@@ -1,0 +1,8 @@
+landing page: build me an elegant looking landing page, dark mode, less colors, grey shades with elegant darker or black features.
+landing page is a common opening page showing:
+ - left sidebar with menu options.
+ - horizontal menu bar on top of the page.
+ - account icon top-right.
+ - main body displays 3 profile tiers: Free, Pro, Max.
+
+keep it lightweight, but professional, elegant touch.

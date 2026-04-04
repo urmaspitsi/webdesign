@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elegant Dark Landing Page</title>
+  <style>
+    :root {
+      --bg: #090909;
+      --panel: #111111;
+      --panel-soft: #151515;
+      --panel-muted: #0d0d0d;
+      --border: #262626;
+      --border-strong: #3a3a3a;
+      --text: #f5f5f5;
+      --text-soft: #b3b3b3;
+      --text-muted: #7a7a7a;
+      --white: #ffffff;
+      --black: #000000;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+    }
+
+    .page {
+      display: flex;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0a0a0a 0%, #090909 100%);
+    }
+
+    .sidebar {
+      width: 250px;
+      background: rgba(0, 0, 0, 0.42);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-brand {
+      padding: 28px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--text-muted);
+    }
+
+    .brand-title {
+      margin-top: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+
+    .sidebar-nav {
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .sidebar-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      color: var(--text-soft);
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-item:hover {
+      background: #151515;
+      color: #e8e8e8;
+    }
+
+    .sidebar-item.active {
+      background: #121212;
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-index {
+      font-size: 12px;
+      color: #636363;
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-note {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(17, 17, 17, 0.85);
+      border: 1px solid var(--border);
+    }
+
+    .sidebar-note strong {
+      display: block;
+      font-size: 14px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-note span {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+
+    .content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 32px;
+      background: rgba(9, 9, 9, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-left,
+    .topbar-right,
+    .topbar-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #121212;
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .mobile-brand {
+      display: none;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+
+    .top-link {
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--text-soft);
+      font-size: 14px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .top-link:hover {
+      background: #151515;
+      color: #e8e8e8;
+    }
+
+    .top-link.active {
+      background: #121212;
+      color: var(--white);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .signin-btn {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: #121212;
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .signin-btn:hover {
+      background: #191919;
+      color: var(--white);
+    }
+
+    .account-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 600;
+      background: linear-gradient(180deg, #2d2d2d 0%, #151515 100%);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .main {
+      padding: 40px 32px 48px;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(17, 17, 17, 0.82);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--text-soft);
+    }
+
+    .hero h1 {
+      margin: 22px 0 0;
+      max-width: 880px;
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.03;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .hero p {
+      margin: 22px 0 0;
+      max-width: 760px;
+      font-size: 18px;
+      line-height: 1.75;
+      color: var(--text-soft);
+    }
+
+    .tiers {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .tier-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.72);
+      padding: 28px;
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-2px);
+      border-color: #3f3f3f;
+      background: rgba(17, 17, 17, 0.9);
+    }
+
+    .tier-card.featured {
+      background: #111111;
+      border-color: #414141;
+      box-shadow: var(--shadow);
+    }
+
+    .tier-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 44%);
+      pointer-events: none;
+    }
+
+    .tier-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tier-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .tier-name {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+    }
+
+    .tier-price-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tier-price {
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+      color: var(--white);
+    }
+
+    .tier-period {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding-bottom: 4px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #d0d0d0;
+      border: 1px solid #3f3f3f;
+      background: rgba(0, 0, 0, 0.36);
+      white-space: nowrap;
+    }
+
+    .tier-desc {
+      margin-top: 24px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+
+    .feature-list {
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(38, 38, 38, 0.85);
+      background: rgba(0, 0, 0, 0.2);
+      color: #d6d6d6;
+      font-size: 14px;
+    }
+
+    .feature-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #666666;
+      flex-shrink: 0;
+    }
+
+    .tier-btn {
+      width: 100%;
+      margin-top: 28px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tier-btn.standard {
+      background: #121212;
+      color: var(--text);
+      border: 1px solid #3b3b3b;
+    }
+
+    .tier-btn.standard:hover {
+      background: #1a1a1a;
+    }
+
+    .tier-btn.featured {
+      background: var(--white);
+      color: var(--black);
+      border: 1px solid var(--white);
+    }
+
+    .tier-btn.featured:hover {
+      background: #dfdfdf;
+    }
+
+    @media (max-width: 1100px) {
+      .tiers {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+
+      .mobile-menu,
+      .mobile-brand {
+        display: inline-flex;
+      }
+
+      .topbar-menu {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar,
+      .main {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .signin-btn {
+        display: none;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .tier-card {
+        padding: 22px;
+      }
+
+      .tier-head {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="eyebrow">Workspace</div>
+        <div class="brand-title">Northstar</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-item" href="#">
+          <span>Overview</span>
+          <span class="sidebar-index">01</span>
+        </a>
+        <a class="sidebar-item active" href="#">
+          <span>Profiles</span>
+          <span class="sidebar-index">02</span>
+        </a>
+        <a class="sidebar-item" href="#">
+          <span>Pricing</span>
+          <span class="sidebar-index">03</span>
+        </a>
+        <a class="sidebar-item" href="#">
+          <span>Analytics</span>
+          <span class="sidebar-index">04</span>
+        </a>
+        <a class="sidebar-item" href="#">
+          <span>Settings</span>
+          <span class="sidebar-index">05</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-note">
+          <strong>Minimal design</strong>
+          <span>Refined layout with restrained tones and focused hierarchy.</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu">Menu</button>
+          <div class="mobile-brand">Northstar</div>
+          <nav class="topbar-menu">
+            <a class="top-link active" href="#">Product</a>
+            <a class="top-link" href="#">Solutions</a>
+            <a class="top-link" href="#">Resources</a>
+            <a class="top-link" href="#">Enterprise</a>
+          </nav>
+        </div>
+
+        <div class="topbar-right">
+          <button class="signin-btn">Sign in</button>
+          <button class="account-btn" aria-label="Account">U</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="container">
+          <section class="hero">
+            <div class="hero-badge">Pricing Overview</div>
+            <h1>Simple tiers designed with a premium, quiet aesthetic.</h1>
+            <p>
+              A dark, restrained landing experience built for clarity. Compare plans,
+              navigate quickly, and present your product with a professional visual tone.
+            </p>
+          </section>
+
+          <section class="tiers">
+            <article class="tier-card">
+              <div class="tier-glow"></div>
+              <div class="tier-content">
+                <div class="tier-head">
+                  <div>
+                    <div class="tier-name">Free</div>
+                    <div class="tier-price-row">
+                      <div class="tier-price">$0</div>
+                      <div class="tier-period">/ month</div>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="tier-desc">
+                  A clean starting point for individuals exploring the platform.
+                </p>
+
+                <ul class="feature-list">
+                  <li class="feature-item"><span class="feature-dot"></span><span>Core access</span></li>
+                  <li class="feature-item"><span class="feature-dot"></span><span>Basic profile tools</span></li>
+                  <li class="feature-item"><span class="feature-dot"></span><span>Community support</span></li>
+                </ul>
+
+                <button class="tier-btn standard">Choose Free</button>
+              </div>
+            </article>
+
+            <article class="tier-card featured">
+              <div class="tier-glow"></div>
+              <div class="tier-content">
+                <div class="tier-head">
+                  <div>
+                    <div class="tier-name">Pro</div>
+                    <div class="tier-price-row">
+                      <div class="tier-price">$29</div>
+                      <div class="tier-period">/ month</div>
+                    </div>
+                  </div>
+                  <div class="tag">Recommended</div>
+                </div>
+
+                <p class="tier-desc">
+                  For professionals who want stronger control, speed, and polish.
+                </p>
+
+                <ul class="feature-list">
+                  <li class="feature-item"><span class="feature-dot"></span><span>Advanced tools</span></li>
+                  <li class="feature-item"><span class="feature-dot"></span><span>Priority support</span></li>
+                  <li class="feature-item"><span class="feature-dot"></span><span>Expanded usage limits</span></li>
+                </ul>
+
+                <button class="tier-btn featured">Choose Pro</button>
+              </div>
+            </article>
+
+            <article class="tier-card">
+              <div class="tier-glow"></div>
+              <div class="tier-content">
+                <div class="tier-head">
+                  <div>
+                    <div class="tier-name">Max</div>
+                    <div class="tier-price-row">
+                      <div class="tier-price">$79</div>
+                      <div class="tier-period">/ month</div>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="tier-desc">
+                  A premium tier for teams and power users with demanding workflows.
+                </p>
+
+                <ul class="feature-list">
+                  <li class="feature-item"><span class="feature-dot"></span><span>Everything in Pro</span></li>
+                  <li class="feature-item"><span class="feature-dot"></span><span>Highest limits</span></li>
+                  <li class="feature-item"><span class="feature-dot"></span><span>Dedicated onboarding</span></li>
+                </ul>
+
+                <button class="tier-btn standard">Choose Max</button>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

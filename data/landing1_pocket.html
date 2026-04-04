@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elegant Tiers Landing</title>
+  <style>
+    :root{
+      --bg: #0b0c0f;
+      --panel: #11131a;
+      --panel2:#0f1117;
+      --text: #e7e9ee;
+      --muted: #a7adbb;
+      --line: rgba(255,255,255,.08);
+      --line2: rgba(255,255,255,.12);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --focus: rgba(255,255,255,.14);
+
+      --black: #000;
+      --dark: #0a0b0e;
+      --accent: #bfc6d6; /* restrained, grey */
+      --accent2: #ffffff;
+      --good: rgba(255,255,255,.85);
+      --badge: rgba(255,255,255,.07);
+      --radius: 16px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      background: radial-gradient(1000px 600px at 20% 0%, rgba(255,255,255,.06), transparent 60%),
+                  radial-gradient(700px 500px at 85% 20%, rgba(255,255,255,.04), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing: -0.01em;
+    }
+
+    /* Layout */
+    .app{
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border-right: 1px solid var(--line);
+      padding: 18px 14px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 10px 16px;
+      color: var(--accent2);
+    }
+    .logo{
+      width: 34px; height: 34px;
+      border-radius: 11px;
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .brand h1{
+      font-size: 14px; margin:0;
+      font-weight: 650;
+    }
+    .brand p{
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav{
+      margin-top: 10px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      padding: 0 8px;
+    }
+
+    .nav a{
+      text-decoration:none;
+      color: var(--muted);
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition: .18s ease;
+    }
+
+    .nav a:hover{
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .nav a.active{
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.12);
+      color: var(--text);
+    }
+
+    .icon{
+      width: 18px; height: 18px;
+      opacity: .9;
+      flex: 0 0 auto;
+    }
+
+    .sidebar-footer{
+      margin-top: 14px;
+      padding: 12px 10px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Main */
+    .main{
+      display:flex;
+      flex-direction:column;
+      min-width: 0;
+    }
+
+    /* Top bar */
+    .topbar{
+      height: 64px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.01);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .top-nav{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding-left: 6px;
+    }
+
+    .top-nav a{
+      color: var(--muted);
+      text-decoration:none;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: .18s ease;
+      font-size: 13px;
+    }
+    .top-nav a:hover{
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
+      color: var(--text);
+    }
+    .top-nav a.active{
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.12);
+      color: var(--text);
+    }
+
+    .account{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .account .hint{
+      color: var(--muted);
+      font-size: 12px;
+      display:none;
+    }
+    @media (min-width: 980px){
+      .account .hint{ display:block; }
+    }
+
+    .account-btn{
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: .18s ease;
+    }
+    .account-btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+
+    /* Content */
+    .content{
+      padding: 26px 20px 40px;
+    }
+
+    .hero{
+      max-width: 1100px;
+      margin: 0 auto 18px;
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .hero h2{
+      margin:0;
+      font-size: 22px;
+      font-weight: 720;
+    }
+    .hero p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      max-width: 62ch;
+    }
+
+    .hero .pill{
+      color: var(--muted);
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 10px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Tiers */
+    .tiers{
+      max-width: 1100px;
+      margin: 18px auto 0;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 980px){
+      .app{ grid-template-columns: 1fr; }
+      .sidebar{
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .tiers{ grid-template-columns: 1fr; }
+      .hero{ flex-direction: column; align-items:flex-start; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.28);
+      position: relative;
+      overflow:hidden;
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      inset: -2px -2px auto -2px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      opacity: .35;
+    }
+
+    .tier-top{
+      display:flex;
+      justify-content: space-between;
+      align-items:flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .tier-name{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+    }
+    .tier-name .label{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      color: var(--accent2);
+      font-weight: 720;
+      font-size: 15px;
+    }
+    .tier-name .sub{
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .badge{
+      background: var(--badge);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .price{
+      margin-top: 6px;
+      font-size: 34px;
+      font-weight: 820;
+      letter-spacing: -0.04em;
+    }
+    .price span{
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0;
+      margin-left: 6px;
+    }
+
+    .features{
+      margin: 14px 0 16px;
+      padding: 0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .features li{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+    }
+
+    .check{
+      width: 18px; height: 18px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      display:grid; place-items:center;
+      margin-top: 1px;
+      flex: 0 0 auto;
+    }
+    .check svg{ opacity: .95; }
+
+    .cta{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+
+    .btn{
+      width: 100%;
+      cursor:pointer;
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      transition: .18s ease;
+      text-decoration:none;
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      gap: 10px;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+    }
+
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .small-note{
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      text-align:center;
+    }
+
+    /* Highlighted tier */
+    .card.highlight{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      border-color: rgba(255,255,255,.22);
+    }
+    .card.highlight .badge{
+      color: rgba(255,255,255,.78);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* Focus */
+    a:focus-visible, button:focus-visible{
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Greyline</h1>
+          <p>Elegant dark tiers</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Menu">
+        <a href="#" class="active">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+          </svg>
+          Overview
+        </a>
+        <a href="#">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M21 15a4 4 0 0 1-4 4H7l-4 0V9a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+            <path d="M7 10h10M7 14h7"/>
+          </svg>
+          Pricing
+        </a>
+        <a href="#">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M21 10h-8V2"/>
+            <path d="M3 14v7h7"/>
+            <path d="M21 3l-9 9"/>
+            <path d="M14 14l7 7"/>
+          </svg>
+          Features
+        </a>
+        <a href="#">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M21 15a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+            <path d="M7 9h10M7 13h6"/>
+          </svg>
+          Docs
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        Tip: Keep it simple. Choose a tier that fits.
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Top bar -->
+      <header class="topbar" aria-label="Top navigation">
+        <nav class="top-nav" aria-label="Top menu">
+          <a href="#" class="active">Tiers</a>
+          <a href="#">Security</a>
+          <a href="#">Support</a>
+        </nav>
+
+        <div class="account">
+          <div class="hint">Account</div>
+          <button class="account-btn" aria-label="Account">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M20 21a8 8 0 0 0-16 0"/>
+              <path d="M12 13a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <section class="content">
+        <div class="hero">
+          <div>
+            <h2>Choose your plan</h2>
+            <p>Three tiers with clean limits and premium performance. Dark, minimal, and professional—no noise.</p>
+          </div>
+          <div class="pill">Billing: Monthly • Cancel anytime</div>
+        </div>
+
+        <div class="tiers">
+          <!-- Free -->
+          <article class="card">
+            <div class="tier-top">
+              <div class="tier-name">
+                <div class="label">
+                  <span>Free</span>
+                </div>
+                <div class="sub">For getting started</div>
+              </div>
+              <div class="badge">Starter</div>
+            </div>
+
+            <div class="price">$0 <span>/ mo</span></div>
+
+            <ul class="features">
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Core features (limited)
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Basic analytics
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Community support
+              </li>
+            </ul>
+
+            <div class="cta">
+              <a class="btn" href="#" role="button" aria-label="Select Free">
+                Select
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M5 12h14"/>
+                  <path d="M13 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="small-note">Great for trying things out.</div>
+          </article>
+
+          <!-- Pro (highlight) -->
+          <article class="card highlight">
+            <div class="tier-top">
+              <div class="tier-name">
+                <div class="label">
+                  <span>Pro</span>
+                </div>
+                <div class="sub">Most popular</div>
+              </div>
+              <div class="badge">Best Value</div>
+            </div>
+
+            <div class="price">$19 <span>/ mo</span></div>
+
+            <ul class="features">
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Advanced analytics & reports
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Priority support
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Team collaboration
+              </li>
+            </ul>
+
+            <div class="cta">
+              <a class="btn primary" href="#" role="button" aria-label="Select Pro">
+                Choose Pro
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M5 12h14"/>
+                  <path d="M13 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="small-note">A polished upgrade for serious work.</div>
+          </article>
+
+          <!-- Max -->
+          <article class="card">
+            <div class="tier-top">
+              <div class="tier-name">
+                <div class="label">
+                  <span>Max</span>
+                </div>
+                <div class="sub">For power users</div>
+              </div>
+              <div class="badge">Enterprise</div>
+            </div>
+
+            <div class="price">$49 <span>/ mo</span></div>
+
+            <ul class="features">
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Full feature access
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Priority SLAs & onboarding
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                </span>
+                Custom workflows & controls
+              </li>
+            </ul>
+
+            <div class="cta">
+              <a class="btn" href="#" role="button" aria-label="Select Max">
+                Contact Sales
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M5 12h14"/>
+                  <path d="M13 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="small-note">Built for teams that need more.</div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Optional: lightweight active-state toggle for top menu (no dependencies).
+    document.querySelectorAll('.top-nav a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.top-nav a').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
