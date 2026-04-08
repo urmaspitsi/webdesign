@@ -117,23 +117,14 @@
   }
 
   function renderCard(item) {
-    var card = createElement("article", "catalog-card");
+    var cardTagName = item.href && !item.secondaryHref ? "a" : "article";
+    var card = createElement(cardTagName, "catalog-card");
     var visual = createElement("div", "card-visual");
     var theme = item.cardTheme || {};
 
-    if (item.href) {
-      card.tabIndex = 0;
-      card.setAttribute("role", "link");
+    if (cardTagName === "a") {
+      card.href = item.href;
       card.setAttribute("aria-label", item.linkLabel || item.title);
-      card.addEventListener("click", function () {
-        window.location.href = item.href;
-      });
-      card.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          window.location.href = item.href;
-        }
-      });
     }
 
     visual.style.setProperty("--card-bg", item.accent || "linear-gradient(145deg, #d59f6f, #8f4e32)");
@@ -189,9 +180,6 @@
     if (item.secondaryHref && item.secondaryLabel) {
       var secondary = createElement("a", "card-link card-link-secondary", item.secondaryLabel);
       secondary.href = item.secondaryHref;
-      secondary.addEventListener("click", function (event) {
-        event.stopPropagation();
-      });
       actions.appendChild(secondary);
     }
 

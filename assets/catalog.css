@@ -290,6 +290,7 @@ img {
   gap: 18px;
   min-height: 100%;
   padding: 22px;
+  position: relative;
   border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: var(--radius-lg);
   background: var(--card-panel-bg, linear-gradient(180deg, var(--panel-strong), var(--panel)));
@@ -315,6 +316,7 @@ img {
 
 .card-visual {
   position: relative;
+  z-index: 2;
   min-height: 180px;
   padding: 20px;
   overflow: hidden;
@@ -372,6 +374,8 @@ img {
   display: grid;
   gap: 12px;
   font-family: var(--card-body-font, var(--sans));
+  position: relative;
+  z-index: 2;
 }
 
 .card-header {
@@ -415,6 +419,8 @@ img {
   align-items: center;
   gap: 14px;
   margin-top: auto;
+  position: relative;
+  z-index: 3;
 }
 
 .card-link {
