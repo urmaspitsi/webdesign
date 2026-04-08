@@ -1,0 +1,598 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .lp-root {
+    font-family: 'DM Sans', sans-serif;
+    background: #0e0e0e;
+    color: #c8c8c4;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid #2a2a28;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 24px 0 16px;
+    background: #111110;
+    border-bottom: 0.5px solid #222220;
+    flex-shrink: 0;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: #e8e8e4;
+    letter-spacing: -0.02em;
+    margin-right: 8px;
+  }
+
+  .top-nav {
+    display: flex;
+    gap: 4px;
+  }
+
+  .top-nav a {
+    font-size: 13px;
+    color: #888882;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    cursor: pointer;
+  }
+  .top-nav a:hover { color: #d0d0cc; background: #1c1c1a; }
+  .top-nav a.active { color: #d8d8d4; background: #1e1e1c; }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #181816;
+    border: 0.5px solid #2a2a28;
+    border-radius: 7px;
+    padding: 0 10px;
+    height: 30px;
+    width: 180px;
+  }
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    color: #a0a09c;
+    font-family: 'DM Sans', sans-serif;
+    width: 100%;
+  }
+  .search-bar input::placeholder { color: #555550; }
+
+  .search-icon {
+    width: 12px; height: 12px;
+    flex-shrink: 0;
+  }
+
+  .account-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #1e1e1c;
+    border: 0.5px solid #2e2e2c;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .account-btn:hover { border-color: #484844; }
+
+  .account-initials {
+    font-size: 11px;
+    font-weight: 500;
+    color: #888882;
+    letter-spacing: 0.03em;
+  }
+
+  /* BODY ROW */
+  .body-row {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    background: #0e0e0c;
+    border-right: 0.5px solid #1e1e1c;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sidebar-section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #444440;
+    text-transform: uppercase;
+    padding: 0 16px;
+    margin: 12px 0 4px;
+  }
+  .sidebar-section-label:first-child { margin-top: 0; }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 16px;
+    font-size: 13px;
+    color: #686864;
+    cursor: pointer;
+    border-radius: 0;
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .sidebar-item:hover { color: #b8b8b4; background: #161614; }
+  .sidebar-item.active {
+    color: #d8d8d4;
+    background: #181816;
+  }
+  .sidebar-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 2px;
+    background: #5a5a58;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .sidebar-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+  .sidebar-item.active .sidebar-dot { opacity: 1; }
+
+  /* MAIN CONTENT */
+  .main {
+    flex: 1;
+    padding: 36px 40px;
+    overflow: auto;
+    background: #0f0f0d;
+  }
+
+  .page-header {
+    margin-bottom: 36px;
+  }
+
+  .page-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: #484844;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #e0e0dc;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .page-sub {
+    font-size: 13px;
+    color: #585854;
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  /* TIER CARDS */
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .tier-card {
+    background: #111110;
+    border: 0.5px solid #222220;
+    border-radius: 12px;
+    padding: 28px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier-card:hover { border-color: #383834; }
+
+  .tier-card.featured {
+    border-color: #303030;
+    background: #131311;
+  }
+
+  .tier-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #585854;
+    background: #1c1c1a;
+    border: 0.5px solid #2a2a28;
+    border-radius: 4px;
+    padding: 3px 7px;
+    text-transform: uppercase;
+  }
+  .tier-badge.highlight {
+    color: #a0a09a;
+    background: #1e1e1c;
+    border-color: #363630;
+  }
+
+  .tier-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: #1a1a18;
+    border: 0.5px solid #262624;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .tier-icon svg { width: 18px; height: 18px; }
+
+  .tier-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: #d8d8d4;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .tier-desc {
+    font-size: 12.5px;
+    color: #505050;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .price-amount {
+    font-size: 28px;
+    font-weight: 300;
+    color: #c8c8c4;
+    letter-spacing: -0.03em;
+  }
+
+  .price-period {
+    font-size: 12px;
+    color: #404040;
+  }
+
+  .divider {
+    height: 0.5px;
+    background: #1e1e1c;
+    margin-bottom: 20px;
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    margin-bottom: 24px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12.5px;
+    color: #686864;
+  }
+  .feature-check {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    color: #484844;
+  }
+  .tier-card.featured .feature-check { color: #787874; }
+
+  .tier-btn {
+    width: 100%;
+    padding: 9px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .tier-btn.ghost {
+    background: transparent;
+    border: 0.5px solid #282826;
+    color: #686864;
+  }
+  .tier-btn.ghost:hover { border-color: #404040; color: #a0a09c; background: #161614; }
+
+  .tier-btn.solid {
+    background: #242422;
+    border: 0.5px solid #363632;
+    color: #c8c8c4;
+  }
+  .tier-btn.solid:hover { background: #2a2a28; color: #e0e0dc; border-color: #484844; }
+
+  .tier-corner-glow {
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle at top right, #2a2a26 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+</style>
+
+<div class="lp-root">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="logo">Arcane</span>
+      <nav class="top-nav">
+        <a class="active">Overview</a>
+        <a>Workspace</a>
+        <a>Analytics</a>
+        <a>Docs</a>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="4" stroke="#555550" stroke-width="1.2"/>
+          <path d="M10 10L13.5 13.5" stroke="#555550" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <input type="text" placeholder="Search...">
+      </div>
+      <div class="account-btn">
+        <span class="account-initials">UE</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-row">
+
+    <aside class="sidebar">
+      <span class="sidebar-section-label">Main</span>
+      <div class="sidebar-item active">
+        <span class="sidebar-dot"></span> Dashboard
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Projects
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Activity
+      </div>
+
+      <span class="sidebar-section-label">Account</span>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Profile
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Billing
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Members
+      </div>
+
+      <span class="sidebar-section-label">System</span>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Settings
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> API Keys
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-dot"></span> Logs
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="page-header">
+        <div class="page-eyebrow">Subscription</div>
+        <div class="page-title">Choose your plan</div>
+        <div class="page-sub">All plans include a 14-day trial. No credit card required.</div>
+      </div>
+
+      <div class="tiers">
+
+        <div class="tier-card">
+          <div class="tier-corner-glow"></div>
+          <div class="tier-badge">Free</div>
+          <div class="tier-icon">
+            <svg viewBox="0 0 18 18" fill="none">
+              <circle cx="9" cy="9" r="6" stroke="#484844" stroke-width="1.2"/>
+              <path d="M9 6v3l2 2" stroke="#484844" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tier-name">Free</div>
+          <div class="tier-desc">Get started with core features at no cost. Perfect for personal use and exploration.</div>
+          <div class="tier-price">
+            <span class="price-amount">$0</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <div class="divider"></div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Up to 3 projects
+            </div>
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              5 GB storage
+            </div>
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Community support
+            </div>
+            <div class="feature-item" style="opacity:0.35;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              Analytics
+            </div>
+            <div class="feature-item" style="opacity:0.35;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              API access
+            </div>
+          </div>
+          <button class="tier-btn ghost">Get started</button>
+        </div>
+
+        <div class="tier-card featured">
+          <div class="tier-corner-glow"></div>
+          <div class="tier-badge highlight">Popular</div>
+          <div class="tier-icon" style="background:#1c1c1a; border-color:#303030;">
+            <svg viewBox="0 0 18 18" fill="none">
+              <path d="M9 2l1.8 5.4H17l-5 3.6 1.9 5.5L9 13l-4.9 3.5L6 11 1 7.4h6.2L9 2z" stroke="#888882" stroke-width="1" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tier-name" style="color:#e0e0dc;">Pro</div>
+          <div class="tier-desc" style="color:#585854;">For teams and professionals who need more power, speed, and priority access.</div>
+          <div class="tier-price">
+            <span class="price-amount" style="color:#d8d8d4;">$24</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <div class="divider"></div>
+          <div class="feature-list">
+            <div class="feature-item" style="color:#7a7a76;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Unlimited projects
+            </div>
+            <div class="feature-item" style="color:#7a7a76;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              100 GB storage
+            </div>
+            <div class="feature-item" style="color:#7a7a76;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Priority support
+            </div>
+            <div class="feature-item" style="color:#7a7a76;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Advanced analytics
+            </div>
+            <div class="feature-item" style="color:#7a7a76; opacity:0.4;">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              Custom integrations
+            </div>
+          </div>
+          <button class="tier-btn solid">Upgrade to Pro</button>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-corner-glow"></div>
+          <div class="tier-badge">Max</div>
+          <div class="tier-icon">
+            <svg viewBox="0 0 18 18" fill="none">
+              <rect x="3" y="3" width="12" height="12" rx="2" stroke="#484844" stroke-width="1.2"/>
+              <path d="M6 9h6M9 6v6" stroke="#484844" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tier-name">Max</div>
+          <div class="tier-desc">Enterprise-grade capabilities with full API access, custom integrations, and dedicated SLA.</div>
+          <div class="tier-price">
+            <span class="price-amount">$79</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <div class="divider"></div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Everything in Pro
+            </div>
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              1 TB storage
+            </div>
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Full API access
+            </div>
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Custom integrations
+            </div>
+            <div class="feature-item">
+              <svg class="feature-check" viewBox="0 0 14 14" fill="none">
+                <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Dedicated SLA
+            </div>
+          </div>
+          <button class="tier-btn ghost">Contact sales</button>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+</div>

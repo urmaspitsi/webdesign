@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0a0a0a; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(10px); 
+        }
+        .sidebar-link:hover { background: rgba(255, 255, 255, 0.05); }
+        .tier-card:hover { border-color: rgba(255, 255, 255, 0.3); transform: translateY(-4px); transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Left Sidebar -->
+    <aside class="w-64 border-r border-white/10 flex flex-col p-6 space-y-8">
+        <div class="text-xl font-bold tracking-tighter">PLATFORM.</div>
+        <nav class="flex-1 space-y-4 text-sm text-gray-400">
+            <a href="#" class="block py-2 px-4 rounded sidebar-link text-white">Dashboard</a>
+            <a href="#" class="block py-2 px-4 rounded sidebar-link">Analytics</a>
+            <a href="#" class="block py-2 px-4 rounded sidebar-link">Resources</a>
+            <a href="#" class="block py-2 px-4 rounded sidebar-link">Settings</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+        
+        <!-- Top Horizontal Bar -->
+        <header class="h-16 border-b border-white/10 flex items-center justify-between px-8">
+            <nav class="flex space-x-8 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:text-white transition">Overview</a>
+                <a href="#" class="hover:text-white transition">Integrations</a>
+                <a href="#" class="hover:text-white transition">Activity</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-gray-700 to-gray-400 flex items-center justify-center border border-white/20 cursor-pointer">
+                    <span class="text-xs font-bold text-black">JD</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body: Profile Tiers -->
+        <main class="p-12 overflow-y-auto">
+            <div class="max-w-5xl mx-auto">
+                <header class="mb-12 text-center">
+                    <h1 class="text-3xl font-light mb-2">Select your experience</h1>
+                    <p class="text-gray-500">Elevate your workflow with our refined tiers.</p>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Free Tier -->
+                    <div class="glass-card p-8 rounded-2xl tier-card">
+                        <h3 class="text-gray-400 uppercase tracking-widest text-xs mb-4">Standard</h3>
+                        <div class="text-4xl font-semibold mb-6">Free</div>
+                        <ul class="space-y-4 text-sm text-gray-500 mb-8">
+                            <li>• Basic core features</li>
+                            <li>• Community access</li>
+                            <li>• 5GB Cloud storage</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-lg border border-white/10 hover:bg-white hover:text-black transition duration-300 font-medium">Get Started</button>
+                    </div>
+
+                    <!-- Pro Tier -->
+                    <div class="glass-card p-8 rounded-2xl tier-card border-white/20 bg-white/5">
+                        <h3 class="text-gray-200 uppercase tracking-widest text-xs mb-4">Professional</h3>
+                        <div class="text-4xl font-semibold mb-6">$29<span class="text-lg text-gray-500">/mo</span></div>
+                        <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                            <li>• Advanced analytics</li>
+                            <li>• 100GB Cloud storage</li>
+                            <li>• Priority support</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-lg bg-white text-black hover:bg-gray-200 transition duration-300 font-medium">Upgrade to Pro</button>
+                    </div>
+
+                    <!-- Max Tier -->
+                    <div class="glass-card p-8 rounded-2xl tier-card">
+                        <h3 class="text-gray-400 uppercase tracking-widest text-xs mb-4">Max</h3>
+                        <div class="text-4xl font-semibold mb-6">$99<span class="text-lg text-gray-500">/mo</span></div>
+                        <ul class="space-y-4 text-sm text-gray-500 mb-8">
+                            <li>• Unlimited everything</li>
+                            <li>• Custom API access</li>
+                            <li>• Dedicated manager</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-lg border border-white/10 hover:bg-white hover:text-black transition duration-300 font-medium">Contact Sales</button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
