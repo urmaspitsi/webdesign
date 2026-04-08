@@ -51,8 +51,16 @@
     mount.appendChild(nav);
   }
 
-  function renderHero(mount, hero) {
-    var section = createElement("section", "hero");
+  function renderHero(mount, hero, variant) {
+    var heroClassName = "hero";
+    var normalizedVariant = variant || "default";
+    var section;
+
+    if (normalizedVariant !== "default") {
+      heroClassName += " hero-" + normalizedVariant;
+    }
+
+    section = createElement("section", heroClassName);
     var inner = createElement("div", "hero-inner");
     inner.appendChild(createElement("div", "hero-kicker", hero.kicker));
     inner.appendChild(createElement("h2", "hero-title", hero.title));
@@ -96,13 +104,70 @@
     return wrap;
   }
 
+  function applyThemeStyles(element, theme) {
+    if (!theme) {
+      return;
+    }
+
+    Object.keys(theme).forEach(function (key) {
+      if (theme[key] !== undefined && theme[key] !== null && theme[key] !== "") {
+        element.style.setProperty(key, theme[key]);
+      }
+    });
+  }
+
   function renderCard(item) {
     var card = createElement("article", "catalog-card");
     var visual = createElement("div", "card-visual");
+    var theme = item.cardTheme || {};
+
+    if (item.href) {
+      card.tabIndex = 0;
+      card.setAttribute("role", "link");
+      card.setAttribute("aria-label", item.linkLabel || item.title);
+      card.addEventListener("click", function () {
+        window.location.href = item.href;
+      });
+      card.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          window.location.href = item.href;
+        }
+      });
+    }
+
     visual.style.setProperty("--card-bg", item.accent || "linear-gradient(145deg, #d59f6f, #8f4e32)");
+    applyThemeStyles(card, {
+      "--card-panel-bg": theme.panelBackground,
+      "--card-panel-border": theme.panelBorder,
+      "--card-panel-shadow": theme.panelShadow,
+      "--card-ink": theme.textColor,
+      "--card-muted": theme.mutedColor,
+      "--card-tag-bg": theme.tagBackground,
+      "--card-tag-ink": theme.tagColor,
+      "--card-link-bg": theme.linkBackground,
+      "--card-link-ink": theme.linkColor,
+      "--card-link-border": theme.linkBorder,
+      "--card-badge-bg": theme.badgeBackground,
+      "--card-badge-ink": theme.badgeColor,
+      "--card-title-font": theme.bodyTitleFont,
+      "--card-title-weight": theme.bodyTitleWeight,
+      "--card-body-font": theme.bodyFont
+    });
+    applyThemeStyles(visual, {
+      "--card-bg": theme.visualBackground,
+      "--card-visual-ink": theme.visualColor,
+      "--card-visual-title-font": theme.visualTitleFont,
+      "--card-visual-title-weight": theme.visualTitleWeight,
+      "--card-visual-title-size": theme.visualTitleSize,
+      "--card-visual-title-spacing": theme.visualTitleSpacing,
+      "--card-visual-label-ink": theme.labelColor
+    });
 
     var visualCopy = createElement("div", "card-visual-copy");
-    visualCopy.appendChild(createElement("div", "card-label", item.eyebrow || "Showcase"));
+    if (item.eyebrow) {
+      visualCopy.appendChild(createElement("div", "card-label", item.eyebrow));
+    }
     visualCopy.appendChild(createElement("h4", "card-visual-title", item.visualTitle || item.title));
     visual.appendChild(visualCopy);
 
@@ -111,10 +176,6 @@
     var titleWrap = createElement("div");
     titleWrap.appendChild(createElement("h5", "card-title", item.title));
     header.appendChild(titleWrap);
-
-    if (item.badge) {
-      header.appendChild(createElement("span", "card-badge", item.badge));
-    }
 
     body.appendChild(header);
     body.appendChild(createElement("p", "card-text", item.description));
@@ -125,23 +186,28 @@
     }
 
     var actions = createElement("div", "card-actions");
-    var primary = createElement("a", "card-link", item.linkLabel || "Open page");
-    primary.href = item.href;
-    actions.appendChild(primary);
-
     if (item.secondaryHref && item.secondaryLabel) {
       var secondary = createElement("a", "card-link card-link-secondary", item.secondaryLabel);
       secondary.href = item.secondaryHref;
+      secondary.addEventListener("click", function (event) {
+        event.stopPropagation();
+      });
       actions.appendChild(secondary);
     }
 
-    appendChildren(card, [visual, body, actions]);
+    if (actions.childNodes.length > 0) {
+      appendChildren(card, [visual, body, actions]);
+    } else {
+      appendChildren(card, [visual, body]);
+    }
     return card;
   }
 
   function renderSection(mount, section) {
     var wrapper = createElement("section");
-    renderSectionHead(wrapper, section);
+    if (!section.hideHeader) {
+      renderSectionHead(wrapper, section);
+    }
 
     if (!section.items || !section.items.length) {
       wrapper.appendChild(
@@ -175,8 +241,13 @@
     }
 
     mount.className = "site-shell";
-    renderNav(mount, config);
-    renderHero(mount, config.hero);
+    if (!config.hideNav) {
+      renderNav(mount, config);
+    }
+
+    if (!config.hideHero) {
+      renderHero(mount, config.hero, config.heroVariant);
+    }
 
     (config.sections || []).forEach(function (section) {
       renderSection(mount, section);
@@ -216,12 +287,14 @@
 
     renderCatalogPage({
       mountId: (options && options.mountId) || "app",
+      hideNav: true,
+      heroVariant: "minimal",
       brand: {
-        href: "./",
+        href: "./index.html",
         label: "GitHub Pages",
         title: "Web Design Collection"
       },
-      navLinks: [{ label: "Home", href: "./", active: true }].concat(
+      navLinks: [{ label: "Home", href: "./index.html", active: true }].concat(
         projects.map(function (project) {
           return projectToNavLink(project, null, "");
         })
@@ -239,6 +312,7 @@
       },
       sections: [
         {
+          hideHeader: true,
           title: "Projects",
           description:
             "Browse by topic. Each card links to a dedicated section page that can grow independently while staying easy to publish and maintain.",
@@ -247,35 +321,44 @@
             return projectToCard(project, "Open section");
           })
         }
-      ],
-      footerNote:
-        "To add a new project later, create a new folder with its own index.html and catalog.config.js, then register the folder once in assets/site-data.js."
+      ]
     });
   };
 
   window.renderProjectFromManifest = function renderProjectFromManifest(options) {
     var projects = window.siteProjects || [];
     var projectCatalog = window.projectCatalog;
+    var sections;
 
     if (!projectCatalog) {
       throw new Error("Project catalog manifest not found.");
     }
 
+    sections = (projectCatalog.sections || []).map(function (section) {
+      var nextSection = {};
+      Object.keys(section).forEach(function (key) {
+        nextSection[key] = section[key];
+      });
+      nextSection.hideHeader = true;
+      return nextSection;
+    });
+
     renderCatalogPage({
       mountId: (options && options.mountId) || "app",
+      hideNav: true,
+      heroVariant: "minimal",
       brand: {
-        href: "../",
+        href: "../index.html",
         label: "Project Index",
         title: projectCatalog.title
       },
-      navLinks: [{ label: "Home", href: "../", active: false }].concat(
+      navLinks: [{ label: "Home", href: "../index.html", active: false }].concat(
         projects.map(function (project) {
           return projectToNavLink(project, projectCatalog.slug, "../");
         })
       ),
       hero: projectCatalog.hero,
-      sections: projectCatalog.sections,
-      footerNote: projectCatalog.footerNote
+      sections: sections
     });
   };
 })();
