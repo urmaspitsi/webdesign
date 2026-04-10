@@ -2,6 +2,8 @@
 
 Static GitHub Pages repository for a collection of standalone web pages.
 
+Deployed site: [urmaspitsi.github.io/webdesign](https://urmaspitsi.github.io/webdesign/)
+
 The repository is organized around topic folders. Each topic folder has its own `index.html` and displays a catalog of pages inside that folder. The root `index.html` acts as the main landing page for navigating between folders.
 
 ## Stack
@@ -100,4 +102,4 @@ Publish from the repository root.
 
 - Some sample pages use external resources such as Google Fonts or CDN scripts.
 - Those pages are still GitHub Pages compatible, but they depend on external network access for those resources.
-- There is currently no automated test suite in this repository.
+- A lightweight automated test suite is available via `npm test`.
