@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Harbor Study is a warm grey-blue chat UI with lighter surfaces, stronger tonal contrast, and an elegant desktop workspace." />
+  <title>Chat UI 07 - Harbor Study</title>
+  <style>
+    :root{
+      --page:#cfd5da;
+      --page-2:#b8c1ca;
+      --panel:#eef2f4;
+      --panel-2:#dbe2e8;
+      --panel-3:#c0cad4;
+      --line:rgba(44,63,80,.16);
+      --line-2:rgba(33,49,63,.28);
+      --text:#1f2d38;
+      --muted:#627483;
+      --assistant:#e7edf1;
+      --user:#b0bfcb;
+      --shadow:0 24px 60px rgba(36,51,65,.16);
+      --radius-xl:34px;
+      font-family:"Segoe UI",Arial,sans-serif;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,255,255,.5), transparent 25%),
+        radial-gradient(circle at 90% 12%, rgba(95,119,145,.14), transparent 24%),
+        linear-gradient(180deg,var(--page) 0%, var(--page-2) 100%);
+      color:var(--text);
+    }
+    .viewport{min-height:100vh;padding:24px;display:grid;grid-template-columns:280px 1fr;gap:20px}
+    .sidebar,.workspace{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .sidebar{
+      border-radius:30px;
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+      background:linear-gradient(180deg,#f7fafb,#d9e1e7);
+    }
+    .sidebar h1,.sidebar h2{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .sidebar p{margin:8px 0 0;color:var(--muted);line-height:1.55}
+    .menu{display:grid;gap:10px}
+    .menu a{
+      color:var(--text);
+      text-decoration:none;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid transparent;
+      background:rgba(255,255,255,.42);
+    }
+    .menu a.active,.menu a:hover{
+      border-color:var(--line-2);
+      background:#fdfefe;
+    }
+    .menu small{display:block;margin-top:6px;color:var(--muted);font-size:.82rem}
+    .workspace{
+      border-radius:var(--radius-xl);
+      overflow:hidden;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      background:linear-gradient(180deg,var(--panel) 0%, #cfd9e1 100%);
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:20px 28px;
+      border-bottom:1px solid var(--line-2);
+      background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,.18));
+    }
+    .top-menu{display:flex;gap:12px;flex-wrap:wrap}
+    .top-menu a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:10px 0;
+      border-bottom:1px solid transparent;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:.78rem;
+    }
+    .top-menu a.active{color:var(--text);border-color:var(--line-2)}
+    .account{
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      border:1px solid var(--line-2);
+      background:linear-gradient(180deg,#5e7388,#3a4b5b);
+      color:#f6fbff;
+      font-weight:700;
+    }
+    .thread{padding:32px;overflow:auto;display:grid;gap:20px;align-content:start;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent)}
+    .header-block{display:flex;justify-content:space-between;align-items:end;gap:18px;padding-bottom:6px}
+    .header-block h2{
+      margin:0;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:clamp(1.5rem,2vw,2.1rem);
+      font-weight:500;
+    }
+    .header-block p{margin:8px 0 0;color:var(--muted);max-width:640px}
+    .status{color:#4d6478;font-size:.84rem;letter-spacing:.08em;text-transform:uppercase}
+    .message{display:grid;gap:8px;max-width:min(860px,88%);animation:floatIn 420ms ease both}
+    .message.user{margin-left:auto}
+    .meta{color:var(--muted);font-size:.82rem}
+    .bubble{
+      padding:18px 20px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      line-height:1.7;
+      background:var(--assistant);
+      color:var(--text);
+    }
+    .message.user .bubble{
+      background:linear-gradient(180deg,#bfd0db,#9fb0bf);
+      border-color:rgba(43,64,82,.24);
+    }
+    .composer{padding:20px 28px 28px;border-top:1px solid var(--line-2);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(193,205,216,.48))}
+    .composer-box{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:14px;
+      padding:12px;
+      border-radius:24px;
+      border:1px solid var(--line-2);
+      background:rgba(250,252,253,.72);
+    }
+    textarea{
+      min-height:58px;
+      resize:none;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font:inherit;
+      line-height:1.6;
+      padding:10px 12px;
+    }
+    .composer button{
+      align-self:end;
+      height:52px;
+      border-radius:18px;
+      border:0;
+      background:linear-gradient(180deg,#44586b,#273645);
+      color:#f6fbff;
+      font-weight:700;
+      padding:0 18px;
+      cursor:pointer;
+    }
+    @keyframes floatIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @media (max-width:980px){
+      .viewport{grid-template-columns:1fr;padding:12px}
+      .sidebar{display:none}
+      .workspace{min-height:calc(100vh - 24px)}
+      .message{max-width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <aside class="sidebar">
+      <div>
+        <h1>Harbor Study</h1>
+        <p>A warm grey-blue reinterpretation of the desk layout, using mist, slate, and faded steel tones with clearer contrast steps.</p>
+      </div>
+      <div>
+        <h2>Menu</h2>
+        <div class="menu">
+          <a class="active" href="#">Conversations<small>Current thread and archived sessions</small></a>
+          <a href="#">Search<small>Natural language retrieval</small></a>
+          <a href="#">Team Notes<small>Shared references and decisions</small></a>
+          <a href="#">Settings<small>Workspace and account preferences</small></a>
+        </div>
+      </div>
+      <div>
+        <h2>Context</h2>
+        <p>The palette stays warm and muted, but each region is separated more decisively so the page reads clearly at a glance.</p>
+      </div>
+    </aside>
+    <section class="workspace">
+      <header class="topbar">
+        <nav class="top-menu">
+          <a class="active" href="#">Chat</a>
+          <a href="#">History</a>
+          <a href="#">Resources</a>
+        </nav>
+        <div class="account">UU</div>
+      </header>
+      <main class="thread" id="chat7">
+        <div class="header-block">
+          <div>
+            <h2>Creative direction conversation</h2>
+            <p>Testing the obsidian layout in a lighter warm grey-blue system with stronger contrast steps between shell, content, and bubbles.</p>
+          </div>
+          <div class="status">Live</div>
+        </div>
+        <article class="message assistant">
+          <div class="meta">Assistant · 18:03</div>
+          <div class="bubble">This variation keeps the same architecture but swaps the dark shell for misty blue-grey surfaces. Contrast now comes from cooler slate actions, brighter panels, and more distinct message states.</div>
+        </article>
+        <article class="message user">
+          <div class="meta">You · 18:05</div>
+          <div class="bubble">I want it lighter than the black version, but still elegant and restrained. The color should feel warm enough to avoid a cold corporate look.</div>
+        </article>
+        <article class="message assistant">
+          <div class="meta">Assistant · 18:06</div>
+          <div class="bubble">That balance works best when the blue is softened with stone-grey neutrals. Clear tonal stepping keeps the layout professional while the palette stays calm.</div>
+        </article>
+      </main>
+      <footer class="composer">
+        <div class="composer-box">
+          <textarea id="prompt7" placeholder="Continue the conversation..."></textarea>
+          <button id="send7" type="button">Send</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+  <script>
+    (function(){const chat=document.getElementById("chat7");const input=document.getElementById("prompt7");const button=document.getElementById("send7");function submit(){const value=input.value.trim();if(!value)return;const item=document.createElement("article");item.className="message user";item.innerHTML='<div class="meta">You · Now</div><div class="bubble"></div>';item.querySelector(".bubble").textContent=value;chat.appendChild(item);chat.scrollTop=chat.scrollHeight;input.value="";}button.addEventListener("click",submit);input.addEventListener("keydown",function(event){if((event.ctrlKey||event.metaKey)&&event.key==="Enter")submit();});})();
+  </script>
+</body>
+</html>

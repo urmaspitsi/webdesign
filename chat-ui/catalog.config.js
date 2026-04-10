@@ -18,7 +18,7 @@ window.projectCatalog = {
       title: "Published Samples",
       description:
         "Compare different ways to handle structure, contrast, spacing, and message treatment while keeping the same core chat app requirements.",
-      note: "6 published entries",
+      note: "10 published entries",
       items: [
         {
           title: "Chat UI 01",
@@ -67,6 +67,38 @@ window.projectCatalog = {
           description:
             "A lighter warm grey-brown interpretation of the obsidian desk concept with clearer tonal separation.",
           href: "chat-ui-06-stone-atelier.html"
+        },
+        {
+          title: "Chat UI 07",
+          visualTitle: "Harbor Study",
+          eyebrow: "Blue Warmth",
+          description:
+            "A warm grey-blue reinterpretation of the obsidian desk layout with more distinct surface contrast.",
+          href: "chat-ui-07-harbor-study.html"
+        },
+        {
+          title: "Chat UI 08",
+          visualTitle: "Ember Ledger",
+          eyebrow: "Warm Dark Grey",
+          description:
+            "A warm dark-grey adaptation of the obsidian desk concept with charcoal, ash, and cocoa-toned contrast.",
+          href: "chat-ui-08-ember-ledger.html"
+        },
+        {
+          title: "Chat UI 09",
+          visualTitle: "Graphite Office",
+          eyebrow: "Neutral Dark Grey",
+          description:
+            "A neutral dark-grey take on the obsidian desk layout with clean graphite contrast and no warm color cast.",
+          href: "chat-ui-09-graphite-office.html"
+        },
+        {
+          title: "Chat UI 10",
+          visualTitle: "Malt Office",
+          eyebrow: "Softer Warm Grey",
+          description:
+            "A slightly warmer evolution of the graphite office layout, keeping the dark neutral look with a gentler ash-brown tint.",
+          href: "chat-ui-10-malt-office.html"
         }
       ]
     }
