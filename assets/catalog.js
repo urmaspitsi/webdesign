@@ -318,10 +318,18 @@
     var projects = window.siteProjects || [];
     var projectCatalog = window.projectCatalog;
     var sections;
+    var hero;
 
     if (!projectCatalog) {
       throw new Error("Project catalog manifest not found.");
     }
+
+    hero = {};
+    Object.keys(projectCatalog.hero || {}).forEach(function (key) {
+      hero[key] = projectCatalog.hero[key];
+    });
+    delete hero.kicker;
+    delete hero.meta;
 
     sections = (projectCatalog.sections || []).map(function (section) {
       var nextSection = {};
@@ -346,7 +354,7 @@
           return projectToNavLink(project, projectCatalog.slug, "../");
         })
       ),
-      hero: projectCatalog.hero,
+      hero: hero,
       sections: sections
     });
   };
