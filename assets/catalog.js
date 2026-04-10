@@ -123,6 +123,148 @@
     });
   }
 
+  function parseDeclarations(block) {
+    var declarations = {};
+
+    if (!block) {
+      return declarations;
+    }
+
+    block.split(";").forEach(function (declaration) {
+      var separatorIndex = declaration.indexOf(":");
+      var property;
+      var value;
+
+      if (separatorIndex === -1) {
+        return;
+      }
+
+      property = declaration.slice(0, separatorIndex).trim();
+      value = declaration.slice(separatorIndex + 1).trim();
+
+      if (property && value) {
+        declarations[property] = value;
+      }
+    });
+
+    return declarations;
+  }
+
+  function selectorTargetsBody(selectorText) {
+    return selectorText
+      .split(",")
+      .map(function (selector) {
+        return selector.trim();
+      })
+      .some(function (selector) {
+        return selector === "body";
+      });
+  }
+
+  function collectCssData(cssText) {
+    var rules = /([^{}]+)\{([^{}]+)\}/g;
+    var match;
+    var rootVars = {};
+    var bodyDeclarations = {};
+
+    while ((match = rules.exec(cssText))) {
+      var selectorText = match[1].trim();
+      var declarations = parseDeclarations(match[2]);
+
+      if (selectorText === ":root") {
+        Object.keys(declarations).forEach(function (property) {
+          rootVars[property] = declarations[property];
+        });
+      }
+
+      if (selectorTargetsBody(selectorText)) {
+        Object.keys(declarations).forEach(function (property) {
+          bodyDeclarations[property] = declarations[property];
+        });
+      }
+    }
+
+    return {
+      rootVars: rootVars,
+      bodyDeclarations: bodyDeclarations
+    };
+  }
+
+  function resolveCssValue(value, rootVars, depth) {
+    var normalizedDepth = depth || 0;
+
+    if (!value || normalizedDepth > 5) {
+      return value;
+    }
+
+    return value.replace(/var\((--[^),\s]+)\)/g, function (fullMatch, variableName) {
+      if (rootVars[variableName] === undefined) {
+        return fullMatch;
+      }
+
+      return resolveCssValue(rootVars[variableName], rootVars, normalizedDepth + 1);
+    });
+  }
+
+  function extractThemeFromLinkedPage(html) {
+    var styleBlocks = [];
+    var stylePattern = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+    var match;
+    var rootVars = {};
+    var bodyDeclarations = {};
+
+    while ((match = stylePattern.exec(html))) {
+      styleBlocks.push(match[1]);
+    }
+
+    styleBlocks.forEach(function (cssText) {
+      var cssData = collectCssData(cssText);
+
+      Object.keys(cssData.rootVars).forEach(function (property) {
+        rootVars[property] = cssData.rootVars[property];
+      });
+
+      Object.keys(cssData.bodyDeclarations).forEach(function (property) {
+        bodyDeclarations[property] = cssData.bodyDeclarations[property];
+      });
+    });
+
+    return {
+      panelBackground: resolveCssValue(
+        bodyDeclarations.background || bodyDeclarations["background-color"],
+        rootVars
+      ),
+      textColor: resolveCssValue(bodyDeclarations.color, rootVars),
+      mutedColor: resolveCssValue(rootVars["--muted"] || rootVars["--text-muted"], rootVars),
+      bodyFont: resolveCssValue(bodyDeclarations["font-family"], rootVars)
+    };
+  }
+
+  function hydrateCardThemeFromHref(card, href) {
+    fetch(new URL(href, window.location.href).href)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Failed to load linked page theme.");
+        }
+
+        return response.text();
+      })
+      .then(function (html) {
+        var theme = extractThemeFromLinkedPage(html);
+
+        applyThemeStyles(card, {
+          "--card-panel-bg": theme.panelBackground,
+          "--card-ink": theme.textColor,
+          "--card-muted": theme.mutedColor,
+          "--card-title-font": theme.bodyFont,
+          "--card-body-font": theme.bodyFont
+        });
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
   function renderCard(item) {
     var cardTagName = item.href && !item.secondaryHref ? "a" : "article";
     var card = createElement(cardTagName, "catalog-card");
@@ -193,8 +335,9 @@
     return card;
   }
 
-  function renderSection(mount, section) {
+  function renderSection(mount, section, options) {
     var wrapper = createElement("section");
+    var settings = options || {};
     if (!section.hideHeader) {
       renderSectionHead(wrapper, section);
     }
@@ -213,7 +356,12 @@
 
     var grid = createElement("div", "card-grid");
     section.items.forEach(function (item) {
-      grid.appendChild(renderCard(item));
+      var card = renderCard(item);
+      grid.appendChild(card);
+
+      if (settings.resolveLinkedThemes && item.href) {
+        hydrateCardThemeFromHref(card, item.href);
+      }
     });
     wrapper.appendChild(grid);
     mount.appendChild(wrapper);
@@ -240,7 +388,9 @@
     }
 
     (config.sections || []).forEach(function (section) {
-      renderSection(mount, section);
+      renderSection(mount, section, {
+        resolveLinkedThemes: config.resolveLinkedThemes
+      });
     });
 
     if (config.footerNote) {
@@ -363,6 +513,7 @@
       mountId: (options && options.mountId) || "app",
       hideNav: true,
       heroVariant: "minimal",
+      resolveLinkedThemes: true,
       brand: {
         href: "../index.html",
         label: "Project Index",
