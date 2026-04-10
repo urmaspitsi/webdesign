@@ -175,11 +175,6 @@
     body.appendChild(header);
     body.appendChild(createElement("p", "card-text", item.description));
 
-    var meta = buildMeta(item.tags, "card-meta");
-    if (meta) {
-      body.appendChild(meta);
-    }
-
     var actions = createElement("div", "card-actions");
     if (item.secondaryHref && item.secondaryLabel) {
       var secondary = createElement("a", "card-link card-link-secondary", item.secondaryLabel);
