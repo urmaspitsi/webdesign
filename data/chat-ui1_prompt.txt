@@ -1,0 +1,12 @@
+chat-ui page: build me an elegant looking chat-ui page, dark mode, less colors, grey shades with elegant darker or black features. 
+chat-ui page is a common page showing: 
+ - left sidebar with menu options.
+ - minimal horizontal menu bar on top of the page.
+ - account icon top-right.
+ - main body displays typical chat ui, message bubbles from user and assistant. 
+
+keep it lightweight, but professional, elegant touch.
+
+**Deliverables**
+- give me 5 samples.
+- HTML/CSS/JS, no frameworks needed. Preferrable single HTML file, so I can simply copy the results and compare.

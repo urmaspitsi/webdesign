@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Midnight Rail dark chat UI with strong black surfaces and a slim utility sidebar." />
+  <title>Chat UI 02 - Midnight Rail</title>
+  <style>
+    :root{--bg:#050506;--rail:#0c0d0f;--surface:#101114;--text:#f5f6f7;--muted:#8e939c;--line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);--bubble-user:#22252a;--bubble-assistant:#121315;font-family:"Segoe UI",Arial,sans-serif}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at top center, rgba(255,255,255,.05), transparent 28%),linear-gradient(180deg,#030304,#090a0b 42%,#050506);color:var(--text)}
+    .layout{min-height:100vh;display:grid;grid-template-columns:96px 260px 1fr}.rail,.sidebar{border-right:1px solid var(--line);background:rgba(8,8,9,.94)}
+    .rail{padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:18px}.rail button,.sidebar a,.chip{transition:background 180ms ease,border-color 180ms ease,transform 180ms ease}
+    .mark,.rail button,.account{width:52px;height:52px;border-radius:18px;border:1px solid var(--line);display:grid;place-items:center;color:var(--text);background:linear-gradient(180deg,#1c1d21,#101114)} .mark{font-weight:700;letter-spacing:.1em}
+    .rail button{cursor:pointer;background:transparent}.rail button:hover,.rail button.active{transform:translateY(-1px);background:rgba(255,255,255,.05);border-color:var(--line-strong)}
+    .sidebar{padding:24px 18px;display:flex;flex-direction:column;gap:22px}.sidebar h1{margin:0;font-size:1.1rem;font-weight:600}.sidebar p{margin:6px 0 0;color:var(--muted);line-height:1.5;font-size:.92rem}
+    .section-label{margin-bottom:10px;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.14em}
+    .sidebar a{display:block;text-decoration:none;color:var(--text);padding:14px 16px;border-radius:16px;border:1px solid transparent;background:rgba(255,255,255,.02);margin-bottom:8px}
+    .sidebar a:hover,.sidebar a.active{background:rgba(255,255,255,.05);border-color:var(--line)} .sidebar small{display:block;margin-top:4px;color:var(--muted);font-size:.82rem}
+    .main{padding:18px}.frame{min-height:calc(100vh - 36px);border:1px solid var(--line);border-radius:32px;background:linear-gradient(180deg,rgba(17,18,20,.96),rgba(8,8,9,.98));box-shadow:0 24px 70px rgba(0,0,0,.45);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+    .topbar{padding:18px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:12px}.chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--muted);cursor:pointer}.chip.active{color:var(--text);background:rgba(255,255,255,.07);border-color:var(--line-strong)}
+    .account{font-size:.82rem;font-weight:700}.thread{padding:28px;overflow:auto;display:flex;flex-direction:column;gap:18px}.hero-line{display:flex;align-items:end;justify-content:space-between;gap:16px;padding-bottom:8px}
+    .hero-line h2{margin:0;font-size:clamp(1.3rem,2vw,1.85rem)}.hero-line span{color:var(--muted);font-size:.9rem}
+    .message{max-width:min(820px,86%);display:grid;gap:8px;animation:fadeUp 380ms ease both}.message.user{margin-left:auto}.meta{color:var(--muted);font-size:.8rem;letter-spacing:.04em}
+    .body{padding:16px 18px;border-radius:22px;border:1px solid var(--line);line-height:1.65;background:var(--bubble-assistant)}.message.user .body{background:linear-gradient(180deg,#25282d,#1a1c20)}
+    .composer{padding:18px 22px 22px;border-top:1px solid var(--line);background:rgba(10,11,12,.84)} .composer-bar{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+    .ghost,.send{height:48px;border-radius:16px;border:1px solid var(--line);padding:0 16px;color:var(--text);background:rgba(255,255,255,.04);cursor:pointer}.send{border:0;background:linear-gradient(180deg,#eceff3,#aeb4be);color:#090a0b;font-weight:700}
+    input{width:100%;border:0;outline:none;background:transparent;color:var(--text);font-size:1rem}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}} @media (max-width:1080px){.layout{grid-template-columns:1fr}.rail,.sidebar{display:none}.main{padding:12px}.frame{min-height:calc(100vh - 24px)}.composer-bar{grid-template-columns:1fr auto}.ghost{display:none}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="rail"><div class="mark">MR</div><button class="active" aria-label="Inbox">+</button><button aria-label="Search">&#9675;</button><button aria-label="Pinned">&#9733;</button></aside>
+    <aside class="sidebar">
+      <div><h1>Midnight Rail</h1><p>Sharper, quieter structure for ongoing client and assistant conversations.</p></div>
+      <div><div class="section-label">Menu</div><a class="active" href="#">Open threads<small>12 active conversations</small></a><a href="#">Knowledge base<small>Specs, decisions, transcripts</small></a><a href="#">Shared assets<small>Attachments and exports</small></a></div>
+      <div><div class="section-label">Pinned</div><a href="#">Studio launch notes<small>Last updated 18 min ago</small></a><a href="#">Q2 design system review<small>Ready for approval</small></a></div>
+    </aside>
+    <main class="main">
+      <section class="frame">
+        <header class="topbar"><div class="chips"><button class="chip active">Conversation</button><button class="chip">Summary</button><button class="chip">Settings</button></div><div class="account">UR</div></header>
+        <div class="thread" id="chat2">
+          <div class="hero-line"><h2>Studio launch review</h2><span>Focused mode</span></div>
+          <article class="message assistant"><div class="meta">Assistant · 10:02</div><div class="body">The structure is clean. I would keep the top navigation minimal and let the conversation column carry most of the visual weight.</div></article>
+          <article class="message user"><div class="meta">You · 10:05</div><div class="body">I also need the side menu to feel lighter. No loud icons, no bright accents, just a calm professional shell around the chat.</div></article>
+          <article class="message assistant"><div class="meta">Assistant · 10:06</div><div class="body">Then a narrow rail for utility and a wider textual sidebar works well. It keeps navigation legible without turning the page into a dashboard.</div></article>
+        </div>
+        <footer class="composer"><div class="composer-bar"><button class="ghost" type="button">Attach</button><input id="prompt2" type="text" placeholder="Type into the thread..." /><button class="send" id="send2" type="button">Reply</button></div></footer>
+      </section>
+    </main>
+  </div>
+  <script>
+    (function(){const chat=document.getElementById("chat2");const input=document.getElementById("prompt2");const button=document.getElementById("send2");function send(){const value=input.value.trim();if(!value)return;const node=document.createElement("article");node.className="message user";node.innerHTML='<div class="meta">You · Now</div><div class="body"></div>';node.querySelector(".body").textContent=value;chat.appendChild(node);chat.scrollTop=chat.scrollHeight;input.value="";}button.addEventListener("click",send);input.addEventListener("keydown",function(event){if(event.key==="Enter")send();});})();
+  </script>
+</body>
+</html>

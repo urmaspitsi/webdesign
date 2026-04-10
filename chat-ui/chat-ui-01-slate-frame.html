@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Slate Frame dark chat UI sample with an elegant sidebar, top bar, and conversational layout." />
+  <title>Chat UI 01 - Slate Frame</title>
+  <style>
+    :root { --bg:#0a0a0b; --panel:#111214; --panel-2:#17181b; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.13); --text:#f2f3f5; --muted:#94979d; --soft:#cfd2d8; --assistant:#141518; --shadow:0 20px 60px rgba(0,0,0,.45); --radius-xl:28px; --sidebar-width:272px; font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:radial-gradient(circle at top left, rgba(255,255,255,.06), transparent 30%),linear-gradient(180deg,#060607 0%,#0c0d0f 100%);color:var(--text)}
+    .app{min-height:100vh;display:grid;grid-template-columns:var(--sidebar-width) 1fr}
+    .sidebar{padding:24px 18px;background:linear-gradient(180deg,rgba(20,21,24,.96),rgba(12,13,15,.98));border-right:1px solid var(--line);display:flex;flex-direction:column;gap:20px}
+    .brand{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 18px;border-bottom:1px solid var(--line)}
+    .brand strong{display:block;font-size:1rem;letter-spacing:.08em;text-transform:uppercase}
+    .brand span{color:var(--muted);font-size:.78rem}
+    .brand-badge{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(180deg,#2a2d31,#18191c);border:1px solid var(--line);color:var(--soft);font-weight:700}
+    .nav-group{display:grid;gap:8px}
+    .nav-label{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;padding:0 12px}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;color:var(--soft);text-decoration:none;border:1px solid transparent;transition:transform 180ms ease,border-color 180ms ease,background 180ms ease}
+    .nav-item:hover,.nav-item.active{transform:translateX(2px);border-color:var(--line);background:rgba(255,255,255,.04)}
+    .nav-item.active{color:var(--text)}
+    .nav-dot{width:9px;height:9px;border-radius:999px;background:linear-gradient(180deg,#9ea3ad,#5c6068);box-shadow:0 0 0 4px rgba(255,255,255,.03)}
+    .sidebar-card{margin-top:auto;padding:16px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line)}
+    .sidebar-card p{margin:6px 0 0;color:var(--muted);line-height:1.5;font-size:.92rem}
+    .workspace{padding:18px}
+    .shell{min-height:calc(100vh - 36px);background:linear-gradient(180deg,rgba(18,19,21,.98),rgba(11,11,12,.98));border:1px solid var(--line);border-radius:var(--radius-xl);box-shadow:var(--shadow);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+    .topbar{height:72px;padding:0 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .topbar-menu{display:flex;gap:10px;flex-wrap:wrap}
+    .topbar-menu button{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--soft);padding:10px 14px;border-radius:999px;cursor:pointer}
+    .topbar-menu button.active{color:var(--text);background:rgba(255,255,255,.08);border-color:var(--line-strong)}
+    .account{width:42px;height:42px;border-radius:16px;background:linear-gradient(180deg,#292b30,#17181b);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;color:var(--text)}
+    .chat{padding:28px 28px 20px;overflow:auto;display:flex;flex-direction:column;gap:18px}
+    .date-divider{align-self:center;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+    .message{max-width:min(760px,84%);display:grid;gap:8px;animation:rise 420ms ease both}
+    .message.user{margin-left:auto}
+    .meta{font-size:.8rem;color:var(--muted);display:flex;gap:10px;align-items:center}
+    .bubble{padding:16px 18px;border-radius:20px;line-height:1.6;border:1px solid var(--line);background:var(--assistant);color:var(--soft)}
+    .message.user .bubble{background:linear-gradient(180deg,#25282d,#1b1d21);color:var(--text)}
+    .composer{padding:18px 24px 24px;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(17,18,20,.8),rgba(10,11,12,.95))}
+    .composer-shell{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+    .composer input{border:0;outline:none;background:transparent;color:var(--text);font-size:.98rem;padding:12px 14px}
+    .composer button{border:0;border-radius:16px;background:linear-gradient(180deg,#f0f1f3,#b7bcc6);color:#0b0c0e;padding:0 18px;font-weight:700;cursor:pointer}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @media (max-width:980px){.app{grid-template-columns:1fr}.sidebar{display:none}.workspace{padding:12px}.shell{min-height:calc(100vh - 24px)}.message{max-width:100%}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div><strong>Northline</strong><span>Private workspace</span></div><div class="brand-badge">N</div></div>
+      <div class="nav-group"><div class="nav-label">Menu</div><a class="nav-item active" href="#"><span class="nav-dot"></span>Inbox</a><a class="nav-item" href="#"><span class="nav-dot"></span>Search</a><a class="nav-item" href="#"><span class="nav-dot"></span>Shared Files</a><a class="nav-item" href="#"><span class="nav-dot"></span>Automations</a></div>
+      <div class="nav-group"><div class="nav-label">Recent</div><a class="nav-item" href="#"><span class="nav-dot"></span>Brand refresh brief</a><a class="nav-item" href="#"><span class="nav-dot"></span>Weekly planning notes</a></div>
+      <div class="sidebar-card"><strong>Quiet mode enabled</strong><p>Subtle contrast, disciplined spacing, and fewer elements competing for focus.</p></div>
+    </aside>
+    <main class="workspace">
+      <section class="shell">
+        <header class="topbar"><div class="topbar-menu"><button class="active">Chat</button><button>Threads</button><button>Knowledge</button></div><div class="account">UA</div></header>
+        <div class="chat" id="chat">
+          <div class="date-divider">Today</div>
+          <article class="message assistant"><div class="meta"><span>Assistant</span><span>09:14</span></div><div class="bubble">I drafted a simplified rollout for the launch page. It keeps the structure minimal and puts more weight on typography and hierarchy.</div></article>
+          <article class="message user"><div class="meta"><span>You</span><span>09:16</span></div><div class="bubble">Keep it darker and more restrained. I want fewer colors, cleaner spacing, and a tone that feels premium rather than flashy.</div></article>
+          <article class="message assistant"><div class="meta"><span>Assistant</span><span>09:17</span></div><div class="bubble">Understood. I would reduce the palette to graphite, slate, and near-black surfaces, then use one bright control only for the send action and key focus states.</div></article>
+        </div>
+        <footer class="composer"><div class="composer-shell"><input id="prompt1" type="text" placeholder="Write a message..." /><button id="send1" type="button">Send</button></div></footer>
+      </section>
+    </main>
+  </div>
+  <script>
+    (function(){const input=document.getElementById("prompt1");const button=document.getElementById("send1");const chat=document.getElementById("chat");function addMessage(){const text=input.value.trim();if(!text)return;const article=document.createElement("article");article.className="message user";article.innerHTML='<div class="meta"><span>You</span><span>Now</span></div><div class="bubble"></div>';article.querySelector(".bubble").textContent=text;chat.appendChild(article);chat.scrollTop=chat.scrollHeight;input.value="";}button.addEventListener("click",addMessage);input.addEventListener("keydown",function(event){if(event.key==="Enter")addMessage();});})();
+  </script>
+</body>
+</html>

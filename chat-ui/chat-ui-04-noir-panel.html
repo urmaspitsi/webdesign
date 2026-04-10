@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Noir Panel is a denser dark chat UI with grayscale panels, compact navigation, and a professional workspace feel." />
+  <title>Chat UI 04 - Noir Panel</title>
+  <style>
+    :root{--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);--text:#eef0f2;--muted:#8b9099;--bubble-a:#121316;font-family:"Segoe UI",Arial,sans-serif}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:linear-gradient(180deg,#040405 0%,#0b0b0c 100%);color:var(--text)}
+    .app{min-height:100vh;display:grid;grid-template-columns:312px 1fr}.sidebar{background:linear-gradient(180deg,rgba(14,15,17,.98),rgba(8,8,9,.98));border-right:1px solid var(--line);padding:18px;display:grid;grid-template-rows:auto auto 1fr auto;gap:18px}
+    .searchbox,.list-item,.meter{border:1px solid var(--line);background:rgba(255,255,255,.03)} .searchbox{border-radius:18px;padding:12px 14px;color:var(--muted)} .group-title{color:var(--muted);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;padding:0 4px}
+    .list{display:grid;gap:10px;align-content:start}.list-item{border-radius:18px;padding:14px;text-decoration:none;color:var(--text)} .list-item.active,.list-item:hover{border-color:var(--line-2);background:rgba(255,255,255,.06)}
+    .list-item strong{display:block;font-size:.95rem;font-weight:600}.list-item span{display:block;margin-top:6px;color:var(--muted);font-size:.84rem;line-height:1.45}
+    .meter{border-radius:20px;padding:16px}.meter-bar{height:8px;border-radius:999px;margin-top:12px;background:linear-gradient(90deg,#d6d9de 0%,#a1a8b2 61%,rgba(255,255,255,.12) 61%)}
+    .main{padding:16px}.frame{min-height:calc(100vh - 32px);border-radius:30px;background:linear-gradient(180deg,rgba(18,19,21,.98),rgba(9,10,11,.98));border:1px solid var(--line);overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)} .topbar nav{display:flex;gap:18px;flex-wrap:wrap}
+    .topbar a{text-decoration:none;color:var(--muted);font-size:.86rem}.topbar a.active{color:var(--text)} .account{width:44px;height:44px;border-radius:16px;border:1px solid var(--line);display:grid;place-items:center;background:linear-gradient(180deg,#23262a,#121316);font-weight:700}
+    .content{display:grid;grid-template-columns:1fr 260px;min-height:0}.chat{padding:24px;overflow:auto;display:grid;gap:16px;align-content:start;border-right:1px solid var(--line)}
+    .message{max-width:min(720px,90%);display:grid;gap:6px;animation:popIn 360ms ease both}.message.user{margin-left:auto}.meta{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .bubble{padding:15px 17px;border-radius:20px;border:1px solid var(--line);line-height:1.6;background:var(--bubble-a)}.message.user .bubble{background:linear-gradient(180deg,#25282d,#1b1d21)}
+    .inspector{padding:24px 20px;display:grid;align-content:start;gap:16px;background:rgba(255,255,255,.02)} .panel{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+    .panel h2{margin:0 0 8px;font-size:.94rem}.panel p,.panel li{margin:0;color:var(--muted);line-height:1.5;font-size:.88rem}.panel ul{margin:0;padding-left:18px}
+    .composer{padding:18px 22px 22px;border-top:1px solid var(--line)} .composer form{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+    .composer input{border:0;outline:none;background:transparent;color:var(--text);font-size:.96rem;padding:12px 14px}.composer button{border:0;border-radius:15px;padding:0 18px;background:linear-gradient(180deg,#eef1f5,#adb3bc);color:#0a0b0c;font-weight:700;cursor:pointer}
+    @keyframes popIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}} @media (max-width:1100px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:12px}.content{grid-template-columns:1fr}.chat{border-right:0}.inspector{display:none}.frame{min-height:calc(100vh - 24px)}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="searchbox">Search conversations</div>
+      <div class="group-title">Menu</div>
+      <div class="list"><a class="list-item active" href="#"><strong>Client chat</strong><span>Live thread with current decisions and generated drafts.</span></a><a class="list-item" href="#"><strong>Project archive</strong><span>Earlier conversations, summaries, and exported transcripts.</span></a><a class="list-item" href="#"><strong>Shared prompts</strong><span>Reusable instructions for team workflows.</span></a></div>
+      <div></div>
+      <div class="meter"><strong>Workspace focus</strong><div class="meter-bar"></div></div>
+    </aside>
+    <main class="main">
+      <section class="frame">
+        <header class="topbar"><nav><a class="active" href="#">Chat</a><a href="#">Activity</a><a href="#">Files</a></nav><div class="account">UP</div></header>
+        <div class="content">
+          <div class="chat" id="chat4">
+            <article class="message assistant"><div class="meta">Assistant · 14:02</div><div class="bubble">This version leans more operational. The sidebar is denser, but the surfaces remain subdued so the interface still feels calm.</div></article>
+            <article class="message user"><div class="meta">You · 14:05</div><div class="bubble">That works for productivity. I still want the top bar minimal and the overall page to stay elegant rather than technical.</div></article>
+            <article class="message assistant"><div class="meta">Assistant · 14:06</div><div class="bubble">Then the chrome should stay thin, monochrome, and precise. Dense information can still feel refined if the borders are quiet and spacing is consistent.</div></article>
+          </div>
+          <aside class="inspector"><section class="panel"><h2>Thread</h2><p>Design direction review for the chat workspace shell.</p></section><section class="panel"><h2>Checklist</h2><ul><li>Dark mode only</li><li>Minimal color use</li><li>Clean message hierarchy</li></ul></section></aside>
+        </div>
+        <footer class="composer"><form id="form4"><input id="prompt4" type="text" placeholder="Message the assistant..." /><button type="submit">Send</button></form></footer>
+      </section>
+    </main>
+  </div>
+  <script>
+    (function(){const form=document.getElementById("form4");const input=document.getElementById("prompt4");const chat=document.getElementById("chat4");form.addEventListener("submit",function(event){event.preventDefault();const value=input.value.trim();if(!value)return;const article=document.createElement("article");article.className="message user";article.innerHTML='<div class="meta">You · Now</div><div class="bubble"></div>';article.querySelector(".bubble").textContent=value;chat.appendChild(article);chat.scrollTop=chat.scrollHeight;input.value="";});})();
+  </script>
+</body>
+</html>

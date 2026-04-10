@@ -1,42 +1,68 @@
 window.projectCatalog = {
   slug: "chat-ui",
   title: "Chat UI",
-  description: "A chat interface section scaffolded for future conversation design experiments.",
+  description: "Five dark, elegant, single-file chat interface studies built for quick comparison.",
   hero: {
     kicker: "Topic Folder",
-    title: "A chat interface section scaffolded for future conversation design experiments.",
+    title: "Five restrained dark-mode chat UI samples with minimal chrome and polished hierarchy.",
     text:
-      "The folder already has its own GitHub Pages entry point and uses the same reusable card system as the rest of the site. Add standalone chat interface files here as the collection grows.",
+      "Each sample is a standalone HTML file with sidebar navigation, a lean top bar, an account affordance, and a conversation view. The palette stays deliberately tight around graphite, charcoal, and blackened metal.",
     meta: [
-      "Index page in place",
-      "Reusable card system wired",
-      "Ready for new entries"
+      "5 standalone HTML files",
+      "Dark grayscale palette",
+      "Lightweight and copy-ready"
     ]
   },
   sections: [
     {
-      title: "Upcoming Chat UI Work",
+      title: "Published Samples",
       description:
-        "This section is intentionally ready before the first chat interface ships, so the overall information architecture stays stable as new categories are added.",
-      note: "0 published entries",
+        "Compare different ways to handle structure, contrast, spacing, and message treatment while keeping the same core chat app requirements.",
+      note: "5 published entries",
       items: [
         {
-          title: "Chat UI Collection",
-          visualTitle: "Coming Soon",
-          eyebrow: "Section Placeholder",
-          badge: "Next",
+          title: "Chat UI 01",
+          visualTitle: "Slate Frame",
+          eyebrow: "Quiet Structure",
           description:
-            "Use this folder for messaging layouts, assistant interfaces, or conversational interaction studies. Each future item should remain a standalone HTML file linked from this index.",
-          tags: ["Scaffolded", "Ready for content", "Chat UI"],
-          href: "../",
-          linkLabel: "Back to home",
-          secondaryHref: "../landingpages/",
-          secondaryLabel: "View landing pages",
-          accent: "linear-gradient(145deg, #4f8c63, #23463a)"
+            "A balanced workspace with brushed graphite panels, soft dividers, and subtly elevated bubbles.",
+          href: "chat-ui-01-slate-frame.html"
+        },
+        {
+          title: "Chat UI 02",
+          visualTitle: "Midnight Rail",
+          eyebrow: "Sharp Contrast",
+          description:
+            "A stronger black-and-steel treatment with a narrow rail sidebar and crisp, editorial spacing.",
+          href: "chat-ui-02-midnight-rail.html"
+        },
+        {
+          title: "Chat UI 03",
+          visualTitle: "Obsidian Desk",
+          eyebrow: "Wide Canvas",
+          description:
+            "A broader desktop feel with generous margins, thin hairlines, and a premium command-surface mood.",
+          href: "chat-ui-03-obsidian-desk.html"
+        },
+        {
+          title: "Chat UI 04",
+          visualTitle: "Noir Panel",
+          eyebrow: "Dense Utility",
+          description:
+            "A compact professional layout with denser navigation and precise message grouping for productivity use.",
+          href: "chat-ui-04-noir-panel.html"
+        },
+        {
+          title: "Chat UI 05",
+          visualTitle: "Carbon Window",
+          eyebrow: "Soft Depth",
+          description:
+            "A calmer glass-dark approach that keeps the palette minimal while introducing smoother depth and motion.",
+          href: "chat-ui-05-carbon-window.html"
         }
       ]
     }
   ],
   footerNote:
-    "To extend this folder later, add new standalone chat UI HTML files here and register them in chat-ui/catalog.config.js."
+    "Each entry is intentionally standalone so you can open, copy, and compare them without dependencies."
 };
