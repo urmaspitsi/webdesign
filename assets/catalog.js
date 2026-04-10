@@ -1,5 +1,12 @@
 (function () {
   var HOME_FOLDER_CARD_ACCENT = "linear-gradient(145deg, #3f7b74, #173b39)";
+  var HOME_FOLDER_CARD_THEME = {
+    panelBackground: "linear-gradient(180deg, #2e2a27, #262320)",
+    panelBorder: "rgba(255, 255, 255, 0.1)",
+    panelShadow: "0 18px 50px rgba(0, 0, 0, 0.24)",
+    textColor: "#f3efe8",
+    mutedColor: "#b8aea3"
+  };
   var FOLDER_ITEM_CARD_VISUAL_ACCENT = "linear-gradient(180deg, #2d2d2d 0%, #151515 100%)";
 
   function createElement(tagName, className, text) {
@@ -408,6 +415,15 @@
 
   function projectToCard(project, cardLinkLabel, options) {
     var settings = options || {};
+    var theme = {};
+
+    Object.keys(project.cardTheme || {}).forEach(function (key) {
+      theme[key] = project.cardTheme[key];
+    });
+
+    Object.keys(settings.cardTheme || {}).forEach(function (key) {
+      theme[key] = settings.cardTheme[key];
+    });
 
     return {
       title: project.title,
@@ -419,7 +435,7 @@
       href: project.href,
       linkLabel: cardLinkLabel || "Open section",
       accent: settings.accent || project.accent,
-      cardTheme: project.cardTheme
+      cardTheme: theme
     };
   }
 
@@ -457,7 +473,8 @@
           items: projects.map(function (project) {
             return projectToCard(project, "Open section", {
               includeTags: false,
-              accent: HOME_FOLDER_CARD_ACCENT
+              accent: HOME_FOLDER_CARD_ACCENT,
+              cardTheme: HOME_FOLDER_CARD_THEME
             });
           })
         }

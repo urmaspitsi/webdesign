@@ -177,6 +177,14 @@ test("home cards share one accent, use folder titles, and do not show eyebrow la
       "linear-gradient(145deg, #3f7b74, #173b39)"
     );
   });
+  cards.forEach(function (card) {
+    assert.equal(
+      card.style.getPropertyValue("--card-panel-bg"),
+      "linear-gradient(180deg, #2e2a27, #262320)"
+    );
+    assert.equal(card.style.getPropertyValue("--card-ink"), "#f3efe8");
+    assert.equal(card.style.getPropertyValue("--card-muted"), "#b8aea3");
+  });
 });
 
 test("project pages remove hero kicker/meta and hide item tag pills", async function () {
