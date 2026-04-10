@@ -1,4 +1,7 @@
 (function () {
+  var HOME_FOLDER_CARD_ACCENT = "linear-gradient(145deg, #3f7b74, #173b39)";
+  var FOLDER_ITEM_CARD_VISUAL_ACCENT = "linear-gradient(180deg, #2d2d2d 0%, #151515 100%)";
+
   function createElement(tagName, className, text) {
     var element = document.createElement(tagName);
 
@@ -265,7 +268,7 @@
       tags: settings.includeTags === false ? [] : project.tags || [],
       href: project.href,
       linkLabel: cardLinkLabel || "Open section",
-      accent: project.accent,
+      accent: settings.accent || project.accent,
       cardTheme: project.cardTheme
     };
   }
@@ -302,7 +305,10 @@
             "Browse by topic. Each card links to a dedicated section page that can grow independently while staying easy to publish and maintain.",
           note: projects.length + " sections available",
           items: projects.map(function (project) {
-            return projectToCard(project, "Open section", { includeTags: false });
+            return projectToCard(project, "Open section", {
+              includeTags: false,
+              accent: HOME_FOLDER_CARD_ACCENT
+            });
           })
         }
       ]
@@ -330,6 +336,24 @@
       var nextSection = {};
       Object.keys(section).forEach(function (key) {
         nextSection[key] = section[key];
+      });
+      nextSection.items = (section.items || []).map(function (item) {
+        var nextItem = {};
+        var nextTheme = {};
+
+        Object.keys(item).forEach(function (key) {
+          nextItem[key] = item[key];
+        });
+
+        Object.keys(item.cardTheme || {}).forEach(function (key) {
+          nextTheme[key] = item.cardTheme[key];
+        });
+
+        nextItem.accent = FOLDER_ITEM_CARD_VISUAL_ACCENT;
+        nextTheme.visualBackground = FOLDER_ITEM_CARD_VISUAL_ACCENT;
+        nextItem.cardTheme = nextTheme;
+
+        return nextItem;
       });
       nextSection.hideHeader = true;
       return nextSection;

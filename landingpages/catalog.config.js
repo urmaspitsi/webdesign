@@ -136,19 +136,19 @@ window.projectCatalog = {
             visualColor: "#fff4ea",
             visualTitleFont: "Georgia, \"Times New Roman\", serif",
             visualTitleWeight: "700",
-            panelBackground: "linear-gradient(180deg, #221311, #120b0a)",
-            panelBorder: "rgba(255,255,255,0.08)",
-            textColor: "#f6e7df",
-            mutedColor: "#c9aaa0",
+            panelBackground: "radial-gradient(1000px 600px at 20% 0%, rgba(255,255,255,.06), transparent 60%), radial-gradient(700px 500px at 85% 20%, rgba(255,255,255,.04), transparent 55%), #0b0c0f",
+            panelBorder: "rgba(255,255,255,.08)",
+            textColor: "#e7e9ee",
+            mutedColor: "#a7adbb",
             tagBackground: "rgba(255,255,255,0.06)",
             tagColor: "#f0cbbd",
             linkBackground: "#f3dfd4",
             linkColor: "#301818",
             badgeBackground: "rgba(255,255,255,0.1)",
             badgeColor: "#fff4ea",
-            bodyTitleFont: "Georgia, \"Times New Roman\", serif",
+            bodyTitleFont: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
             bodyTitleWeight: "700",
-            bodyFont: "\"Segoe UI\", Arial, sans-serif"
+            bodyFont: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\""
           }
         },
         {
@@ -166,19 +166,19 @@ window.projectCatalog = {
             visualBackground: "linear-gradient(145deg, #c77f4a, #6a3520)",
             visualColor: "#fff4e6",
             visualTitleFont: "Georgia, \"Times New Roman\", serif",
-            panelBackground: "linear-gradient(180deg, #25140d, #150b07)",
+            panelBackground: "radial-gradient(1200px 600px at 18% -10%, rgba(255,255,255,.06), transparent 60%), radial-gradient(900px 500px at 95% 0%, rgba(255,255,255,.035), transparent 55%), #0b0c0f",
             panelBorder: "rgba(255,255,255,0.08)",
-            textColor: "#f6e7da",
-            mutedColor: "#cfa88f",
+            textColor: "#e8e9ee",
+            mutedColor: "#a5a8b3",
             tagBackground: "rgba(255,255,255,0.06)",
             tagColor: "#f2d0ba",
             linkBackground: "#f2e0d2",
             linkColor: "#6a3520",
             badgeBackground: "rgba(255,255,255,0.1)",
             badgeColor: "#fff4e6",
-            bodyTitleFont: "Georgia, \"Times New Roman\", serif",
+            bodyTitleFont: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
             bodyTitleWeight: "700",
-            bodyFont: "\"Segoe UI\", Arial, sans-serif"
+            bodyFont: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\""
           }
         },
         {
