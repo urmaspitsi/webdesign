@@ -18,7 +18,7 @@ window.projectCatalog = {
       title: "Published Samples",
       description:
         "Compare different ways to handle structure, contrast, spacing, and message treatment while keeping the same core chat app requirements.",
-      note: "5 published entries",
+      note: "6 published entries",
       items: [
         {
           title: "Chat UI 01",
@@ -59,6 +59,14 @@ window.projectCatalog = {
           description:
             "A calmer glass-dark approach that keeps the palette minimal while introducing smoother depth and motion.",
           href: "chat-ui-05-carbon-window.html"
+        },
+        {
+          title: "Chat UI 06",
+          visualTitle: "Stone Atelier",
+          eyebrow: "Warm Contrast",
+          description:
+            "A lighter warm grey-brown interpretation of the obsidian desk concept with clearer tonal separation.",
+          href: "chat-ui-06-stone-atelier.html"
         }
       ]
     }
