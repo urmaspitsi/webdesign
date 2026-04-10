@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vivid dark item gallery with stronger product UI controls." />
+  <title>Spectrum Shelf</title>
+  <style>
+    :root {
+      --bg: #06080c; --ink: #edf4ff; --muted: #8da2be; --line: rgba(255,255,255,0.08); --cyan: #48e7ff; --lime: #b8ff5f; --violet: #8b74ff;
+      --shadow: 0 24px 70px rgba(0,0,0,0.4); color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink);
+      background: radial-gradient(circle at 10% 0%, rgba(72,231,255,0.16), transparent 26%), radial-gradient(circle at 90% 10%, rgba(139,116,255,0.18), transparent 26%), linear-gradient(180deg, #0d131b, var(--bg));
+    }
+    .app { display: grid; grid-template-columns: 258px 1fr; min-height: 100vh; }
+    .side {
+      background: linear-gradient(180deg, rgba(8,11,15,0.98), rgba(7,9,12,0.92)); border-right: 1px solid var(--line); padding: 24px 18px; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 18px;
+    }
+    .stamp, .status div, .hero aside, .card, .toolbar { box-shadow: var(--shadow); }
+    .stamp { border: 1px solid var(--line); border-radius: 22px; padding: 14px 16px; background: rgba(255,255,255,0.03); }
+    .stamp small { display: block; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.68rem; margin-bottom: 8px; }
+    .nav, .status { display: grid; gap: 8px; }
+    .nav a, .status div, .toolbar button, .action button { text-decoration: none; color: inherit; font: inherit; }
+    .nav a { padding: 12px 14px; border-radius: 16px; color: var(--muted); transition: 160ms ease; }
+    .nav a:hover, .nav a.active { color: var(--ink); background: linear-gradient(135deg, rgba(72,231,255,0.18), rgba(139,116,255,0.1)); }
+    .status div { border: 1px solid rgba(255,255,255,0.06); border-radius: 18px; padding: 14px; background: rgba(255,255,255,0.03); color: var(--muted); }
+    .status strong { display: block; color: var(--ink); font-size: 1.2rem; margin-bottom: 6px; }
+    .main { padding: 18px; min-width: 0; }
+    .toolbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 14px; border: 1px solid var(--line); background: rgba(11,15,20,0.8); border-radius: 24px;
+      padding: 14px 16px; position: sticky; top: 14px; z-index: 20; backdrop-filter: blur(14px);
+    }
+    .toolbar .menu { display: flex; gap: 10px; flex-wrap: wrap; }
+    .toolbar button { border: 0; cursor: pointer; background: rgba(255,255,255,0.04); color: var(--muted); padding: 10px 14px; border-radius: 999px; }
+    .toolbar button.active { color: #031017; background: linear-gradient(135deg, var(--cyan), #b4f8ff); }
+    .profile {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.12); background: linear-gradient(135deg, #202d3a, #0d1318); font-weight: 700;
+    }
+    .hero { padding: 30px 4px 20px; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 22px; align-items: center; }
+    h1 { margin: 0; font-size: clamp(2.5rem, 4vw, 4.5rem); letter-spacing: -0.05em; line-height: 0.94; max-width: 10ch; }
+    .hero p { color: var(--muted); line-height: 1.65; max-width: 60ch; }
+    .hero aside { padding: 22px; border-radius: 28px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); }
+    .hero aside strong { display: inline-block; margin-bottom: 10px; color: var(--lime); }
+    .grid { display: grid; gap: 16px; max-height: calc(100vh - 180px); overflow: auto; padding-bottom: 28px; padding-right: 6px; }
+    .card {
+      display: grid; grid-template-columns: 210px 1fr 150px; gap: 18px; padding: 16px; border-radius: 26px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,21,28,0.96), rgba(9,12,16,0.98));
+    }
+    .thumb {
+      min-height: 164px; border-radius: 22px; padding: 16px; background: var(--thumb); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .thumb::after { content: ""; position: absolute; inset: auto -15% -20% auto; width: 120px; height: 120px; background: rgba(255,255,255,0.16); border-radius: 24px; transform: rotate(28deg); filter: blur(2px); }
+    .thumb span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.76); }
+    .thumb strong { font-size: 1.32rem; line-height: 1.04; max-width: 10ch; }
+    .details h2 { margin: 4px 0 8px; font-size: 1.3rem; }
+    .details p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .tags span { padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); font-size: 0.84rem; }
+    .action { display: grid; align-content: space-between; justify-items: end; gap: 12px; }
+    .action strong { font-size: 1.5rem; }
+    .action button { border: 0; cursor: pointer; border-radius: 18px; padding: 12px 16px; background: linear-gradient(135deg, var(--violet), #b2a6ff); color: white; box-shadow: 0 14px 28px rgba(139,116,255,0.28); }
+    @media (max-width: 1080px) { .app { grid-template-columns: 1fr; } .side { position: static; height: auto; } .hero { grid-template-columns: 1fr; } .grid { max-height: none; overflow: visible; } }
+    @media (max-width: 760px) { .toolbar { flex-direction: column; align-items: flex-start; } .card { grid-template-columns: 1fr; } .action { justify-items: start; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="stamp"><small>Signal Deck</small><strong>Spectrum Shelf</strong></div>
+      <nav class="nav"><a href="#" class="active">Browse All</a><a href="#">Hardware</a><a href="#">Interfaces</a><a href="#">Subscriptions</a><a href="#">Teams</a></nav>
+      <div class="status"><div><strong>124</strong>live items in review</div><div><strong>19</strong>priority artifacts this week</div></div>
+    </aside>
+    <main class="main">
+      <header class="toolbar"><div class="menu"><button class="active">Overview</button><button>Signals</button><button>Trending</button><button>Sync Queue</button></div><div class="profile">US</div></header>
+      <section class="hero"><div><h1>Dense enough for work, polished enough for a premium product.</h1><p>This variation leans more operational: sharper contrast, brighter accents, and tighter scan patterns for teams comparing modern artifacts, products, or active services.</p></div><aside><strong>Live mode</strong>Ideal for catalogs where vivid status cues and stronger action contrast need to coexist with a dark, professional surface.</aside></section>
+      <section class="grid">
+        <article class="card" style="--thumb: linear-gradient(165deg, #0f2430, #081018 58%, #2ad9f6);"><div class="thumb"><span>Interface</span><strong>Flux Command Pad</strong></div><div class="details"><h2>Flux Command Pad</h2><p>Compact orchestration surface for fast routing and scene recall, tuned for low-light production desks and polished app previews.</p><div class="tags"><span>Fast route</span><span>Low-light</span><span>Compact</span></div></div><div class="action"><strong>$340</strong><button>Inspect</button></div></article>
+        <article class="card" style="--thumb: linear-gradient(165deg, #1b1d39, #090b15 58%, #796bff);"><div class="thumb"><span>Service</span><strong>Violet Audit Sprint</strong></div><div class="details"><h2>Violet Audit Sprint</h2><p>Short-cycle review package for marketplace pages, component consistency, and friction mapping with an action-first punch list.</p><div class="tags"><span>48 hours</span><span>Friction map</span><span>Action list</span></div></div><div class="action"><strong>$860</strong><button>Inspect</button></div></article>
+        <article class="card" style="--thumb: linear-gradient(165deg, #1a2811, #0a1008 58%, #b7f45f);"><div class="thumb"><span>Product</span><strong>Lime Vector Rack</strong></div><div class="details"><h2>Lime Vector Rack</h2><p>Modular vertical mount system for creative tools and field accessories with low-profile fastening and silent rails.</p><div class="tags"><span>Modular</span><span>Silent rails</span><span>Tool-ready</span></div></div><div class="action"><strong>$180</strong><button>Inspect</button></div></article>
+        <article class="card" style="--thumb: linear-gradient(165deg, #2a170f, #0f0a08 58%, #ff9a53);"><div class="thumb"><span>Collection</span><strong>Cinder Sample Pack</strong></div><div class="details"><h2>Cinder Sample Pack</h2><p>A tightly edited group of launch assets, interaction previews, and dark-surface references for rapid experimentation.</p><div class="tags"><span>Sample pack</span><span>Launch assets</span><span>Rapid test</span></div></div><div class="action"><strong>$120</strong><button>Inspect</button></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".nav, .menu").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

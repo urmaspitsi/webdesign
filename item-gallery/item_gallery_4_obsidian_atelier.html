@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Serif-led elegant dark gallery for studio services and premium objects." />
+  <title>Obsidian Atelier</title>
+  <style>
+    :root {
+      --bg: #080706; --ink: #f4efe7; --muted: #b3a596; --line: rgba(255,255,255,0.08); --stone: #d7bf9d; --ember: #d77b51;
+      --shadow: 0 26px 72px rgba(0,0,0,0.42); color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink);
+      background: radial-gradient(circle at 12% 0%, rgba(215,123,81,0.14), transparent 28%), radial-gradient(circle at 85% 8%, rgba(215,191,157,0.12), transparent 24%), linear-gradient(180deg, #110d0b, var(--bg));
+    }
+    .shell { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+    .sidebar {
+      padding: 24px 18px; border-right: 1px solid var(--line); background: linear-gradient(180deg, rgba(12,10,8,0.98), rgba(7,6,5,0.95)); position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 18px;
+    }
+    .mark, .note, .atelier-box, .card, .topbar { box-shadow: var(--shadow); }
+    .mark { padding: 14px 16px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,0.03); font-family: Georgia, serif; }
+    .mark span { display: block; color: var(--stone); text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem; margin-bottom: 8px; }
+    .stack { display: grid; gap: 8px; }
+    .stack a, .tabs button, .booking { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .stack a { padding: 12px 14px; border-radius: 16px; color: var(--muted); }
+    .stack a.active, .stack a:hover { color: var(--ink); background: rgba(255,255,255,0.05); }
+    .note { margin-top: auto; padding: 18px; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid var(--line); color: var(--muted); line-height: 1.6; }
+    .main { padding: 20px; min-width: 0; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 14px; background: rgba(16,13,11,0.82); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 24px;
+      padding: 14px 18px; position: sticky; top: 14px; z-index: 10;
+    }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tabs button { padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.04); }
+    .tabs button.active { color: #1a120d; background: linear-gradient(135deg, var(--stone), #eed9bb); }
+    .account {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.12); background: linear-gradient(135deg, #34261d, #110d0a); font-family: Georgia, serif; font-weight: 700;
+    }
+    .lead { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; padding: 34px 4px 22px; align-items: end; }
+    .lead h1 { margin: 0 0 14px; font-family: Georgia, serif; font-size: clamp(2.7rem, 4vw, 4.8rem); line-height: 0.94; letter-spacing: -0.05em; max-width: 9ch; }
+    .lead p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
+    .atelier-box { padding: 24px; border-radius: 30px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)), linear-gradient(135deg, rgba(215,123,81,0.1), transparent 45%); }
+    .atelier-box strong { display: block; margin-bottom: 10px; color: var(--stone); letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.72rem; }
+    .feed { display: grid; gap: 18px; max-height: calc(100vh - 194px); overflow: auto; padding-right: 6px; padding-bottom: 30px; }
+    .card {
+      display: grid; grid-template-columns: 220px 1fr 140px; gap: 18px; padding: 18px; border-radius: 28px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(20,16,14,0.94), rgba(12,10,9,0.96));
+    }
+    .visual { min-height: 164px; border-radius: 22px; background: var(--art); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+    .visual span { color: rgba(255,255,255,0.72); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.72rem; }
+    .visual strong { font-family: Georgia, serif; font-size: 1.42rem; line-height: 1; max-width: 10ch; }
+    .body h2 { margin: 4px 0 10px; font-family: Georgia, serif; font-size: 1.4rem; }
+    .body p { margin: 0; color: var(--muted); line-height: 1.65; }
+    .traits { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .traits span { padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); color: #e7ddd1; font-size: 0.86rem; }
+    .cta-column { display: grid; justify-items: end; align-content: space-between; gap: 12px; }
+    .cta-column strong { font-family: Georgia, serif; font-size: 1.5rem; }
+    .booking { padding: 12px 18px; border-radius: 999px; color: #1b120d; background: linear-gradient(135deg, var(--ember), #f2ad84); box-shadow: 0 12px 28px rgba(215,123,81,0.26); }
+    @media (max-width: 1080px) { .shell { grid-template-columns: 1fr; } .sidebar { position: static; height: auto; } .lead { grid-template-columns: 1fr; } .feed { max-height: none; overflow: visible; } }
+    @media (max-width: 760px) { .topbar { flex-direction: column; align-items: flex-start; } .card { grid-template-columns: 1fr; } .cta-column { justify-items: start; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="mark"><span>Studio Ledger</span>Obsidian Atelier</div>
+      <nav class="stack"><a href="#" class="active">Selected Works</a><a href="#">Interior Objects</a><a href="#">Commissioned Services</a><a href="#">Consulting Retainers</a><a href="#">Archive</a></nav>
+      <div class="note">A darker, more artistic gallery direction suited for premium studios, design consultancies, or collectible service catalogs.</div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="tabs"><button class="active">Curated Floor</button><button>New Works</button><button>Private Commission</button><button>Seasonal</button></div><div class="account">OA</div></header>
+      <section class="lead"><div><h1>Studio-caliber presentation in a dark restrained shell.</h1><p>This sample pushes toward a more cultured mood: serif emphasis, stone and ember accents, quieter navigation, and enough structure to present luxury services and objects with confidence.</p></div><div class="atelier-box"><strong>Private Room</strong>Use this direction when the catalog should feel less like ecommerce and more like a carefully edited atelier selection.</div></section>
+      <section class="feed">
+        <article class="card" style="--art: linear-gradient(165deg, #2b1d16, #120d0b 58%, #c87b53);"><div class="visual"><span>Object</span><strong>Burnished Form Lamp</strong></div><div class="body"><h2>Burnished Form Lamp</h2><p>Bronze-toned sculptural light object with dimmed ambient spread, brushed detailing, and a gallery-minded silhouette.</p><div class="traits"><span>Gallery finish</span><span>Bronze tone</span><span>Sculptural</span></div></div><div class="cta-column"><strong>$520</strong><button class="booking">Reserve</button></div></article>
+        <article class="card" style="--art: linear-gradient(165deg, #241d18, #0f0c09 58%, #d3b280);"><div class="visual"><span>Service</span><strong>Stoneline Interior Review</strong></div><div class="body"><h2>Stoneline Interior Review</h2><p>Spatial styling and interface placement review for hospitality, studio, and showroom environments where atmosphere matters.</p><div class="traits"><span>Spatial review</span><span>Placement audit</span><span>Executive notes</span></div></div><div class="cta-column"><strong>$1,480</strong><button class="booking">Reserve</button></div></article>
+        <article class="card" style="--art: linear-gradient(165deg, #161b24, #0a0c10 58%, #7688a8);"><div class="visual"><span>Edition</span><strong>Slate Index Panels</strong></div><div class="body"><h2>Slate Index Panels</h2><p>A restrained set of material reference panels for dark environments, crafted for concept rooms and premium visual presentations.</p><div class="traits"><span>Material study</span><span>Presentation set</span><span>Dark palette</span></div></div><div class="cta-column"><strong>$175</strong><button class="booking">Reserve</button></div></article>
+        <article class="card" style="--art: linear-gradient(165deg, #172019, #0b0f0c 58%, #8eb487);"><div class="visual"><span>Retainer</span><strong>Evergreen Direction Desk</strong></div><div class="body"><h2>Evergreen Direction Desk</h2><p>Monthly creative oversight for premium collections, including hierarchy reviews, launch sequencing, and presentation alignment.</p><div class="traits"><span>Monthly retainer</span><span>Launch oversight</span><span>Creative direction</span></div></div><div class="cta-column"><strong>$2,600</strong><button class="booking">Reserve</button></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".stack, .tabs").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Luxury dark item gallery sample with boutique styling." />
+  <title>Velvet Commerce</title>
+  <style>
+    :root {
+      --bg: #090709; --sidebar: #110d10; --line: rgba(255,255,255,0.08); --text: #f6edf1; --muted: #b59ca7;
+      --accent: #ff6e91; --accent-2: #f0c58a; --shadow: 0 24px 70px rgba(0,0,0,0.42); color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: radial-gradient(circle at top right, rgba(255,110,145,0.16), transparent 25%), radial-gradient(circle at 15% 0%, rgba(240,197,138,0.14), transparent 30%), linear-gradient(180deg, #130f12 0%, var(--bg) 100%);
+      color: var(--text); min-height: 100vh;
+    }
+    .layout { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+    aside { padding: 28px 18px; background: linear-gradient(180deg, rgba(17,13,16,0.98), rgba(8,7,8,0.96)); border-right: 1px solid var(--line); position: sticky; top: 0; height: 100vh; }
+    .logo {
+      padding: 12px 16px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,0.03); font-family: Georgia, serif; line-height: 1.25; margin-bottom: 24px;
+    }
+    .logo span { display: block; color: var(--accent-2); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+    .side-nav, .filters { display: grid; gap: 10px; }
+    .side-nav a, .filters button, .top-nav button, .cta { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .side-nav a { padding: 12px 14px; border-radius: 16px; color: var(--muted); transition: 180ms ease; }
+    .side-nav a:hover, .side-nav a.active { background: rgba(255,255,255,0.05); color: var(--text); }
+    .section-label { margin: 24px 0 10px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
+    .filters button { text-align: left; padding: 10px 0; color: var(--muted); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .filters button:last-child { border-bottom: 0; }
+    .main { padding: 20px; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; background: rgba(18,14,18,0.8); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 24px;
+      padding: 14px 18px; position: sticky; top: 16px; z-index: 10; box-shadow: var(--shadow);
+    }
+    .top-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    .top-nav button { padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.04); }
+    .top-nav button.active { color: #220d16; background: linear-gradient(135deg, var(--accent-2), #f6d6ab); }
+    .avatar {
+      width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #3e2630, #120d10); border: 1px solid rgba(255,255,255,0.1); font-weight: 700;
+    }
+    .intro { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; padding: 32px 4px 24px; align-items: center; }
+    .intro h1 { margin: 0; font-family: Georgia, serif; font-size: clamp(2.6rem, 4vw, 4.4rem); line-height: 0.98; letter-spacing: -0.04em; max-width: 9ch; }
+    .intro p { color: var(--muted); max-width: 56ch; line-height: 1.7; }
+    .spotlight {
+      padding: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: 1px solid var(--line); border-radius: 30px; position: relative; overflow: hidden;
+    }
+    .spotlight::after { content: ""; position: absolute; width: 200px; height: 200px; right: -70px; top: -70px; border-radius: 50%; background: radial-gradient(circle, rgba(255,110,145,0.38), transparent 62%); }
+    .spotlight strong { display: block; margin-bottom: 10px; color: var(--accent-2); letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.74rem; }
+    .cards { display: grid; gap: 18px; max-height: calc(100vh - 196px); overflow: auto; padding-right: 6px; padding-bottom: 32px; }
+    .card {
+      display: grid; grid-template-columns: 240px 1fr 132px; gap: 20px; border: 1px solid var(--line); border-radius: 28px; padding: 18px;
+      background: linear-gradient(180deg, rgba(28,22,27,0.94), rgba(15,11,14,0.96)); box-shadow: var(--shadow); transition: transform 180ms ease, border-color 180ms ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .image { border-radius: 22px; min-height: 170px; padding: 18px; background: var(--bgart); display: flex; flex-direction: column; justify-content: space-between; }
+    .image span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.7); }
+    .image strong { font-size: 1.5rem; font-family: Georgia, serif; line-height: 1; }
+    .content h2 { margin: 4px 0 8px; font-family: Georgia, serif; font-size: 1.45rem; }
+    .content p { margin: 0; color: var(--muted); line-height: 1.65; }
+    .list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .list span { padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); color: #e8d8de; font-size: 0.88rem; }
+    .action { display: grid; justify-items: end; align-content: space-between; }
+    .action strong { font-size: 1.4rem; font-family: Georgia, serif; }
+    .cta { padding: 11px 18px; border-radius: 999px; color: #260d14; background: linear-gradient(135deg, var(--accent), #ff9eb6); box-shadow: 0 12px 28px rgba(255,110,145,0.24); }
+    @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } aside { position: static; height: auto; } .intro { grid-template-columns: 1fr; } .cards { max-height: none; overflow: visible; } }
+    @media (max-width: 760px) { .topbar { flex-direction: column; align-items: flex-start; } .card { grid-template-columns: 1fr; } .action { justify-items: start; gap: 14px; } }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="logo"><span>Boutique Layer</span>Velvet Commerce</div>
+      <nav class="side-nav"><a href="#" class="active">Featured</a><a href="#">Objects</a><a href="#">Packages</a><a href="#">Premium Services</a><a href="#">Archived</a></nav>
+      <div class="section-label">Refine</div>
+      <div class="filters"><button>High margin only</button><button>Limited release</button><button>Signature edits</button><button>Same-day review</button></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="top-nav"><button class="active">Curated</button><button>Best Sellers</button><button>Editor Picks</button><button>Limited</button></div><div class="avatar">UC</div></header>
+      <section class="intro"><div><h1>Luxury browsing without heavy chrome.</h1><p>A dark-mode catalog page with retail composure, warm metallic highlights, and enough structure to sell products, services, or creative editions professionally.</p></div><div class="spotlight"><strong>Salon Notes</strong>Featured layouts balance atmosphere with direct pricing, making the gallery feel premium without losing speed or readability.</div></section>
+      <section class="cards">
+        <article class="card" style="--bgart: linear-gradient(165deg, #2a1820, #100b0d 58%, #cf5a7f);"><div class="image"><span>Edition</span><strong>Rose Alloy Lamp</strong></div><div class="content"><h2>Rose Alloy Lamp</h2><p>Small-batch lighting piece with blush metallic surfaces, satin glow diffusion, and a sculpted weighted stem.</p><div class="list"><span>Limited batch</span><span>Interior object</span><span>Warm finish</span></div></div><div class="action"><strong>$390</strong><button class="cta">Preview</button></div></article>
+        <article class="card" style="--bgart: linear-gradient(165deg, #3d2b1d, #120d09 58%, #f0b35c);"><div class="image"><span>Service</span><strong>Goldline Styling Set</strong></div><div class="content"><h2>Goldline Styling Set</h2><p>Creative direction package for premium product visuals including framing, palette strategy, and market-facing art notes.</p><div class="list"><span>3 concepts</span><span>Direction deck</span><span>One week</span></div></div><div class="action"><strong>$1,250</strong><button class="cta">Preview</button></div></article>
+        <article class="card" style="--bgart: linear-gradient(165deg, #21142a, #100b12 58%, #9167ff);"><div class="image"><span>Product</span><strong>Plum Archive Case</strong></div><div class="content"><h2>Plum Archive Case</h2><p>Dark velvet composite storage case for collectible tools, finished with hidden seams and satin hardware.</p><div class="list"><span>Archive-ready</span><span>Matte hardware</span><span>Foam interior</span></div></div><div class="action"><strong>$210</strong><button class="cta">Preview</button></div></article>
+        <article class="card" style="--bgart: linear-gradient(165deg, #17201a, #0c0f0c 58%, #62cc8c);"><div class="image"><span>Package</span><strong>Emerald Concierge</strong></div><div class="content"><h2>Emerald Concierge</h2><p>Service layer for luxury launches, handling page polish, collection sequencing, and private pre-release presentation.</p><div class="list"><span>Launch support</span><span>Concierge review</span><span>Presentation-ready</span></div></div><div class="action"><strong>$1,780</strong><button class="cta">Preview</button></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".side-nav, .top-nav").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

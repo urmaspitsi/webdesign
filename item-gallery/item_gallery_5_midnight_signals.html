@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Matte-black dark gallery with luminous tech-oriented accents." />
+  <title>Midnight Signals</title>
+  <style>
+    :root {
+      --bg: #050608; --ink: #edf1f7; --muted: #99a5b8; --line: rgba(255,255,255,0.08); --teal: #52f5d2; --blue: #62a8ff; --orange: #ffa45b;
+      --shadow: 0 22px 64px rgba(0,0,0,0.44); color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink);
+      background: radial-gradient(circle at 12% 0%, rgba(82,245,210,0.14), transparent 28%), radial-gradient(circle at 88% 10%, rgba(98,168,255,0.14), transparent 26%), linear-gradient(180deg, #0c1015, var(--bg));
+    }
+    .frame { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+    .left {
+      padding: 22px 18px; border-right: 1px solid var(--line); background: linear-gradient(180deg, rgba(8,10,13,0.98), rgba(6,8,10,0.96));
+      position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 16px;
+    }
+    .lockup, .signals div, .summary, .card, .top { box-shadow: var(--shadow); }
+    .lockup { padding: 14px 16px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,0.03); }
+    .lockup small { display: block; color: var(--teal); text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem; margin-bottom: 8px; }
+    .lockup strong { font-size: 1.15rem; }
+    .menu, .signals { display: grid; gap: 8px; }
+    .menu a, .top button, .btn { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .menu a { padding: 12px 14px; border-radius: 16px; color: var(--muted); }
+    .menu a.active, .menu a:hover { color: var(--ink); background: rgba(255,255,255,0.05); }
+    .signals div { padding: 14px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color: var(--muted); }
+    .signals strong { display: block; color: var(--ink); margin-bottom: 6px; }
+    .main { padding: 18px; min-width: 0; }
+    .top {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; background: rgba(12,15,19,0.82); backdrop-filter: blur(14px); border: 1px solid var(--line);
+      border-radius: 24px; padding: 14px 16px; position: sticky; top: 14px; z-index: 12;
+    }
+    .top nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    .top button { padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.04); }
+    .top button.active { background: linear-gradient(135deg, var(--blue), #b9d7ff); color: #08111b; }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.12); background: linear-gradient(135deg, #1f2a38, #0a0d12); font-weight: 700;
+    }
+    .headline { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 22px; align-items: center; padding: 30px 4px 18px; }
+    .headline h1 { margin: 0 0 12px; font-size: clamp(2.5rem, 4vw, 4.6rem); line-height: 0.95; letter-spacing: -0.05em; max-width: 10ch; }
+    .headline p { margin: 0; max-width: 58ch; color: var(--muted); line-height: 1.65; }
+    .summary {
+      border: 1px solid var(--line); border-radius: 28px; padding: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)), linear-gradient(135deg, rgba(98,168,255,0.08), transparent 52%);
+    }
+    .summary strong { display: inline-block; margin-bottom: 10px; color: var(--teal); letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.72rem; }
+    .stream { display: grid; gap: 16px; max-height: calc(100vh - 182px); overflow: auto; padding-right: 6px; padding-bottom: 28px; }
+    .card {
+      display: grid; grid-template-columns: 220px 1fr 136px; gap: 18px; padding: 16px; border-radius: 26px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,20,25,0.96), rgba(9,11,14,0.98));
+    }
+    .media {
+      min-height: 164px; border-radius: 20px; background: var(--media); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+    }
+    .media::before { content: ""; position: absolute; inset: 18px auto auto 18px; width: 56px; height: 4px; border-radius: 999px; background: rgba(255,255,255,0.3); }
+    .media span { color: rgba(255,255,255,0.76); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.72rem; }
+    .media strong { font-size: 1.34rem; line-height: 1.02; max-width: 10ch; }
+    .copy h2 { margin: 4px 0 8px; font-size: 1.3rem; }
+    .copy p { margin: 0; color: var(--muted); line-height: 1.62; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .badges span { padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); font-size: 0.84rem; }
+    .side-action { display: grid; justify-items: end; align-content: space-between; gap: 12px; }
+    .side-action strong { font-size: 1.48rem; }
+    .btn { padding: 12px 16px; border-radius: 18px; color: #071118; background: linear-gradient(135deg, var(--teal), #b9fff1); box-shadow: 0 12px 26px rgba(82,245,210,0.22); }
+    @media (max-width: 1080px) { .frame { grid-template-columns: 1fr; } .left { position: static; height: auto; } .headline { grid-template-columns: 1fr; } .stream { max-height: none; overflow: visible; } }
+    @media (max-width: 760px) { .top { flex-direction: column; align-items: flex-start; } .card { grid-template-columns: 1fr; } .side-action { justify-items: start; } }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <aside class="left">
+      <div class="lockup"><small>System Shelf</small><strong>Midnight Signals</strong></div>
+      <nav class="menu"><a href="#" class="active">Signal Board</a><a href="#">Devices</a><a href="#">Services</a><a href="#">Bundles</a><a href="#">Monitors</a></nav>
+      <div class="signals"><div><strong>14 urgent</strong>Items with elevated team attention</div><div><strong>91% synced</strong>Catalog state across active surfaces</div></div>
+    </aside>
+    <main class="main">
+      <header class="top"><nav><button class="active">Live Catalog</button><button>Favorites</button><button>Scheduled</button><button>Archived</button></nav><div class="avatar">UM</div></header>
+      <section class="headline"><div><h1>Matte dark structure with brighter operational cues.</h1><p>A clean, professional gallery for catalogs that need more tech energy. Gray-black surfaces stay calm while teal and blue accents highlight state, action, and flow.</p></div><div class="summary"><strong>Operational Fit</strong>Useful for product catalogs, service lists, or creative inventories where modern status styling matters more than luxury editorial tone.</div></section>
+      <section class="stream">
+        <article class="card" style="--media: linear-gradient(165deg, #11211f, #09100f 58%, #41d8ba);"><div class="media"><span>Device</span><strong>Teal Beacon Dock</strong></div><div class="copy"><h2>Teal Beacon Dock</h2><p>Minimal charging and signal dock with a low-reflection finish, subtle status pulse, and matte aluminum body.</p><div class="badges"><span>Signal pulse</span><span>Matte body</span><span>Docking ready</span></div></div><div class="side-action"><strong>$240</strong><button class="btn">Open</button></div></article>
+        <article class="card" style="--media: linear-gradient(165deg, #142033, #0a0f18 58%, #5b9dff);"><div class="media"><span>Service</span><strong>Blueframe Sync Review</strong></div><div class="copy"><h2>Blueframe Sync Review</h2><p>Structured assessment of dashboard consistency, signal hierarchy, and responsive edge cases for live product surfaces.</p><div class="badges"><span>Responsive pass</span><span>Hierarchy map</span><span>Delivery memo</span></div></div><div class="side-action"><strong>$1,020</strong><button class="btn">Open</button></div></article>
+        <article class="card" style="--media: linear-gradient(165deg, #2f1b12, #100a07 58%, #ff9f54);"><div class="media"><span>Bundle</span><strong>Cinder Launch Pack</strong></div><div class="copy"><h2>Cinder Launch Pack</h2><p>A compact asset and interaction bundle for dark mode releases, product overviews, and technical showcase pages.</p><div class="badges"><span>Launch assets</span><span>Dark mode</span><span>Fast deploy</span></div></div><div class="side-action"><strong>$155</strong><button class="btn">Open</button></div></article>
+        <article class="card" style="--media: linear-gradient(165deg, #20252a, #0a0c0f 58%, #7c8794);"><div class="media"><span>Monitor</span><strong>Graphite Watch Tile</strong></div><div class="copy"><h2>Graphite Watch Tile</h2><p>Desktop status panel for active collections, tuned for dark rooms with low-clutter metrics and crisp threshold indicators.</p><div class="badges"><span>Status thresholds</span><span>Low clutter</span><span>Desktop ready</span></div></div><div class="side-action"><strong>$310</strong><button class="btn">Open</button></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".menu, .top nav").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>
