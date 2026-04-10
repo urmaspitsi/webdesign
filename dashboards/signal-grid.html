@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal Grid Dashboard</title>
+  <style>
+    :root { --bg:#09090a; --panel:#121214; --line:rgba(255,255,255,.07); --text:#efeff0; --muted:#8d9098; --soft:rgba(255,255,255,.04); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI",sans-serif; background:radial-gradient(circle at 100% 0%, rgba(255,255,255,.06), transparent 22%),linear-gradient(180deg, #0f0f11 0%, #070708 100%); color:var(--text); }
+    .shell { min-height:100vh; display:grid; grid-template-columns:232px 1fr; }
+    .sidebar { background:#050506; border-right:1px solid var(--line); padding:22px 16px; display:flex; flex-direction:column; gap:22px; }
+    .sidebar h1, .top h2, .module h3 { margin:0; font-family:Georgia,serif; font-weight:600; }
+    .nav { display:grid; gap:8px; }
+    .nav a { color:var(--muted); text-decoration:none; padding:11px 14px; border-radius:14px; transition:160ms ease; }
+    .nav a.active, .nav a:hover { background:var(--soft); color:var(--text); }
+    .aside-card { margin-top:auto; padding:16px; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--line); }
+    .main { padding:18px; }
+    .top { border:1px solid var(--line); background:rgba(14,14,16,.88); border-radius:24px; padding:18px 20px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .tabs { display:flex; gap:14px; flex-wrap:wrap; }
+    .tabs a { text-decoration:none; color:var(--muted); font-size:.92rem; }
+    .tabs a.active, .tabs a:hover { color:var(--text); }
+    .avatar { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg, #3d3d44, #141418); border:1px solid var(--line); font-weight:700; }
+    .board { margin-top:18px; display:grid; gap:18px; }
+    .lead { display:grid; grid-template-columns:1.35fr .9fr; gap:18px; }
+    .module { background:linear-gradient(180deg, rgba(20,20,23,.96), rgba(11,11,13,.96)); border:1px solid var(--line); border-radius:22px; padding:20px; }
+    .muted { color:var(--muted); }
+    .headline { font-size:2rem; line-height:1.15; margin:10px 0 12px; max-width:18ch; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .metric { padding:14px; border-radius:16px; background:var(--soft); border:1px solid var(--line); }
+    .metric strong { display:block; margin-top:6px; font-size:1.35rem; }
+    .columns { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+    .heat { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-top:18px; }
+    .heat div { aspect-ratio:1; border-radius:14px; background:linear-gradient(180deg, #efefef, #2a2a30); opacity:var(--alpha); }
+    .watchlist { display:grid; gap:12px; margin-top:16px; }
+    .row { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-radius:14px; background:var(--panel); border:1px solid var(--line); }
+    table { width:100%; border-collapse:collapse; margin-top:12px; }
+    th, td { text-align:left; padding:12px 0; border-bottom:1px solid var(--line); font-size:.9rem; }
+    .line-chart { margin-top:18px; width:100%; height:180px; }
+    @media (max-width:1080px) { .shell, .lead, .columns, .stats { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .shell { grid-template-columns:1fr; } .sidebar { display:none; } .main { padding:14px; } .heat { grid-template-columns:repeat(4,1fr); } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div><h1>Signal Grid</h1><p class="muted">Market intelligence</p></div>
+      <nav class="nav"><a class="active" href="#">Signals</a><a href="#">Streams</a><a href="#">Watchlist</a><a href="#">Orders</a><a href="#">Alerts</a></nav>
+      <div class="aside-card"><p class="muted">System load</p><h3 style="margin-top:8px;">Stable / 18ms</h3></div>
+    </aside>
+    <main class="main">
+      <header class="top">
+        <div><p class="muted" style="margin:0;">Command stream</p><h2 style="margin-top:4px;">Signal monitor</h2></div>
+        <nav class="tabs"><a href="#" class="active">Live</a><a href="#">Daily</a><a href="#">Comparatives</a><a href="#">Export</a></nav>
+        <div class="avatar">SG</div>
+      </header>
+      <section class="board">
+        <section class="lead">
+          <article class="module"><p class="muted" style="margin:0;">Current reading</p><div class="headline">Lower volatility, rising conviction, selective momentum.</div><p class="muted">The current session shows stronger institutional follow-through in large-cap names while defensive rotation remains limited to two sectors.</p></article>
+          <article class="module"><div class="stats"><div class="metric"><span class="muted">Signal score</span><strong>81</strong></div><div class="metric"><span class="muted">Momentum</span><strong>+2.7</strong></div><div class="metric"><span class="muted">Alerts</span><strong>12</strong></div></div></article>
+        </section>
+        <section class="columns">
+          <article class="module"><h3>Sector heatmap</h3><p class="muted">Intensity by participation and trend quality</p><div class="heat"><div style="--alpha:.95"></div><div style="--alpha:.55"></div><div style="--alpha:.72"></div><div style="--alpha:.48"></div><div style="--alpha:.88"></div><div style="--alpha:.38"></div><div style="--alpha:.64"></div><div style="--alpha:.82"></div><div style="--alpha:.44"></div><div style="--alpha:.91"></div><div style="--alpha:.59"></div><div style="--alpha:.31"></div></div></article>
+          <article class="module"><h3>Watchlist</h3><div class="watchlist"><div class="row"><span>NVQ Composite</span><span>+1.8%</span></div><div class="row"><span>Stonebridge Energy</span><span>+0.9%</span></div><div class="row"><span>Harbor Retail</span><span>-0.4%</span></div><div class="row"><span>Northline Tech</span><span>+2.2%</span></div></div></article>
+        </section>
+        <section class="columns">
+          <article class="module"><h3>Intraday trend</h3><svg class="line-chart" viewBox="0 0 500 180" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 145C55 124 74 95 119 104C168 114 196 140 243 122C290 104 304 50 357 46C404 42 440 92 500 68" stroke="#f0f0f2" stroke-width="3" stroke-linecap="round"/><path d="M0 160H500" stroke="rgba(255,255,255,0.12)"/><path d="M0 118H500" stroke="rgba(255,255,255,0.08)"/><path d="M0 76H500" stroke="rgba(255,255,255,0.08)"/></svg></article>
+          <article class="module"><h3>Top alerts</h3><table><thead><tr><th>Rule</th><th>Scope</th><th>State</th></tr></thead><tbody><tr><td>Momentum break</td><td>Large cap</td><td>Live</td></tr><tr><td>Volume spike</td><td>Energy</td><td>Review</td></tr><tr><td>Trend divergence</td><td>Retail</td><td>Queued</td></tr></tbody></table></article>
+        </section>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

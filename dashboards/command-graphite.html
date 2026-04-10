@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command Graphite Dashboard</title>
+  <style>
+    :root { --bg:#070707; --sidebar:#040404; --panel:#111112; --panel-soft:#171719; --border:rgba(255,255,255,.075); --text:#efefef; --muted:#8c8e94; --shadow:0 26px 80px rgba(0,0,0,.45); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--text); background:radial-gradient(circle at top, rgba(255,255,255,.06), transparent 25%),linear-gradient(180deg, #0b0b0c, #060606); font-family:"Segoe UI",sans-serif; }
+    .wrap { min-height:100vh; display:grid; grid-template-columns:250px 1fr; }
+    .sidebar { background:var(--sidebar); border-right:1px solid var(--border); padding:24px 18px; display:flex; flex-direction:column; gap:24px; }
+    .sidebar h1, .topbar h2, .panel h3 { margin:0; font-family:Georgia,serif; font-weight:600; }
+    .sidebar nav { display:grid; gap:8px; }
+    .sidebar nav a { color:var(--muted); text-decoration:none; padding:12px 14px; border-radius:14px; transition:160ms ease; }
+    .sidebar nav a.active, .sidebar nav a:hover { background:rgba(255,255,255,.05); color:var(--text); }
+    .status-block { margin-top:auto; padding:16px; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid var(--border); }
+    .main { padding:18px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 20px; border-radius:24px; border:1px solid var(--border); background:rgba(14,14,15,.9); box-shadow:var(--shadow); }
+    .toplinks { display:flex; gap:16px; flex-wrap:wrap; }
+    .toplinks a { text-decoration:none; color:var(--muted); font-size:.92rem; }
+    .toplinks a.active, .toplinks a:hover { color:var(--text); }
+    .user { width:44px; height:44px; border-radius:50%; border:1px solid var(--border); background:linear-gradient(135deg, #3b3c42, #111115); display:grid; place-items:center; font-weight:700; }
+    .board { margin-top:18px; display:grid; gap:18px; }
+    .lead { display:grid; grid-template-columns:1.25fr .75fr; gap:18px; }
+    .panel { padding:20px; border-radius:24px; background:linear-gradient(180deg, rgba(19,19,21,.96), rgba(10,10,11,.96)); border:1px solid var(--border); box-shadow:var(--shadow); }
+    .muted { color:var(--muted); }
+    .hero-title { font-size:2.15rem; line-height:1.15; margin:10px 0 12px; max-width:20ch; }
+    .kpis { display:grid; gap:12px; }
+    .kpi { padding:14px 16px; border-radius:18px; background:var(--panel-soft); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline; }
+    .grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:18px; }
+    .stream { display:grid; gap:12px; margin-top:16px; }
+    .event { padding:14px 16px; border-radius:18px; background:rgba(255,255,255,.03); border:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; }
+    .bars { margin-top:18px; display:grid; gap:14px; }
+    .track { height:12px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden; }
+    .fill { height:100%; border-radius:inherit; background:linear-gradient(90deg, #f1f1f1, #555860); }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { padding:12px 0; border-bottom:1px solid var(--border); text-align:left; font-size:.92rem; }
+    @media (max-width:1080px) { .wrap, .lead, .grid { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .wrap { grid-template-columns:1fr; } .sidebar { display:none; } .main { padding:14px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="sidebar">
+      <div><h1>Graphite</h1><p class="muted">Ops control</p></div>
+      <nav><a class="active" href="#">Control Room</a><a href="#">Incidents</a><a href="#">Infrastructure</a><a href="#">Capacity</a><a href="#">Logs</a></nav>
+      <div class="status-block"><p class="muted">Environment</p><h3 style="margin-top:8px;">Production stable</h3></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div><p class="muted" style="margin:0;">Operations command</p><h2 style="margin-top:4px;">System dashboard</h2></div>
+        <nav class="toplinks"><a class="active" href="#">Overview</a><a href="#">Health</a><a href="#">Queue</a><a href="#">Deployments</a></nav>
+        <div class="user">CG</div>
+      </header>
+      <section class="board">
+        <section class="lead">
+          <article class="panel"><p class="muted" style="margin:0;">Morning signal</p><div class="hero-title">Response times are stable while queue pressure increases in one region.</div><p class="muted">Most services remain within target latency. Two worker pools show sustained backlog growth and should be scaled before the evening peak.</p></article>
+          <article class="panel"><div class="kpis"><div class="kpi"><span class="muted">Uptime</span><strong>99.98%</strong></div><div class="kpi"><span class="muted">Latency</span><strong>118ms</strong></div><div class="kpi"><span class="muted">Incidents</span><strong>02</strong></div></div></article>
+        </section>
+        <section class="grid">
+          <article class="panel"><h3>Active incidents</h3><div class="stream"><div class="event"><span>Queue lag in EU-West worker cluster</span><span class="muted">Investigating</span></div><div class="event"><span>Delayed webhook retries on billing edge</span><span class="muted">Mitigating</span></div><div class="event"><span>Scheduled database failover rehearsal</span><span class="muted">Planned</span></div></div></article>
+          <article class="panel"><h3>Throughput by service</h3><div class="bars"><div><p class="muted" style="margin:0 0 8px;">API gateway</p><div class="track"><div class="fill" style="width:82%"></div></div></div><div><p class="muted" style="margin:0 0 8px;">Workers</p><div class="track"><div class="fill" style="width:71%"></div></div></div><div><p class="muted" style="margin:0 0 8px;">Notifications</p><div class="track"><div class="fill" style="width:58%"></div></div></div><div><p class="muted" style="margin:0 0 8px;">Data sync</p><div class="track"><div class="fill" style="width:64%"></div></div></div></div></article>
+        </section>
+        <article class="panel"><div style="display:flex; justify-content:space-between; gap:16px; align-items:end;"><div><h3 style="margin:0;">Node summary</h3><p class="muted">Regional availability and load</p></div></div><table><thead><tr><th>Region</th><th>Load</th><th>Errors</th><th>Capacity</th><th>State</th></tr></thead><tbody><tr><td>EU-West</td><td>78%</td><td>0.09%</td><td>Scaling</td><td>Watch</td></tr><tr><td>US-East</td><td>62%</td><td>0.03%</td><td>Healthy</td><td>Normal</td></tr><tr><td>AP-South</td><td>54%</td><td>0.05%</td><td>Healthy</td><td>Normal</td></tr></tbody></table></article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

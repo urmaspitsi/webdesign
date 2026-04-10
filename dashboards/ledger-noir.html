@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ledger Noir Dashboard</title>
+  <style>
+    :root { --bg:#080808; --surface:#101012; --surface-2:#17171a; --border:rgba(255,255,255,.07); --text:#f5f5f6; --muted:#91939a; --bright:#fff; --shadow:0 24px 70px rgba(0,0,0,.5); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; background:linear-gradient(135deg, rgba(255,255,255,.05), transparent 20%),linear-gradient(180deg, #0b0b0c, #060606); color:var(--text); font-family:"Segoe UI",sans-serif; }
+    .layout { min-height:100vh; display:grid; grid-template-columns:240px 1fr; }
+    .sidebar { padding:24px 18px; background:#050505; border-right:1px solid var(--border); display:flex; flex-direction:column; gap:26px; }
+    .logo, .header h1, .panel h2, .panel h3 { font-family:Georgia,serif; }
+    .logo { font-size:1.5rem; letter-spacing:.04em; }
+    .stack { display:grid; gap:8px; }
+    .stack a { text-decoration:none; color:var(--muted); padding:12px 14px; border-radius:14px; transition:180ms ease; }
+    .stack a.active, .stack a:hover { background:var(--surface-2); color:var(--bright); }
+    .vault { margin-top:auto; padding:18px; border-radius:20px; background:linear-gradient(180deg, #17171a, #0c0c0e); border:1px solid var(--border); }
+    .main { padding:20px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; padding:18px 22px; border-radius:24px; border:1px solid var(--border); background:rgba(12,12,14,.88); backdrop-filter:blur(12px); box-shadow:var(--shadow); }
+    .links { display:flex; gap:18px; flex-wrap:wrap; }
+    .links a { text-decoration:none; color:var(--muted); font-size:.94rem; }
+    .links a.active, .links a:hover { color:var(--text); }
+    .avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #3b3b43, #111116); border:1px solid var(--border); display:grid; place-items:center; font-weight:700; }
+    .dashboard { display:grid; gap:18px; margin-top:18px; }
+    .hero { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; }
+    .panel { background:linear-gradient(180deg, rgba(24,24,27,.96), rgba(12,12,14,.96)); border:1px solid var(--border); border-radius:26px; padding:22px; box-shadow:var(--shadow); }
+    .muted { color:var(--muted); }
+    .headline { font-size:2.2rem; line-height:1.1; margin:10px 0 14px; }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .stat { padding:16px; border-radius:18px; background:rgba(255,255,255,.03); border:1px solid var(--border); }
+    .stat strong { display:block; margin-top:8px; font-size:1.5rem; }
+    .split { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+    .sparkline { margin-top:18px; width:100%; height:220px; }
+    .holdings { display:grid; gap:14px; margin-top:16px; }
+    .holding { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-radius:18px; background:var(--surface); border:1px solid var(--border); }
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th, td { padding:14px 0; text-align:left; border-bottom:1px solid rgba(255,255,255,.08); font-size:.92rem; }
+    .chip { padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04); color:var(--text); display:inline-block; }
+    @media (max-width:1080px) { .layout, .hero, .split, .stats { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .layout { grid-template-columns:1fr; } .sidebar { display:none; } .main { padding:14px; } }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div><div class="logo">Ledger Noir</div><p class="muted">Capital dashboard</p></div>
+      <nav class="stack"><a class="active" href="#">Portfolio</a><a href="#">Cash Flow</a><a href="#">Exposure</a><a href="#">Settlements</a><a href="#">Compliance</a></nav>
+      <div class="vault"><p class="muted">Vault balance</p><h3 style="margin:8px 0 0;">$18.24M</h3></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="header"><p class="muted" style="margin:0;">Treasury desk</p><h1 style="margin:4px 0 0;">Portfolio overview</h1></div>
+        <nav class="links"><a class="active" href="#">Overview</a><a href="#">Performance</a><a href="#">Transactions</a><a href="#">Counterparties</a></nav>
+        <div class="avatar">UN</div>
+      </header>
+      <section class="dashboard">
+        <section class="hero">
+          <article class="panel"><p class="muted" style="margin:0;">Session note</p><div class="headline">Capital allocation remains conservative while fixed income yield improves.</div><p class="muted">Risk-adjusted return moved up 1.8% this week with lower equity volatility and tighter liquidity buffers across active mandates.</p></article>
+          <article class="panel"><div class="stats"><div class="stat"><span class="muted">AUM</span><strong>$124M</strong></div><div class="stat"><span class="muted">PnL</span><strong>+4.2%</strong></div><div class="stat"><span class="muted">Liquidity</span><strong>39d</strong></div><div class="stat"><span class="muted">Alerts</span><strong>03</strong></div></div></article>
+        </section>
+        <section class="split">
+          <article class="panel">
+            <h2 style="margin:0;">Yield curve</h2><p class="muted">Seven-day movement</p>
+            <svg class="sparkline" viewBox="0 0 600 220" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 170C55 168 80 112 132 112C183 112 203 148 258 146C310 144 340 68 395 64C447 60 487 110 540 95C568 88 585 76 600 68" stroke="#e8e8eb" stroke-width="3" stroke-linecap="round"/><path d="M0 182H600" stroke="rgba(255,255,255,0.12)"/><path d="M0 134H600" stroke="rgba(255,255,255,0.08)"/><path d="M0 86H600" stroke="rgba(255,255,255,0.08)"/></svg>
+          </article>
+          <article class="panel"><h3 style="margin:0;">Largest holdings</h3><div class="holdings"><div class="holding"><span>Short Duration Bonds</span><span>$32.1M</span></div><div class="holding"><span>Global Equity Basket</span><span>$24.8M</span></div><div class="holding"><span>Private Credit</span><span>$18.5M</span></div><div class="holding"><span>Infrastructure Fund</span><span>$12.3M</span></div></div></article>
+        </section>
+        <article class="panel">
+          <div style="display:flex; justify-content:space-between; gap:16px; align-items:end;"><div><h3 style="margin:0;">Recent transactions</h3><p class="muted">Last settlement window</p></div><span class="chip">4 approvals pending</span></div>
+          <table>
+            <thead><tr><th>Instrument</th><th>Type</th><th>Desk</th><th>Size</th><th>Status</th></tr></thead>
+            <tbody><tr><td>US 10Y Note</td><td>Buy</td><td>Rates</td><td>$4.0M</td><td>Matched</td></tr><tr><td>Euro IG Basket</td><td>Rebalance</td><td>Credit</td><td>$2.6M</td><td>Reviewing</td></tr><tr><td>Core Equity ETF</td><td>Sell</td><td>Multi-Asset</td><td>$1.2M</td><td>Settled</td></tr></tbody>
+          </table>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

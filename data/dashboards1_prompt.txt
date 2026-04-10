@@ -1,0 +1,12 @@
+dashboard page: build me an elegant looking dashboard page, dark mode, less colors, grey shades with elegant darker or black features. 
+dashboard page is a common page showing: 
+ - left sidebar with menu options.
+ - horizontal menu bar on top of the page.
+ - account icon top-right.
+ - main body displays sections of typical dashboard items, may include tables, charts, etc. 
+
+keep it lightweight, but professional, elegant touch.
+
+**Deliverables**
+- give me 5 samples.
+- HTML/CSS/JS, no frameworks needed. Preferrable single HTML file, so I can simply copy the results and compare.

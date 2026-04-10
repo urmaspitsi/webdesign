@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monolith View Dashboard</title>
+  <style>
+    :root { --bg:#050506; --sidebar:#030304; --panel:rgba(18,18,20,.96); --surface:rgba(255,255,255,.035); --border:rgba(255,255,255,.075); --text:#f1f1f1; --muted:#8f9096; --shadow:0 24px 90px rgba(0,0,0,.45); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 20% 0%, rgba(255,255,255,.06), transparent 22%),linear-gradient(180deg, #09090a, #040405); color:var(--text); font-family:"Segoe UI",sans-serif; }
+    .frame { min-height:100vh; display:grid; grid-template-columns:236px 1fr; }
+    .sidebar { background:var(--sidebar); border-right:1px solid var(--border); padding:24px 16px; display:flex; flex-direction:column; gap:24px; }
+    .sidebar h1, .topbar h2, .panel h3, .hero h3 { margin:0; font-family:Georgia,serif; font-weight:600; }
+    .menu { display:grid; gap:8px; }
+    .menu a { text-decoration:none; color:var(--muted); padding:12px 14px; border-radius:14px; transition:160ms ease; }
+    .menu a.active, .menu a:hover { color:var(--text); background:var(--surface); }
+    .foot { margin-top:auto; padding:16px; border-radius:18px; border:1px solid var(--border); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); }
+    .main { padding:18px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 22px; border-radius:24px; border:1px solid var(--border); background:rgba(13,13,15,.9); box-shadow:var(--shadow); }
+    .horizontal { display:flex; gap:16px; flex-wrap:wrap; }
+    .horizontal a { text-decoration:none; color:var(--muted); font-size:.92rem; }
+    .horizontal a.active, .horizontal a:hover { color:var(--text); }
+    .account { width:44px; height:44px; border-radius:50%; border:1px solid var(--border); background:linear-gradient(135deg, #3b3c40, #101114); display:grid; place-items:center; font-weight:700; }
+    .board { margin-top:18px; display:grid; gap:18px; }
+    .hero { display:grid; grid-template-columns:1.4fr .8fr; gap:18px; }
+    .panel { padding:22px; border-radius:26px; border:1px solid var(--border); background:linear-gradient(180deg, rgba(18,18,20,.97), rgba(10,10,11,.97)); box-shadow:var(--shadow); }
+    .muted { color:var(--muted); }
+    .hero h3 { font-size:2.1rem; line-height:1.15; margin:10px 0 12px; max-width:16ch; }
+    .summary { display:grid; gap:12px; }
+    .summary div { padding:14px 16px; border-radius:16px; background:var(--surface); border:1px solid var(--border); display:flex; justify-content:space-between; }
+    .columns { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .area { width:100%; height:220px; margin-top:12px; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { text-align:left; padding:12px 0; border-bottom:1px solid var(--border); font-size:.92rem; }
+    .notes { display:grid; gap:12px; margin-top:14px; }
+    .note { padding:14px 16px; border-radius:16px; border:1px solid var(--border); background:var(--surface); }
+    @media (max-width:1080px) { .frame, .hero, .columns { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .frame { grid-template-columns:1fr; } .sidebar { display:none; } .main { padding:14px; } }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <aside class="sidebar">
+      <div><h1>Monolith</h1><p class="muted">Minimal analytics</p></div>
+      <nav class="menu"><a href="#" class="active">Overview</a><a href="#">Metrics</a><a href="#">Activity</a><a href="#">Reports</a><a href="#">System</a></nav>
+      <div class="foot"><p class="muted">Snapshot</p><h3 style="margin-top:8px;">Weekly close</h3></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div><p class="muted" style="margin:0;">Analytics desk</p><h2 style="margin-top:4px;">Quiet dashboard</h2></div>
+        <nav class="horizontal"><a href="#" class="active">Overview</a><a href="#">Trends</a><a href="#">Segments</a><a href="#">Exports</a></nav>
+        <div class="account">MV</div>
+      </header>
+      <section class="board">
+        <section class="hero">
+          <article class="panel"><p class="muted" style="margin:0;">Weekly signal</p><h3>Traffic softened slightly while conversion quality continued to improve.</h3><p class="muted">This sample uses fewer modules, broader whitespace, and a quieter chart style to keep the dashboard elegant and lightweight.</p></article>
+          <article class="panel"><div class="summary"><div><span class="muted">Visitors</span><strong>182k</strong></div><div><span class="muted">Conversion</span><strong>4.8%</strong></div><div><span class="muted">Avg. value</span><strong>$86</strong></div></div></article>
+        </section>
+        <section class="columns">
+          <article class="panel"><h3>Trend line</h3><svg class="area" viewBox="0 0 520 220" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 182C54 176 84 140 129 136C178 132 213 170 257 160C306 149 333 88 389 78C441 68 468 96 520 84V220H0V182Z" fill="rgba(255,255,255,0.12)"/><path d="M0 182C54 176 84 140 129 136C178 132 213 170 257 160C306 149 333 88 389 78C441 68 468 96 520 84" stroke="#f2f2f2" stroke-width="3" stroke-linecap="round"/><path d="M0 194H520" stroke="rgba(255,255,255,0.12)"/><path d="M0 138H520" stroke="rgba(255,255,255,0.07)"/><path d="M0 82H520" stroke="rgba(255,255,255,0.07)"/></svg></article>
+          <article class="panel"><h3>Recent entries</h3><table><thead><tr><th>Source</th><th>Sessions</th><th>Change</th></tr></thead><tbody><tr><td>Organic search</td><td>62,481</td><td>+3.2%</td></tr><tr><td>Direct</td><td>41,907</td><td>+1.1%</td></tr><tr><td>Referral</td><td>18,772</td><td>-0.8%</td></tr></tbody></table></article>
+        </section>
+        <article class="panel"><h3>Analyst notes</h3><div class="notes"><div class="note">Paid acquisition volume cooled, but high-intent pages continued to convert above target.</div><div class="note">Mobile session quality improved after the checkout simplification release.</div><div class="note">Email campaigns remained stable with no unusual churn signal.</div></div></article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

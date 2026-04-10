@@ -1,42 +1,62 @@
 window.projectCatalog = {
   slug: "dashboards",
   title: "Dashboards",
-  description: "A dashboard section scaffolded for future UI experiments.",
+  description: "Five dark, lightweight dashboard studies built as standalone HTML files.",
   hero: {
-    kicker: "Topic Folder",
-    title: "A dashboard section scaffolded for future UI experiments.",
+    title: "Elegant dark dashboards with restrained grey palettes.",
     text:
-      "The folder already has its own GitHub Pages entry point and uses the same reusable card system as the rest of the site. Add standalone dashboard files here as the collection grows.",
+      "Five standalone dashboard samples exploring executive, finance, operations, strategy, and minimal analytics layouts. Each page stays framework-free and copy-paste ready.",
     meta: [
-      "Index page in place",
-      "Reusable card system wired",
-      "Ready for new entries"
+      "5 published entries",
+      "Single-file HTML",
+      "Dark monochrome direction"
     ]
   },
   sections: [
     {
-      title: "Upcoming Dashboard Work",
+      title: "Dashboard Samples",
       description:
-        "This section is intentionally ready before the first dashboard ships, so the overall information architecture stays stable as new categories are added.",
-      note: "0 published entries",
+        "Each sample includes a left sidebar, a top navigation bar, an account control in the top-right corner, and a main content area with typical dashboard modules such as metrics, charts, and tables.",
+      note: "5 published entries",
       items: [
         {
-          title: "Dashboard Collection",
-          visualTitle: "Coming Soon",
-          eyebrow: "Section Placeholder",
-          badge: "Next",
+          title: "Executive Slate",
+          visualTitle: "Executive Slate",
           description:
-            "Use this folder for analytics, reporting, admin, or operational dashboard studies. Each future item should remain a standalone HTML file linked from this index.",
-          tags: ["Scaffolded", "Ready for content", "Dashboard UI"],
-          href: "../",
-          linkLabel: "Back to home",
-          secondaryHref: "../landingpages/",
-          secondaryLabel: "View landing pages",
-          accent: "linear-gradient(145deg, #2a6f6a, #16363f)"
+            "A refined executive overview with a calm sidebar, compact KPI rail, soft radial surfaces, and a clear operations table.",
+          href: "executive-slate.html"
+        },
+        {
+          title: "Ledger Noir",
+          visualTitle: "Ledger Noir",
+          description:
+            "A finance-oriented dashboard with sharper geometry, portfolio metrics, and a disciplined transaction table.",
+          href: "ledger-noir.html"
+        },
+        {
+          title: "Signal Grid",
+          visualTitle: "Signal Grid",
+          description:
+            "A denser analytics sample focused on market signals, watchlists, compact charts, and a tighter command surface.",
+          href: "signal-grid.html"
+        },
+        {
+          title: "Command Graphite",
+          visualTitle: "Command Graphite",
+          description:
+            "An operational control-center layout with status streams, incident summaries, throughput modules, and darker industrial detailing.",
+          href: "command-graphite.html"
+        },
+        {
+          title: "Monolith View",
+          visualTitle: "Monolith View",
+          description:
+            "A minimal analytics layout with broad spacing, quieter chart treatment, and a highly restrained grayscale presentation.",
+          href: "monolith-view.html"
         }
       ]
     }
   ],
   footerNote:
-    "To extend this folder later, add new standalone dashboard HTML files here and register them in dashboards/catalog.config.js."
+    "All dashboard samples are plain HTML, CSS, and JavaScript so they can be copied directly or adapted individually."
 };
