@@ -1,0 +1,12 @@
+item-gallery page: build me an elegant looking item-gallery page, dark mode, vivid colors, grey shades with elegant darker or black features.  
+item-gallery page is a common page showing: 
+ - left sidebar with menu options.
+ - horizontal menu bar on top of the page.
+ - account icon top-right.
+ - main body displays typical item-gallery: top-down scrollable item-cards page. Item cards display creative artifact, product or service.
+
+keep it lightweight, but professional, elegant touch.
+
+**Deliverables**
+- give me 5 samples.
+- HTML/CSS/JS, no frameworks needed. Preferrable single HTML file, so I can simply copy the results and compare.
