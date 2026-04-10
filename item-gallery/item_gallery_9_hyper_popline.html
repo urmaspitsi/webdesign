@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hyper Popline</title>
+  <style>
+    :root {
+      --bg: #0d0512;
+      --text: #fff8ff;
+      --muted: #d8bce6;
+      --line: rgba(255,255,255,0.11);
+      color-scheme: dark;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,0,170,0.28), transparent 26%),
+        radial-gradient(circle at 100% 0%, rgba(64,214,255,0.24), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(203,255,77,0.2), transparent 28%),
+        linear-gradient(180deg, #190926, var(--bg));
+    }
+    .app { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; padding: 22px 18px; display: flex; flex-direction: column; gap: 16px;
+      background: linear-gradient(180deg, rgba(16,8,23,0.97), rgba(9,5,14,0.94)); border-right: 1px solid var(--line);
+    }
+    .tile, .topbar, .card { box-shadow: 0 28px 78px rgba(0,0,0,0.42); }
+    .tile {
+      padding: 16px; border-radius: 22px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .tile small { display: block; margin-bottom: 8px; color: #ff8bf2; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem; }
+    .nav { display: grid; gap: 8px; }
+    .nav a, .tabs button { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .nav a { padding: 12px 14px; border-radius: 16px; color: var(--muted); }
+    .nav a.active, .nav a:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+    .main { padding: 18px; min-width: 0; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      position: sticky; top: 14px; z-index: 10; padding: 14px 16px; border-radius: 24px;
+      border: 1px solid var(--line); background: rgba(17,9,24,0.74); backdrop-filter: blur(15px);
+    }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tabs button { padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.05); }
+    .tabs button.active { color: #18091a; background: linear-gradient(135deg, #d4ff52, #6effff); }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #ff56d8, #6effff); color: #0b1115;
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: center; padding: 30px 4px 22px;
+    }
+    .hero h1 { margin: 0 0 12px; font-size: clamp(2.7rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.07em; max-width: 8ch; }
+    .hero p { margin: 0; color: var(--muted); max-width: 58ch; line-height: 1.65; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px;
+      max-height: calc(100vh - 188px); overflow: auto; padding-right: 6px; padding-bottom: 28px;
+    }
+    .card {
+      min-height: 378px; padding: 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(14,8,20,0.98), rgba(10,6,14,0.96));
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 0%, rgba(255,255,255,0.08), transparent 24%);
+      pointer-events: none;
+    }
+    .art {
+      height: 230px; border-radius: 22px; background: var(--art); padding: 18px;
+      display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+    }
+    .art::after {
+      content: ""; position: absolute; inset: auto -18px -18px auto; width: 140px; height: 140px;
+      border-radius: 32px; background: rgba(255,255,255,0.18); transform: rotate(18deg);
+    }
+    .art span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.82); }
+    .art strong { position: relative; z-index: 1; font-size: 2rem; line-height: 0.94; max-width: 8ch; }
+    .content { padding: 16px 8px 8px; }
+    .content h2 { margin: 0 0 10px; font-size: 1.6rem; }
+    .content p { margin: 0; color: var(--muted); line-height: 1.55; }
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .grid { max-height: none; overflow: visible; }
+    }
+    @media (max-width: 760px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="tile"><small>Maximal Mode</small><strong>Hyper Popline</strong></div>
+      <nav class="nav">
+        <a href="#" class="active">Pop Cards</a><a href="#">Color Bursts</a><a href="#">Hero Items</a><a href="#">Services</a><a href="#">Drops</a>
+      </nav>
+      <div class="tile">This is the most over-the-board concept in the set: candy chrome, louder gradients, and main-body cards designed to compete for attention.</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="tabs"><button class="active">Maximal</button><button>Popular</button><button>Shiny</button><button>Latest</button></div>
+        <div class="avatar">HP</div>
+      </header>
+      <section class="hero">
+        <div><h1>Hypercolor item cards built to overwhelm politely.</h1><p>This page deliberately goes louder than normal product UI, but keeps the shell clean enough that the card grid still reads fast and stays usable.</p></div>
+        <div class="tile"><small>Intentional Excess</small>Use this when the goal is a memorable card wall with pop-culture attitude rather than subdued elegance.</div>
+      </section>
+      <section class="grid">
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ff57da,#8f4fff 46%,#4dd9ff);"><span>Product</span><strong>Candy Mirror Radio</strong></div><div class="content"><h2>Item Gallery 9A</h2><p>A playful audio object with pop-finish shell styling and a card presentation built to feel collectible.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#d8ff4f,#53ff9e 48%,#00c9ff);"><span>Service</span><strong>Popstorm Launch Lab</strong></div><div class="content"><h2>Item Gallery 9B</h2><p>A creative sprint for loud campaign visuals, category disruption, and culture-led release pages.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ff6a57,#ffb547 46%,#ffdff1);"><span>Edition</span><strong>Bubble Chrome Vase</strong></div><div class="content"><h2>Item Gallery 9C</h2><p>A speculative collectible object sold with maximal polish, warm highlights, and pop-art contrast.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#7d7cff,#ff72d8 46%,#ffef72);"><span>Collection</span><strong>Confetti Type System</strong></div><div class="content"><h2>Item Gallery 9D</h2><p>A bright creative pack of type experiments, modular posters, and playful interface ornaments.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#7afff1,#3ea4ff 44%,#4d4eff);"><span>Drop</span><strong>Electric Foam Capsule</strong></div><div class="content"><h2>Item Gallery 9E</h2><p>A digital drop concept designed for youth-market energy, bright surfaces, and fast visual recognition.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ff4ec0,#ff6f63 44%,#ffe152);"><span>Object</span><strong>Glow Melt Clock</strong></div><div class="content"><h2>Item Gallery 9F</h2><p>An extravagant decor concept with a stylized glossy shell and playful exaggerated color identity.</p></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".nav, .tabs").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

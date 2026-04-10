@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prism Parade</title>
+  <meta name="description" content="Bold item gallery with standout colorful item cards." />
+  <style>
+    :root {
+      --bg: #130717;
+      --panel: rgba(14, 10, 19, 0.84);
+      --line: rgba(255,255,255,0.1);
+      --text: #fff6ff;
+      --muted: #d0b9db;
+      --accent: #7effd8;
+      color-scheme: dark;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,73,194,0.34), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(92,105,255,0.32), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(86,255,214,0.22), transparent 30%),
+        linear-gradient(180deg, #221130, var(--bg));
+    }
+    .app { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; padding: 22px 18px; display: flex; flex-direction: column; gap: 16px;
+      background: linear-gradient(180deg, rgba(15,10,20,0.96), rgba(10,7,14,0.92)); border-right: 1px solid var(--line);
+    }
+    .brand, .promo, .topbar, .card { box-shadow: 0 28px 80px rgba(0,0,0,0.42); }
+    .brand, .promo {
+      border: 1px solid var(--line); border-radius: 24px; padding: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .brand small {
+      display: block; margin-bottom: 8px; color: #ff96f0; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem;
+    }
+    .nav { display: grid; gap: 8px; }
+    .nav a, .tabs button, .pill { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .nav a {
+      padding: 12px 14px; border-radius: 16px; color: var(--muted);
+      transition: transform 160ms ease, background 160ms ease;
+    }
+    .nav a.active, .nav a:hover {
+      background: linear-gradient(135deg, rgba(255,91,208,0.2), rgba(111,255,227,0.18));
+      color: var(--text); transform: translateX(4px);
+    }
+    .promo { margin-top: auto; color: var(--muted); line-height: 1.6; }
+    .main { padding: 18px; min-width: 0; }
+    .topbar {
+      position: sticky; top: 14px; z-index: 10;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 14px 16px; border-radius: 24px; border: 1px solid var(--line);
+      background: rgba(18,13,24,0.72); backdrop-filter: blur(16px);
+    }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tabs button {
+      padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.05);
+    }
+    .tabs button.active { color: #19071d; background: linear-gradient(135deg, #7effd8, #fff06a); }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #ff5bc7, #735cff); border: 1px solid rgba(255,255,255,0.18);
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: center; padding: 30px 4px 22px;
+    }
+    .hero h1 {
+      margin: 0 0 12px; font-size: clamp(2.7rem, 5vw, 5rem); line-height: 0.92; letter-spacing: -0.06em; max-width: 8ch;
+    }
+    .hero p { margin: 0; color: var(--muted); max-width: 58ch; line-height: 1.65; }
+    .hero-card {
+      padding: 22px; border-radius: 28px; border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .hero-card strong { display: block; margin-bottom: 10px; color: #fff06a; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.72rem; }
+    .pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .pill { padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,0.07); color: var(--text); }
+    .gallery {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px;
+      max-height: calc(100vh - 190px); overflow: auto; padding-right: 6px; padding-bottom: 28px;
+    }
+    .card {
+      position: relative; min-height: 360px; padding: 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(8,10,16,0.96), rgba(9,6,13,0.98));
+      overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.28), transparent 30%, rgba(255,255,255,0.08));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+    .visual {
+      height: 228px; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;
+      background: var(--art); position: relative; overflow: hidden;
+    }
+    .visual::after {
+      content: ""; position: absolute; width: 140px; height: 140px; right: -20px; bottom: -24px;
+      background: rgba(255,255,255,0.18); border-radius: 28px; transform: rotate(14deg);
+    }
+    .visual span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.76); }
+    .visual strong { position: relative; z-index: 1; font-size: 2rem; line-height: 0.96; max-width: 8ch; }
+    .content { padding: 16px 10px 8px; }
+    .content h2 { margin: 0 0 10px; font-size: 1.65rem; }
+    .content p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 1rem; }
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .gallery { max-height: none; overflow: visible; }
+    }
+    @media (max-width: 760px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><small>Chromatic Run</small><strong>Prism Parade</strong></div>
+      <nav class="nav">
+        <a href="#" class="active">Featured Tiles</a><a href="#">Art Drops</a><a href="#">Merch</a><a href="#">Studio Packs</a><a href="#">Services</a>
+      </nav>
+      <div class="promo">Built around loud gallery cards with glossy surfaces, playful contrast, and a more poster-like presence in the main body.</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="tabs"><button class="active">Spotlight</button><button>Trending</button><button>Bright Sets</button><button>New</button></div>
+        <div class="avatar">PP</div>
+      </header>
+      <section class="hero">
+        <div>
+          <h1>Extravagant item cards with gallery-poster energy.</h1>
+          <p>This version pushes hard into vivid gradients and playful luxury. The main body behaves as a premium card wall where each item feels collectible and loud.</p>
+          <div class="pills"><button class="pill">Gloss Layer</button><button class="pill">Candy Neon</button><button class="pill">Bold Contrast</button></div>
+        </div>
+        <div class="hero-card"><strong>Card First</strong>The page shell stays practical, but the central product area becomes the event with expressive cards that stand out immediately.</div>
+      </section>
+      <section class="gallery">
+        <article class="card"><div class="visual" style="--art:linear-gradient(160deg,#00d1ff,#675bff 55%,#ff4cc7);"><span>Creative Pack</span><strong>Dreamwave Suite</strong></div><div class="content"><h2>Item Gallery 6A</h2><p>A high-saturation bundle of motion scenes, social drops, and launch visuals for loud digital releases.</p></div></article>
+        <article class="card"><div class="visual" style="--art:linear-gradient(160deg,#ffd84e,#ff6a00 52%,#ff2f92);"><span>Product</span><strong>Solar Chrome Speaker</strong></div><div class="content"><h2>Item Gallery 6B</h2><p>Portable sound object with reflective shell treatment, sharp form cuts, and collector-style presentation.</p></div></article>
+        <article class="card"><div class="visual" style="--art:linear-gradient(160deg,#5cffb8,#00a6ff 58%,#0631ff);"><span>Service</span><strong>Electric Brand Sprint</strong></div><div class="content"><h2>Item Gallery 6C</h2><p>A rapid design service for bold campaigns, immersive landing pages, and high-energy product reveals.</p></div></article>
+        <article class="card"><div class="visual" style="--art:linear-gradient(160deg,#ff5d9e,#7a4dff 58%,#1f183a);"><span>Edition</span><strong>Velour Noise Lamp</strong></div><div class="content"><h2>Item Gallery 6D</h2><p>Decorative object framed like a collector drop with velvet shadows and loud accent spill.</p></div></article>
+        <article class="card"><div class="visual" style="--art:linear-gradient(160deg,#83ff7d,#d2ff4a 45%,#00bf8f);"><span>Collection</span><strong>Lime Flicker Archive</strong></div><div class="content"><h2>Item Gallery 6E</h2><p>A playful archive of bright visual studies, sticker sets, and fluorescent identity fragments.</p></div></article>
+        <article class="card"><div class="visual" style="--art:linear-gradient(160deg,#8cf5ff,#ff8fea 58%,#fffa70);"><span>Drop</span><strong>Pastel Riot Capsule</strong></div><div class="content"><h2>Item Gallery 6F</h2><p>An over-the-board release concept for items meant to feel rare, shiny, and culturally loud.</p></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".nav, .tabs").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar Flair</title>
+  <style>
+    :root {
+      --bg: #140906;
+      --text: #fff7f0;
+      --muted: #e1b9a1;
+      --line: rgba(255,255,255,0.1);
+      color-scheme: dark;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,191,64,0.28), transparent 24%),
+        radial-gradient(circle at 100% 0%, rgba(255,83,83,0.22), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(255,99,0,0.18), transparent 26%),
+        linear-gradient(180deg, #2a130d, var(--bg));
+    }
+    .app { display: grid; grid-template-columns: 246px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; padding: 22px 18px; display: flex; flex-direction: column; gap: 16px;
+      background: linear-gradient(180deg, rgba(22,11,8,0.97), rgba(12,7,6,0.94)); border-right: 1px solid var(--line);
+    }
+    .panel, .topbar, .card { box-shadow: 0 26px 74px rgba(0,0,0,0.42); }
+    .panel {
+      padding: 16px; border-radius: 22px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    }
+    .panel small { display: block; margin-bottom: 8px; color: #ffd36a; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem; }
+    .nav { display: grid; gap: 8px; }
+    .nav a, .tabs button { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .nav a { padding: 12px 14px; border-radius: 16px; color: var(--muted); }
+    .nav a.active, .nav a:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+    .main { padding: 18px; min-width: 0; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      position: sticky; top: 14px; z-index: 10; padding: 14px 16px; border-radius: 24px;
+      border: 1px solid var(--line); background: rgba(28,14,10,0.72); backdrop-filter: blur(15px);
+    }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tabs button { padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.05); color: var(--muted); }
+    .tabs button.active { color: #241208; background: linear-gradient(135deg, #ffd45d, #ff8a4c); }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #ffdb62, #ff5b43); color: #341207;
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: center; padding: 30px 4px 22px;
+    }
+    .hero h1 { margin: 0 0 12px; font-size: clamp(2.6rem, 4.9vw, 4.9rem); line-height: 0.92; letter-spacing: -0.06em; max-width: 8ch; }
+    .hero p { margin: 0; color: var(--muted); max-width: 58ch; line-height: 1.65; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px;
+      max-height: calc(100vh - 188px); overflow: auto; padding-right: 6px; padding-bottom: 28px;
+    }
+    .card {
+      min-height: 370px; padding: 14px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(18,8,6,0.98), rgba(14,7,6,0.95));
+      overflow: hidden;
+    }
+    .art {
+      height: 224px; border-radius: 22px; background: var(--art); padding: 18px;
+      display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+    }
+    .art::after {
+      content: ""; position: absolute; inset: auto -18px -18px auto; width: 128px; height: 128px;
+      background: rgba(255,255,255,0.18); border-radius: 50%;
+    }
+    .art span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.82); }
+    .art strong { position: relative; z-index: 1; font-size: 1.95rem; line-height: 0.95; max-width: 8ch; }
+    .content { padding: 16px 8px 8px; }
+    .content h2 { margin: 0 0 10px; font-size: 1.56rem; }
+    .content p { margin: 0; color: var(--muted); line-height: 1.55; }
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .grid { max-height: none; overflow: visible; }
+    }
+    @media (max-width: 760px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="panel"><small>Heat Index</small><strong>Solar Flair</strong></div>
+      <nav class="nav">
+        <a href="#" class="active">Hot Cards</a><a href="#">Collectibles</a><a href="#">Service Drops</a><a href="#">Warm Editions</a><a href="#">Archive</a>
+      </nav>
+      <div class="panel">A hotter, more flamboyant gallery built around warm glossy cards that look like premium drops under sunset lighting.</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="tabs"><button class="active">Golden Hour</button><button>Top Heat</button><button>Fresh Cards</button><button>Featured</button></div>
+        <div class="avatar">SF</div>
+      </header>
+      <section class="hero">
+        <div><h1>Warm gradients, glossy cards, louder item presence.</h1><p>The main gallery here is built to feel almost collectible, with intense warm color, stronger highlight effects, and more visual appetite than the earlier dark studies.</p></div>
+        <div class="panel"><small>Collector Tone</small>Designed for items that should feel premium, dramatic, and immediately visible in a crowded marketplace.</div>
+      </section>
+      <section class="grid">
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ffe463,#ff9944 52%,#ff4f4f);"><span>Object</span><strong>Sunline Pod Lamp</strong></div><div class="content"><h2>Item Gallery 8A</h2><p>A collector-style ambient light object with a glossy heat-treated shell and strong display presence.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ffae33,#ff5f3d 54%,#9c132d);"><span>Service</span><strong>Flare Campaign Build</strong></div><div class="content"><h2>Item Gallery 8B</h2><p>A premium launch service for brands that want warmer, bolder pages and stronger visual drama.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#fff188,#ff9260 52%,#593aff);"><span>Edition</span><strong>Citrus Prism Chair</strong></div><div class="content"><h2>Item Gallery 8C</h2><p>An eccentric collectible furniture concept presented like a featured release with sunset-hot styling.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ffc94e,#ff6f43 48%,#38120d);"><span>Collection</span><strong>Amber Poster Set</strong></div><div class="content"><h2>Item Gallery 8D</h2><p>A warm visual pack of poster systems, campaign textures, and exhibition-ready digital sheets.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ffe47d,#ff4f79 52%,#5622c9);"><span>Drop</span><strong>Peach Pulse Capsule</strong></div><div class="content"><h2>Item Gallery 8E</h2><p>A louder capsule of stylish consumer goods and visual assets with a high-energy showcase tone.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#ffd75a,#ff8a4c 50%,#ff3e2f);"><span>Product</span><strong>Blaze Mini Projector</strong></div><div class="content"><h2>Item Gallery 8F</h2><p>A compact premium device concept treated like a glossy release card for standout retail presentation.</p></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".nav, .tabs").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

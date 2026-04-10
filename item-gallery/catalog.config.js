@@ -1,14 +1,14 @@
 window.projectCatalog = {
   slug: "item-gallery",
   title: "Item Gallery",
-  description: "Five standalone item-gallery page studies with elegant dark-mode treatments.",
+  description: "Ten standalone item-gallery page studies spanning elegant dark themes and bolder high-color card galleries.",
   hero: {
     kicker: "Topic Folder",
-    title: "Five standalone item-gallery page studies with elegant dark-mode treatments.",
+    title: "Ten standalone item-gallery page studies spanning elegant dark themes and bolder high-color card galleries.",
     text:
-      "Each sample is a self-contained HTML file with its own visual system. All five keep the same practical gallery structure while exploring different premium dark interfaces.",
+      "Each sample is a self-contained HTML file with its own visual system. The collection now ranges from restrained premium dark UIs to louder, more extravagant card-led gallery directions.",
     meta: [
-      "5 published HTML entries",
+      "10 published HTML entries",
       "No framework dependencies",
       "Sidebar + topbar + gallery layout"
     ]
@@ -17,7 +17,7 @@ window.projectCatalog = {
     {
       title: "Published Pages",
       description:
-        "Five lightweight gallery variations focused on elegant dark UI, vivid accents, and practical browsing surfaces for products, services, or creative artifacts.",
+        "Ten lightweight gallery variations focused on elegant dark UI, vivid accents, and practical browsing surfaces for products, services, or creative artifacts.",
       note: "Catalog view",
       items: [
         {
@@ -79,6 +79,66 @@ window.projectCatalog = {
           href: "item_gallery_5_midnight_signals.html",
           linkLabel: "Open page",
           accent: "linear-gradient(180deg, #1f2328 0%, #090b0d 100%)"
+        },
+        {
+          title: "Item Gallery 6",
+          visualTitle: "Prism Parade",
+          eyebrow: "",
+          badge: "Published",
+          description:
+            "A candy-electric gallery with oversized glossy cards, saturated color fields, and playful premium energy.",
+          tags: ["Extravagant", "Card grid", "Electric"],
+          href: "item_gallery_6_prism_parade.html",
+          linkLabel: "Open page",
+          accent: "linear-gradient(180deg, #2a1742 0%, #0b0611 100%)"
+        },
+        {
+          title: "Item Gallery 7",
+          visualTitle: "Neon Bazaar",
+          eyebrow: "",
+          badge: "Published",
+          description:
+            "A bolder marketplace direction with luminous neon trims, high-contrast cards, and club-inspired color collisions.",
+          tags: ["Neon", "Marketplace", "Vivid"],
+          href: "item_gallery_7_neon_bazaar.html",
+          linkLabel: "Open page",
+          accent: "linear-gradient(180deg, #1f233f 0%, #080911 100%)"
+        },
+        {
+          title: "Item Gallery 8",
+          visualTitle: "Solar Flair",
+          eyebrow: "",
+          badge: "Published",
+          description:
+            "A sunset-hot tile gallery with warm explosive gradients, glossy framing, and standout collectible cards.",
+          tags: ["Warm", "Glossy", "Collectibles"],
+          href: "item_gallery_8_solar_flair.html",
+          linkLabel: "Open page",
+          accent: "linear-gradient(180deg, #402012 0%, #120805 100%)"
+        },
+        {
+          title: "Item Gallery 9",
+          visualTitle: "Hyper Popline",
+          eyebrow: "",
+          badge: "Published",
+          description:
+            "An over-the-board hypercolor concept with pop-art lighting, candy chrome cards, and maximalist modern styling.",
+          tags: ["Hypercolor", "Maximal", "Pop"],
+          href: "item_gallery_9_hyper_popline.html",
+          linkLabel: "Open page",
+          accent: "linear-gradient(180deg, #26124a 0%, #09040f 100%)"
+        },
+        {
+          title: "Item Gallery 10",
+          visualTitle: "Aurora Luxe",
+          eyebrow: "",
+          badge: "Published",
+          description:
+            "A high-end aurora palette with jewel-toned cards, polished glass treatment, and strong visual contrast.",
+          tags: ["Jewel tones", "Glass", "Luxury"],
+          href: "item_gallery_10_aurora_luxe.html",
+          linkLabel: "Open page",
+          accent: "linear-gradient(180deg, #12303d 0%, #060b10 100%)"
         }
       ]
     }

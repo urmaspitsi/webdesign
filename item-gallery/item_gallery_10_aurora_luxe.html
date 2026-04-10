@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Luxe</title>
+  <style>
+    :root {
+      --bg: #061017;
+      --text: #f4fbff;
+      --muted: #a8bfd0;
+      --line: rgba(255,255,255,0.1);
+      color-scheme: dark;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(72,255,210,0.18), transparent 24%),
+        radial-gradient(circle at 100% 0%, rgba(78,122,255,0.18), transparent 26%),
+        radial-gradient(circle at 60% 100%, rgba(224,95,255,0.16), transparent 26%),
+        linear-gradient(180deg, #0d1823, var(--bg));
+    }
+    .app { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; padding: 22px 18px; display: flex; flex-direction: column; gap: 16px;
+      background: linear-gradient(180deg, rgba(8,14,19,0.97), rgba(6,10,15,0.94)); border-right: 1px solid var(--line);
+    }
+    .panel, .topbar, .card { box-shadow: 0 28px 78px rgba(0,0,0,0.42); }
+    .panel {
+      padding: 16px; border-radius: 22px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .panel small { display: block; margin-bottom: 8px; color: #88ffe5; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem; }
+    .nav { display: grid; gap: 8px; }
+    .nav a, .tabs button { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .nav a { padding: 12px 14px; border-radius: 16px; color: var(--muted); }
+    .nav a.active, .nav a:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+    .main { padding: 18px; min-width: 0; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      position: sticky; top: 14px; z-index: 10; padding: 14px 16px; border-radius: 24px;
+      border: 1px solid var(--line); background: rgba(9,16,23,0.72); backdrop-filter: blur(15px);
+    }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tabs button { padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.05); }
+    .tabs button.active { color: #091118; background: linear-gradient(135deg, #82ffe6, #89b7ff); }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #7df9e8, #7d8cff); color: #081118;
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: center; padding: 30px 4px 22px;
+    }
+    .hero h1 { margin: 0 0 12px; font-size: clamp(2.7rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.07em; max-width: 8ch; }
+    .hero p { margin: 0; color: var(--muted); max-width: 58ch; line-height: 1.65; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px;
+      max-height: calc(100vh - 188px); overflow: auto; padding-right: 6px; padding-bottom: 28px;
+    }
+    .card {
+      min-height: 378px; padding: 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(8,13,18,0.98), rgba(6,10,15,0.96));
+      position: relative; overflow: hidden;
+    }
+    .card::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 24%);
+      pointer-events: none;
+    }
+    .art {
+      height: 230px; border-radius: 22px; background: var(--art); padding: 18px;
+      display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    .art::before {
+      content: ""; position: absolute; inset: auto -30px -20px auto; width: 150px; height: 150px;
+      border-radius: 50%; background: rgba(255,255,255,0.16);
+    }
+    .art span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.82); }
+    .art strong { position: relative; z-index: 1; font-size: 2rem; line-height: 0.94; max-width: 8ch; }
+    .content { padding: 16px 8px 8px; }
+    .content h2 { margin: 0 0 10px; font-size: 1.6rem; }
+    .content p { margin: 0; color: var(--muted); line-height: 1.55; }
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .grid { max-height: none; overflow: visible; }
+    }
+    @media (max-width: 760px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="panel"><small>Jewel Layer</small><strong>Aurora Luxe</strong></div>
+      <nav class="nav">
+        <a href="#" class="active">Jewel Cards</a><a href="#">Luxury Items</a><a href="#">Studio Services</a><a href="#">Curated</a><a href="#">Seasonal</a>
+      </nav>
+      <div class="panel">This sample is more polished than chaotic: strong aurora hues, glassy depth, and confident standout cards without losing upscale tone.</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="tabs"><button class="active">Aurora Picks</button><button>Premium</button><button>Latest</button><button>Saved</button></div>
+        <div class="avatar">AL</div>
+      </header>
+      <section class="hero">
+        <div><h1>Jewel-toned gallery cards with polished dark contrast.</h1><p>A more luxurious high-color variant where cards feel expensive and luminous, balancing vivid aurora hues with a more composed overall shell.</p></div>
+        <div class="panel"><small>Luxury Bright</small>Best for premium collections that still want strong color identity and highly visible card showcases.</div>
+      </section>
+      <section class="grid">
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#75ffe2,#42c1ff 46%,#5f68ff);"><span>Product</span><strong>Glacier Halo Dock</strong></div><div class="content"><h2>Item Gallery 10A</h2><p>A futuristic desktop object with clean premium shaping and a crisp aurora-glass visual treatment.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#70f0ff,#af7aff 48%,#f76dff);"><span>Service</span><strong>Iris Launch Direction</strong></div><div class="content"><h2>Item Gallery 10B</h2><p>A high-end launch design service for polished digital releases, refined interfaces, and luxury visual systems.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#78ffcf,#c5ff72 48%,#38c19e);"><span>Edition</span><strong>Mint Aurora Chair</strong></div><div class="content"><h2>Item Gallery 10C</h2><p>A collectible object concept shown as a premium card with jewel-tone calm and strong surface contrast.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#8dd7ff,#7e8cff 50%,#28336d);"><span>Collection</span><strong>Blueglass Asset Set</strong></div><div class="content"><h2>Item Gallery 10D</h2><p>A polished collection of luxury visuals, product studies, and controlled high-end promotional materials.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#8ffff1,#6ce0ff 46%,#db72ff);"><span>Drop</span><strong>Frost Prism Capsule</strong></div><div class="content"><h2>Item Gallery 10E</h2><p>A composed but vivid capsule release for premium goods that still benefit from standout chroma.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(160deg,#6bffe0,#7db3ff 48%,#f7a2ff);"><span>Object</span><strong>Crystal Ribbon Lamp</strong></div><div class="content"><h2>Item Gallery 10F</h2><p>A premium decor concept displayed with jewel-toned atmosphere and a cleaner luxury framing language.</p></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".nav, .tabs").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

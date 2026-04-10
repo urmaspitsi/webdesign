@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Bazaar</title>
+  <style>
+    :root {
+      --bg: #05070d;
+      --text: #f8fbff;
+      --muted: #afbdd2;
+      --line: rgba(255,255,255,0.1);
+      color-scheme: dark;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(0,255,224,0.18), transparent 24%),
+        radial-gradient(circle at 100% 0%, rgba(255,0,153,0.22), transparent 28%),
+        linear-gradient(180deg, #121727, var(--bg));
+    }
+    .app { display: grid; grid-template-columns: 244px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; padding: 20px 18px; display: flex; flex-direction: column; gap: 16px;
+      background: linear-gradient(180deg, rgba(8,10,15,0.98), rgba(5,7,11,0.94)); border-right: 1px solid var(--line);
+    }
+    .box, .topbar, .card { box-shadow: 0 24px 70px rgba(0,0,0,0.42); }
+    .box {
+      padding: 16px; border-radius: 22px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    }
+    .box small { display: block; margin-bottom: 8px; color: #5ff8ff; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.68rem; }
+    .nav { display: grid; gap: 8px; }
+    .nav a, .tabs button { color: inherit; text-decoration: none; font: inherit; border: 0; background: transparent; cursor: pointer; }
+    .nav a { padding: 12px 14px; border-radius: 16px; color: var(--muted); }
+    .nav a.active, .nav a:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+    .main { padding: 18px; min-width: 0; }
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      position: sticky; top: 14px; z-index: 10; padding: 14px 16px; border-radius: 24px;
+      border: 1px solid var(--line); background: rgba(10,14,22,0.78); backdrop-filter: blur(15px);
+    }
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tabs button { padding: 10px 14px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,0.04); }
+    .tabs button.active { color: #050911; background: linear-gradient(135deg, #00ffd0, #66e1ff); }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+      background: linear-gradient(135deg, #00ffd0, #ff2ca6); color: #071017;
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 24px; align-items: center; padding: 30px 4px 22px;
+    }
+    .hero h1 { margin: 0 0 12px; font-size: clamp(2.6rem, 4.8vw, 4.8rem); line-height: 0.92; letter-spacing: -0.06em; max-width: 8ch; }
+    .hero p { margin: 0; color: var(--muted); max-width: 58ch; line-height: 1.65; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px;
+      max-height: calc(100vh - 188px); overflow: auto; padding-right: 6px; padding-bottom: 28px;
+    }
+    .card {
+      min-height: 370px; padding: 14px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(7,10,15,0.98), rgba(6,8,12,0.96));
+      position: relative; overflow: hidden;
+    }
+    .card::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 22%);
+      pointer-events: none;
+    }
+    .art {
+      height: 224px; border-radius: 20px; background: var(--art); padding: 18px;
+      display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 0 36px rgba(0,0,0,0.28);
+    }
+    .art::before {
+      content: ""; position: absolute; inset: 14px 14px auto auto; width: 74px; height: 74px;
+      border-radius: 50%; border: 2px solid rgba(255,255,255,0.18);
+    }
+    .art span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.78); }
+    .art strong { position: relative; z-index: 1; font-size: 1.95rem; line-height: 0.95; max-width: 8ch; }
+    .content { padding: 16px 8px 8px; }
+    .content h2 { margin: 0 0 10px; font-size: 1.58rem; }
+    .content p { margin: 0; color: var(--muted); line-height: 1.55; }
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .grid { max-height: none; overflow: visible; }
+    }
+    @media (max-width: 760px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="box"><small>Night Market</small><strong>Neon Bazaar</strong></div>
+      <nav class="nav">
+        <a href="#" class="active">Glow Cards</a><a href="#">Objects</a><a href="#">Services</a><a href="#">Featured</a><a href="#">Flash Drops</a>
+      </nav>
+      <div class="box">Inspired by nightlife signage and saturated city reflections, with the main body turned into a sharper marketplace card grid.</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="tabs"><button class="active">Live Floor</button><button>Best Light</button><button>Hot Releases</button><button>Rare</button></div>
+        <div class="avatar">NB</div>
+      </header>
+      <section class="hero">
+        <div><h1>Item cards that look lit from inside.</h1><p>This direction keeps the UI shell controlled while the gallery cards behave like luminous display units, each with stronger color identity and presence.</p></div>
+        <div class="box"><small>Standout Mode</small>Useful when the catalog should feel vibrant, trendy, and immediately visual without losing overall page structure.</div>
+      </section>
+      <section class="grid">
+        <article class="card"><div class="art" style="--art:linear-gradient(155deg,#00ffd0,#007cf0 52%,#08143b);"><span>Device</span><strong>Aqua Pulse Deck</strong></div><div class="content"><h2>Item Gallery 7A</h2><p>Compact visual mixer framed in teal light with a club-ready product presence and sharp digital attitude.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(155deg,#ff2ca6,#ff7a18 52%,#3b0d32);"><span>Service</span><strong>Magenta Launch Burst</strong></div><div class="content"><h2>Item Gallery 7B</h2><p>A campaign sprint package for high-contrast brands, event drops, and high-energy visual merchandising.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(155deg,#9d5cff,#3d52ff 50%,#0b0d27);"><span>Edition</span><strong>Ultraviolet Lamp Set</strong></div><div class="content"><h2>Item Gallery 7C</h2><p>Atmospheric collectible lighting framed like a rare drop, with bold electric depth and polished curvature.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(155deg,#b7ff27,#00d48d 56%,#072019);"><span>Collection</span><strong>Acid Garden Posters</strong></div><div class="content"><h2>Item Gallery 7D</h2><p>A loud graphic set for music visuals, capsules, and culture-led storefront presentations.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(155deg,#ffef66,#ff7e5f 52%,#481709);"><span>Product</span><strong>Signal Ember Camera</strong></div><div class="content"><h2>Item Gallery 7E</h2><p>A speculative hardware object wrapped in saturated warmth and sold as a featured collector piece.</p></div></article>
+        <article class="card"><div class="art" style="--art:linear-gradient(155deg,#87f9ff,#f581ff 54%,#23103b);"><span>Drop</span><strong>Nightline Capsule</strong></div><div class="content"><h2>Item Gallery 7F</h2><p>A stylish mixed drop of premium visuals, audio snippets, and digital objects with nightlife polish.</p></div></article>
+      </section>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll(".nav, .tabs").forEach(function (group) {
+      group.addEventListener("click", function (event) {
+        var target = event.target.closest("a, button");
+        if (!target) return;
+        group.querySelectorAll(".active").forEach(function (node) { node.classList.remove("active"); });
+        target.classList.add("active");
+        event.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>
