@@ -7,10 +7,16 @@ window.siteProjects = [
     badge: "Live",
     href: "landingpages/index.html",
     navHref: "landingpages/index.html",
-    accent: "linear-gradient(145deg, #cc5a34, #6a2b24)",
+    accent: "linear-gradient(145deg, #4f8d83, #244b49)",
     eyebrow: "Project Folder",
     visualTitle: "Hero Concepts",
-    tags: ["Folder index", "Standalone pages", "Marketing UI"]
+    tags: ["Folder index", "Standalone pages", "Marketing UI"],
+    cardTheme: {
+      panelBackground: "linear-gradient(180deg, rgba(242, 238, 232, 0.96), rgba(226, 219, 211, 0.90))",
+      panelBorder: "rgba(123, 112, 101, 0.18)",
+      panelShadow: "0 18px 50px rgba(34, 28, 24, 0.12)",
+      mutedColor: "#595148"
+    }
   },
   {
     slug: "dashboards",
@@ -20,9 +26,15 @@ window.siteProjects = [
     badge: "Placeholder",
     href: "dashboards/index.html",
     navHref: "dashboards/index.html",
-    accent: "linear-gradient(145deg, #356b68, #17353b)",
+    accent: "linear-gradient(145deg, #3f7b74, #173b39)",
     eyebrow: "Project Folder",
     visualTitle: "Data Views",
-    tags: ["Folder index", "Future catalog", "Dashboard UI"]
+    tags: ["Folder index", "Future catalog", "Dashboard UI"],
+    cardTheme: {
+      panelBackground: "linear-gradient(180deg, rgba(240, 236, 231, 0.96), rgba(222, 215, 207, 0.90))",
+      panelBorder: "rgba(116, 107, 98, 0.18)",
+      panelShadow: "0 18px 50px rgba(31, 26, 22, 0.12)",
+      mutedColor: "#575047"
+    }
   }
 ];

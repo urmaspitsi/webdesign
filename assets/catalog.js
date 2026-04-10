@@ -62,7 +62,11 @@
 
     section = createElement("section", heroClassName);
     var inner = createElement("div", "hero-inner");
-    inner.appendChild(createElement("div", "hero-kicker", hero.kicker));
+
+    if (hero.kicker) {
+      inner.appendChild(createElement("div", "hero-kicker", hero.kicker));
+    }
+
     inner.appendChild(createElement("h2", "hero-title", hero.title));
     inner.appendChild(createElement("p", "hero-text", hero.text));
 
@@ -254,17 +258,20 @@
     };
   }
 
-  function projectToCard(project, cardLinkLabel) {
+  function projectToCard(project, cardLinkLabel, options) {
+    var settings = options || {};
+
     return {
       title: project.title,
       visualTitle: project.visualTitle || project.title,
       eyebrow: project.eyebrow || "Project Folder",
       badge: project.badge,
       description: project.summary,
-      tags: project.tags || [],
+      tags: settings.includeTags === false ? [] : project.tags || [],
       href: project.href,
       linkLabel: cardLinkLabel || "Open section",
-      accent: project.accent
+      accent: project.accent,
+      cardTheme: project.cardTheme
     };
   }
 
@@ -288,15 +295,9 @@
         })
       ),
       hero: {
-        kicker: "Static HTML + CSS + JS",
-        title: "A lightweight gallery for standalone web experiments.",
+        title: "My web design gallery",
         text:
-          "This repository is structured for GitHub Pages: each top-level folder is its own topic, each topic has an index page, and every design stays self-contained without frameworks or build tooling.",
-        meta: [
-          "Root homepage for project discovery",
-          projects.length + " project folders registered",
-          "Standalone files ready to host"
-        ]
+          "This is my little gallery of various web design projects."
       },
       sections: [
         {
@@ -306,7 +307,7 @@
             "Browse by topic. Each card links to a dedicated section page that can grow independently while staying easy to publish and maintain.",
           note: projects.length + " sections available",
           items: projects.map(function (project) {
-            return projectToCard(project, "Open section");
+            return projectToCard(project, "Open section", { includeTags: false });
           })
         }
       ]
