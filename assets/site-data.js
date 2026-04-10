@@ -8,8 +8,7 @@ window.siteProjects = [
     href: "landingpages/index.html",
     navHref: "landingpages/index.html",
     accent: "linear-gradient(145deg, #4f8d83, #244b49)",
-    eyebrow: "Project Folder",
-    visualTitle: "Hero Concepts",
+    visualTitle: "Landing Pages",
     tags: ["Folder index", "Standalone pages", "Marketing UI"],
     cardTheme: {
       panelBackground: "linear-gradient(180deg, rgba(242, 238, 232, 0.96), rgba(226, 219, 211, 0.90))",
@@ -27,8 +26,7 @@ window.siteProjects = [
     href: "dashboards/index.html",
     navHref: "dashboards/index.html",
     accent: "linear-gradient(145deg, #3f7b74, #173b39)",
-    eyebrow: "Project Folder",
-    visualTitle: "Data Views",
+    visualTitle: "Dashboards",
     tags: ["Folder index", "Future catalog", "Dashboard UI"],
     cardTheme: {
       panelBackground: "linear-gradient(180deg, rgba(240, 236, 231, 0.96), rgba(222, 215, 207, 0.90))",
@@ -46,8 +44,7 @@ window.siteProjects = [
     href: "chat-ui/index.html",
     navHref: "chat-ui/index.html",
     accent: "linear-gradient(145deg, #5d8662, #284339)",
-    eyebrow: "Project Folder",
-    visualTitle: "Conversation Views",
+    visualTitle: "Chat UI",
     tags: ["Folder index", "Messaging UI", "Assistant patterns"],
     cardTheme: {
       panelBackground: "linear-gradient(180deg, rgba(240, 238, 231, 0.96), rgba(221, 216, 206, 0.9))",
@@ -65,8 +62,7 @@ window.siteProjects = [
     href: "item-gallery/index.html",
     navHref: "item-gallery/index.html",
     accent: "linear-gradient(145deg, #8d6d49, #4a3324)",
-    eyebrow: "Project Folder",
-    visualTitle: "Collection Views",
+    visualTitle: "Item Gallery",
     tags: ["Folder index", "Catalog UI", "Browse patterns"],
     cardTheme: {
       panelBackground: "linear-gradient(180deg, rgba(242, 236, 229, 0.96), rgba(227, 216, 204, 0.9))",

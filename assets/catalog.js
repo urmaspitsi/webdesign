@@ -264,7 +264,7 @@
     return {
       title: project.title,
       visualTitle: project.visualTitle || project.title,
-      eyebrow: project.eyebrow || "Project Folder",
+      eyebrow: project.eyebrow || "",
       badge: project.badge,
       description: project.summary,
       tags: settings.includeTags === false ? [] : project.tags || [],
