@@ -70,5 +70,23 @@ window.siteProjects = [
       panelShadow: "0 18px 50px rgba(37, 27, 20, 0.12)",
       mutedColor: "#625246"
     }
+  },
+  {
+    slug: "news-feed",
+    title: "News feed",
+    shortTitle: "News feed",
+    summary: "Reserved for news stream, editorial feed, and update-heavy layout concepts.",
+    badge: "Placeholder",
+    href: "news-feed/index.html",
+    navHref: "news-feed/index.html",
+    accent: "linear-gradient(145deg, #6f7f55, #2f3d28)",
+    visualTitle: "News feed",
+    tags: ["Folder index", "Editorial UI", "Feed patterns"],
+    cardTheme: {
+      panelBackground: "linear-gradient(180deg, rgba(238, 236, 228, 0.96), rgba(219, 216, 204, 0.9))",
+      panelBorder: "rgba(111, 115, 91, 0.18)",
+      panelShadow: "0 18px 50px rgba(27, 32, 21, 0.12)",
+      mutedColor: "#525544"
+    }
   }
 ];
