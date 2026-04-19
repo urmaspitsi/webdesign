@@ -80,6 +80,32 @@ After that, the homepage will be able to link to the new folder, and the folder 
 3. Set `href` to the local file, for example `my-page.html`.
 4. Optionally add a `cardTheme` object if the card should visually reflect the target page.
 
+## Run Locally
+
+Serve the repository root with a lightweight local HTTP server:
+
+```powershell
+cd C:\Users\Urmas\Documents\codex\webdesign
+python -m http.server 5500
+```
+
+Then open [http://localhost:5500](http://localhost:5500/).
+
+Useful local routes:
+
+- [http://localhost:5500/](http://localhost:5500/)
+- [http://localhost:5500/landingpages/](http://localhost:5500/landingpages/)
+- [http://localhost:5500/dashboards/](http://localhost:5500/dashboards/)
+
+If `python` is not available, you can use:
+
+```powershell
+cd C:\Users\Urmas\Documents\codex\webdesign
+npx serve .
+```
+
+Avoid opening pages with `file://...` directly, because some pages load local config or theme data through fetch and work correctly only when served over `http://localhost`.
+
 ## GitHub Pages Compatibility
 
 This repository is GitHub Pages friendly because:
