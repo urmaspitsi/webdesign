@@ -82,14 +82,14 @@ After that, the homepage will be able to link to the new folder, and the folder 
 
 ## Run Locally
 
-Serve the repository root with a lightweight local HTTP server:
+For day-to-day development, use the local dev server:
 
 ```powershell
 cd C:\Users\Urmas\Documents\codex\webdesign
-python -m http.server 5500
+npm run dev
 ```
 
-Then open [http://localhost:5500](http://localhost:5500/).
+This starts `live-server` on [http://localhost:5500](http://localhost:5500/) and reloads the browser automatically when files change.
 
 Useful local routes:
 
@@ -97,7 +97,14 @@ Useful local routes:
 - [http://localhost:5500/landingpages/](http://localhost:5500/landingpages/)
 - [http://localhost:5500/dashboards/](http://localhost:5500/dashboards/)
 
-If `python` is not available, you can use:
+If you do not want the npm-based workflow, you can still serve the repository root with a lightweight HTTP server:
+
+```powershell
+cd C:\Users\Urmas\Documents\codex\webdesign
+python -m http.server 5500
+```
+
+If `python` is not available, you can also use:
 
 ```powershell
 cd C:\Users\Urmas\Documents\codex\webdesign
@@ -113,7 +120,8 @@ This repository is GitHub Pages friendly because:
 - it is static,
 - it does not depend on server-side rendering,
 - it uses relative paths,
-- folder links use explicit `index.html` targets.
+- folder links use explicit `index.html` targets,
+- local tooling such as `npm run dev` is development-only and does not affect the deployed site.
 
 Publish from the repository root.
 

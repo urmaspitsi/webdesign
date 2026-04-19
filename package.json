@@ -2,6 +2,10 @@
   "name": "webdesign-gallery",
   "private": true,
   "scripts": {
+    "dev": "live-server --port=5500 --host=localhost --open=/",
     "test": "node tests/catalog.test.js"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
   }
 }
