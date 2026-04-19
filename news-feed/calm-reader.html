@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briefing Room</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --surface: rgba(255, 255, 255, 0.72);
+      --surface-strong: rgba(255, 255, 255, 0.9);
+      --text: #17202a;
+      --muted: #5e6873;
+      --line: rgba(23, 32, 42, 0.12);
+      --accent: #2555d9;
+      --accent-soft: rgba(37, 85, 217, 0.12);
+      --shadow: 0 24px 60px rgba(23, 32, 42, 0.08);
+      --sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --serif: "Georgia", "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 85, 217, 0.12), transparent 34%),
+        linear-gradient(180deg, #f8f5ef 0%, var(--bg) 100%);
+      transition: background .25s ease, color .25s ease;
+    }
+
+    body[data-theme="dark"] {
+      --bg: #0c1016;
+      --surface: rgba(16, 22, 30, 0.78);
+      --surface-strong: rgba(20, 27, 36, 0.92);
+      --text: #edf1f5;
+      --muted: #9aa4af;
+      --line: rgba(237, 241, 245, 0.12);
+      --accent: #8fb2ff;
+      --accent-soft: rgba(143, 178, 255, 0.14);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+      background:
+        radial-gradient(circle at top left, rgba(143, 178, 255, 0.16), transparent 34%),
+        linear-gradient(180deg, #081019 0%, var(--bg) 100%);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      padding: 28px clamp(20px, 4vw, 48px) 72px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 112px 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+    }
+
+    .topbar,
+    .hero-grid,
+    .section,
+    .cta {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 36px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .topbar nav {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .topbar nav a:hover,
+    .story-list a:hover,
+    .spotlight-copy a:hover {
+      color: var(--accent);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: end;
+      min-height: calc(100vh - 156px);
+      padding-top: 28px;
+    }
+
+    .eyebrow,
+    .kicker {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 600;
+      line-height: 0.98;
+    }
+
+    h1 {
+      max-width: 8ch;
+      margin-top: 18px;
+      font-size: clamp(3.8rem, 9vw, 7.5rem);
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy p,
+    .section-intro,
+    .spotlight-copy p,
+    .cta p {
+      max-width: 38rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+    }
+
+    .button-primary {
+      background: var(--text);
+      color: #fff;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    body[data-theme="dark"] .button-primary {
+      background: #f1f4f8;
+      color: #10161d;
+    }
+
+    body[data-theme="dark"] .button-secondary {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero-note {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .brief-panel {
+      position: relative;
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .brief-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    body[data-theme="dark"] .brief-panel {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .brief-meta,
+    .story-meta {
+      display: flex;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brief-panel h2 {
+      margin-top: 20px;
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: -0.04em;
+    }
+
+    .brief-panel p {
+      margin: 16px 0 26px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .ticker {
+      display: grid;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .ticker-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+
+    .ticker-row strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    main {
+      padding: 0 clamp(20px, 4vw, 48px) 84px;
+    }
+
+    .section {
+      padding: 40px 0 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-intro {
+      margin: 0;
+      max-width: 26rem;
+    }
+
+    .story-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px 26px;
+      padding-top: 22px;
+    }
+
+    .story-list article {
+      padding: 18px 0 24px;
+      border-bottom: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: reveal 700ms ease forwards;
+    }
+
+    .story-list article:nth-child(2) {
+      animation-delay: 80ms;
+    }
+
+    .story-list article:nth-child(3) {
+      animation-delay: 160ms;
+    }
+
+    .story-list h3 {
+      margin-top: 14px;
+      font-size: 1.5rem;
+      line-height: 1.16;
+      letter-spacing: -0.03em;
+    }
+
+    .story-list p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .spotlight {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr);
+      gap: clamp(24px, 4vw, 52px);
+      align-items: center;
+      padding-top: 52px;
+    }
+
+    .spotlight-media {
+      min-height: 440px;
+      background:
+        linear-gradient(180deg, rgba(17, 30, 56, 0.08), rgba(17, 30, 56, 0.26)),
+        url("https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1200&q=80") center/cover;
+      box-shadow: var(--shadow);
+    }
+
+    body[data-theme="dark"] .spotlight-media {
+      background:
+        linear-gradient(180deg, rgba(5, 10, 16, 0.28), rgba(5, 10, 16, 0.58)),
+        url("https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1200&q=80") center/cover;
+    }
+
+    .spotlight-copy {
+      padding: 12px 0;
+    }
+
+    .spotlight-copy h2 {
+      margin-top: 16px;
+      font-size: clamp(2.4rem, 4vw, 4.5rem);
+      letter-spacing: -0.05em;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .metric {
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .metric strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 2rem;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .cta {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      align-items: center;
+      margin-top: 72px;
+      padding: 30px 0 8px;
+      border-top: 1px solid var(--line);
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      letter-spacing: -0.05em;
+    }
+
+    .cta p {
+      margin: 12px 0 0;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(26px);
+      animation: reveal 850ms ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 120ms;
+    }
+
+    .delay-2 {
+      animation-delay: 240ms;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes drift {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(6px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .story-list,
+      .spotlight,
+      .cta,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        padding-top: 12px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .section-header,
+      .cta {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 20px;
+        padding-bottom: 56px;
+      }
+
+      .topbar nav {
+        flex-wrap: wrap;
+        gap: 12px 18px;
+      }
+
+      h1 {
+        max-width: none;
+        font-size: clamp(3rem, 16vw, 4.5rem);
+      }
+
+      .brief-panel,
+      .hero-copy p,
+      .section-intro,
+      .spotlight-copy p,
+      .cta p {
+        max-width: none;
+      }
+
+      .spotlight-media {
+        min-height: 300px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="theme-toggle.css" />
+</head>
+<body data-default-theme="light">
+  <div class="page-shell">
+    <header class="hero">
+      <div class="topbar fade-in">
+        <a class="brand" href="#top">Briefing Room</a>
+        <div class="topbar-actions">
+          <nav aria-label="Primary">
+            <a href="#feed">Top Stories</a>
+            <a href="#edition">Sunday Edition</a>
+            <a href="#subscribe">Subscribe</a>
+          </nav>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme"></button>
+        </div>
+      </div>
+
+      <div class="hero-grid" id="top">
+        <div class="hero-copy fade-in delay-1">
+          <div class="eyebrow">Daily News Intelligence</div>
+          <h1>News that reads like a clear desk.</h1>
+          <p>
+            A refined briefing surface for the people who want the signal first:
+            composed headlines, measured context, and a feed that never feels loud.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#subscribe">Start Reading</a>
+            <a class="button button-secondary" href="#feed">Preview Feed</a>
+            <span class="hero-note">Updated at 7:00 AM, noon, and market close.</span>
+          </div>
+        </div>
+
+        <aside class="brief-panel fade-in delay-2" aria-label="Lead briefing">
+          <div class="brief-meta">
+            <span>Lead Brief</span>
+            <span>06 min read</span>
+          </div>
+          <h2>Markets stabilize as energy and rates reset the week.</h2>
+          <p>
+            Start with the three developments moving capital, policy, and public attention,
+            then move into regional dispatches and editor selections without changing pace.
+          </p>
+          <div class="ticker" aria-label="Quick headlines">
+            <div class="ticker-row">
+              <strong>Policy</strong>
+              <span>Budget talks extend through Friday</span>
+            </div>
+            <div class="ticker-row">
+              <strong>World</strong>
+              <span>Trade corridor reopens for limited shipping</span>
+            </div>
+            <div class="ticker-row">
+              <strong>Culture</strong>
+              <span>Museum attendance returns to pre-2020 levels</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="feed">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Top Stories</div>
+            <h2>The feed, trimmed to essentials.</h2>
+          </div>
+          <p class="section-intro">
+            Each story lands with enough context to act on, without turning the page into a dashboard.
+          </p>
+        </div>
+
+        <div class="story-list">
+          <article>
+            <a href="#">
+              <div class="story-meta">
+                <span>Economy</span>
+                <span>4 min</span>
+              </div>
+              <h3>Central banks signal patience while inflation cools unevenly.</h3>
+              <p>Why the language matters more than the rate itself for the next two quarters.</p>
+            </a>
+          </article>
+
+          <article>
+            <a href="#">
+              <div class="story-meta">
+                <span>Technology</span>
+                <span>5 min</span>
+              </div>
+              <h3>Chip supply improves, but enterprise buyers are still cautious.</h3>
+              <p>The market is loosening at the factory level while procurement teams keep budgets tight.</p>
+            </a>
+          </article>
+
+          <article>
+            <a href="#">
+              <div class="story-meta">
+                <span>World</span>
+                <span>3 min</span>
+              </div>
+              <h3>Coastal cities test new climate bonds to fund local protection.</h3>
+              <p>A quiet financing shift could change how infrastructure stories unfold over the decade.</p>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section spotlight" id="edition">
+        <div class="spotlight-media" aria-hidden="true"></div>
+        <div class="spotlight-copy fade-in">
+          <div class="kicker">Sunday Edition</div>
+          <h2>Long-form reporting with room to breathe.</h2>
+          <p>
+            The weekend edition leans slower: deeper interviews, sharper visual pacing,
+            and one editorial note that connects the week’s hardest-to-read signals.
+          </p>
+          <a class="button button-secondary" href="#subscribe">Reserve the Sunday Brief</a>
+          <div class="metrics" aria-label="Edition metrics">
+            <div class="metric">
+              <strong>18</strong>
+              <span>curated briefs per day</span>
+            </div>
+            <div class="metric">
+              <strong>06</strong>
+              <span>core desks covered</span>
+            </div>
+            <div class="metric">
+              <strong>92%</strong>
+              <span>reader retention after week one</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="subscribe">
+        <div class="fade-in">
+          <div class="kicker">Membership</div>
+          <h2>Build a calmer front page.</h2>
+          <p>Join for concise daily briefings, elegant reading lists, and a professional start to every morning.</p>
+        </div>
+        <a class="button button-primary fade-in delay-1" href="mailto:editor@briefingroom.example">Request Invite</a>
+      </section>
+    </main>
+  </div>
+  <script src="theme-toggle.js"></script>
+</body>
+</html>

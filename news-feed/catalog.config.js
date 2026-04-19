@@ -1,13 +1,13 @@
 window.projectCatalog = {
   slug: "news-feed",
   title: "News feed",
-  description: "Ten restrained dark-mode news feed studies built as standalone HTML files.",
+  description: "Eleven restrained news feed studies built as standalone HTML files, including light-first and dark-first editorial concepts.",
   hero: {
     title: "Elegant dark news feeds with quiet contrast and editorial structure.",
     text:
-      "Ten standalone news-feed samples exploring newsroom fronts, briefing layouts, market-led streams, live editorial workspaces, and polished briefing dashboards. Each page is a single HTML file for easy copy, review, and comparison.",
+      "Eleven standalone news-feed samples exploring newsroom fronts, briefing layouts, market-led streams, live editorial workspaces, and polished briefing dashboards. Each page is a single HTML file for easy copy, review, and comparison.",
     meta: [
-      "10 published entries",
+      "11 published entries",
       "Single-file HTML",
       "Dark editorial direction"
     ]
@@ -17,7 +17,7 @@ window.projectCatalog = {
       title: "News Feed Samples",
       description:
         "Each sample keeps the palette tight, the chrome minimal, and the hierarchy focused on headlines, timing, and readable story grouping.",
-      note: "10 published entries",
+      note: "11 published entries",
       items: [
         {
           title: "Chronicle Ledger",
@@ -88,6 +88,13 @@ window.projectCatalog = {
           description:
             "A metropolitan news front with confident typography, transport-heavy coverage, and a polished live brief rail.",
           href: "metro-journal.html"
+        },
+        {
+          title: "Calm Reader",
+          visualTitle: "Calm Reader",
+          description:
+            "A light-first editorial briefing page with generous spacing, glassy panels, and a corresponding dark reading mode.",
+          href: "calm-reader.html"
         }
       ]
     }

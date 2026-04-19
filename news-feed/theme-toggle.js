@@ -16,7 +16,8 @@
   }
 
   function init() {
-    var saved = localStorage.getItem(storageKey) || "dark";
+    var defaultTheme = document.body.getAttribute("data-default-theme") || "dark";
+    var saved = localStorage.getItem(storageKey) || defaultTheme;
     applyTheme(saved);
 
     document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
