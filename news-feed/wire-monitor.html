@@ -26,6 +26,19 @@
         linear-gradient(180deg,#040506,#0b0d10);
       color:var(--text);
     }
+    body[data-theme="light"]{
+      --panel:#fffdfa;
+      --panel-2:#f5ede4;
+      --panel-3:#ece3d7;
+      --line:rgba(36,44,52,.12);
+      --line-2:rgba(36,44,52,.22);
+      --text:#18212b;
+      --muted:#68727e;
+      --shadow:0 18px 40px rgba(40,52,66,.10);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(138,158,178,.10), transparent 18%),
+        linear-gradient(180deg,#f8f3ec,#eef2f5);
+    }
     .app{display:grid;grid-template-columns:260px 1fr 340px;min-height:100vh;gap:16px;padding:16px}
     .nav,.workspace,.aside,.top,.stack section,.feed-item{border:1px solid var(--line);box-shadow:var(--shadow)}
     .nav,.aside,.workspace{border-radius:28px;background:linear-gradient(180deg,#0b0d10,#101318)}
@@ -97,6 +110,11 @@
     }
     .meter{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:14px}
     .meter span{display:block;height:100%;width:78%;background:linear-gradient(90deg,#d8dbde,#5f666e)}
+    body[data-theme="light"] .nav,
+    body[data-theme="light"] .aside,
+    body[data-theme="light"] .workspace{background:linear-gradient(180deg,#fffdfa,#f2ebe2)}
+    body[data-theme="light"] .top{background:rgba(255,250,244,.92)}
+    body[data-theme="light"] .detail-card{background:linear-gradient(180deg,#f8f4ee,#efe6da)}
     @media (max-width:1200px){
       .app{grid-template-columns:1fr}
       .nav,.aside{display:none}

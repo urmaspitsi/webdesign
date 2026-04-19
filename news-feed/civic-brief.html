@@ -26,6 +26,19 @@
         radial-gradient(circle at 10% 0%, rgba(255,255,255,.06), transparent 20%),
         linear-gradient(180deg,#060708,#0d1013);
     }
+    body[data-theme="light"]{
+      --panel:#fffdf9;
+      --panel-2:#f6eee5;
+      --panel-3:#ebe2d7;
+      --line:rgba(36,44,52,.12);
+      --line-2:rgba(36,44,52,.22);
+      --text:#1a232c;
+      --muted:#68727d;
+      --shadow:0 18px 38px rgba(40,52,66,.10);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(155,171,186,.10), transparent 20%),
+        linear-gradient(180deg,#f8f3ec,#eef2f5);
+    }
     .shell{max-width:1360px;margin:0 auto;padding:20px}
     .top,.hero,.panel,.note{border:1px solid var(--line);box-shadow:var(--shadow)}
     .top{
@@ -75,6 +88,15 @@
       padding:10px 14px;border-radius:999px;cursor:pointer;font:inherit
     }
     .filter button.active{color:var(--text);border-color:var(--line-2);background:rgba(255,255,255,.06)}
+    body[data-theme="light"] .top{background:rgba(255,250,244,.92)}
+    body[data-theme="light"] .hero{background:linear-gradient(180deg,#fffdfa,#f3ebe2)}
+    body[data-theme="light"] .hero-art{
+      background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.10)),
+        radial-gradient(circle at 70% 28%, rgba(113,133,152,.16), transparent 14%),
+        linear-gradient(145deg,#d9e2ea,#f8f1e9 58%,#e7dccc);
+    }
+    body[data-theme="light"] .note{background:linear-gradient(180deg,#f8f3ed,#efe6da)}
     @media (max-width:1040px){.hero-grid,.layout,.stories{grid-template-columns:1fr}}
     @media (max-width:720px){.shell{padding:12px}.top{flex-direction:column;align-items:flex-start}}
   </style>

@@ -26,6 +26,19 @@
         radial-gradient(circle at 20% 0%, rgba(255,255,255,.05), transparent 18%),
         linear-gradient(180deg,#050505,#0b0c0d);
     }
+    body[data-theme="light"]{
+      --paper:#fffdfa;
+      --paper-2:#f6eee4;
+      --paper-3:#ece2d6;
+      --line:rgba(35,42,49,.12);
+      --line-2:rgba(35,42,49,.22);
+      --text:#1a2028;
+      --muted:#6b727a;
+      --shadow:0 20px 42px rgba(40,52,66,.10);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(172,152,132,.10), transparent 18%),
+        linear-gradient(180deg,#faf5ee,#eef1f4);
+    }
     .shell{max-width:1320px;margin:0 auto;padding:22px}
     .frame,.hero,.feature,.panel,.quote{border:1px solid var(--line);box-shadow:var(--shadow)}
     .frame{
@@ -108,6 +121,15 @@
         linear-gradient(180deg,#17191c,#111316);
     }
     .quote h3{font-size:1.5rem;line-height:1.35}
+    body[data-theme="light"] .frame{background:linear-gradient(180deg,#fffdfa,#f2ebe2)}
+    body[data-theme="light"] .hero{background:linear-gradient(180deg,#fffdfa,#f4ece3)}
+    body[data-theme="light"] .hero-visual{
+      background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.10)),
+        radial-gradient(circle at 30% 26%, rgba(118,137,154,.16), transparent 18%),
+        linear-gradient(150deg,#dbe3ea,#f8f1e8 58%,#e5d8ca);
+    }
+    body[data-theme="light"] .quote{background:linear-gradient(180deg,#f8f3ed,#efe6da)}
     @media (max-width:1080px){
       .hero-grid,.layout,.brief-grid{grid-template-columns:1fr}
     }

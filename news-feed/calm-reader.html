@@ -37,6 +37,12 @@
       transition: background .25s ease, color .25s ease;
     }
 
+    body[data-theme="light"] {
+      background:
+        radial-gradient(circle at top left, rgba(37, 85, 217, 0.12), transparent 34%),
+        linear-gradient(180deg, #f8f5ef 0%, var(--bg) 100%);
+    }
+
     body[data-theme="dark"] {
       --bg: #0c1016;
       --surface: rgba(16, 22, 30, 0.78);

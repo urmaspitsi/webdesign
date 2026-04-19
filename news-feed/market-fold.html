@@ -12,6 +12,18 @@
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 100% 0%, rgba(255,255,255,.05), transparent 20%),linear-gradient(180deg,#050607,#0c0f13)}
+    body[data-theme="light"]{
+      --panel:#fffdf9;
+      --panel-2:#f6eee4;
+      --line:rgba(36,44,52,.12);
+      --line-2:rgba(36,44,52,.22);
+      --text:#1a232c;
+      --muted:#68727d;
+      --shadow:0 18px 40px rgba(40,52,66,.10);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(154,171,188,.10), transparent 20%),
+        linear-gradient(180deg,#faf5ee,#eef2f5);
+    }
     .shell{max-width:1380px;margin:0 auto;padding:20px}
     .top,.ticker,.hero,.panel,.tile{border:1px solid var(--line);box-shadow:var(--shadow)}
     .top{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:18px 22px;border-radius:28px;background:rgba(14,16,19,.9)}
@@ -41,6 +53,9 @@
     .watch-item:first-child{padding-top:0;border-top:0}
     .watch-item strong{display:block;line-height:1.45}
     @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    body[data-theme="light"] .top{background:rgba(255,250,244,.92)}
+    body[data-theme="light"] .ticker{background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(243,234,224,.82))}
+    body[data-theme="light"] .hero{background:linear-gradient(180deg,#fffdfa,#f3ebe2)}
     @media (max-width:1040px){.top,.hero-grid,.layout,.tiles{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr}}
     @media (max-width:720px){.shell{padding:12px}}
   </style>
