@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Wire Monitor is a dense, professional dark-mode news feed for breaking items, watchlists, and routing." />
+  <title>News Feed 04 - Wire Monitor</title>
+  <style>
+    :root{
+      --bg:#060708;
+      --panel:#0d0f12;
+      --panel-2:#13161a;
+      --panel-3:#1a1f24;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.16);
+      --text:#f1f2f3;
+      --muted:#97a0a7;
+      --shadow:0 22px 56px rgba(0,0,0,.46);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,.05), transparent 18%),
+        linear-gradient(180deg,#040506,#0b0d10);
+      color:var(--text);
+    }
+    .app{display:grid;grid-template-columns:260px 1fr 340px;min-height:100vh;gap:16px;padding:16px}
+    .nav,.workspace,.aside,.top,.stack section,.feed-item{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .nav,.aside,.workspace{border-radius:28px;background:linear-gradient(180deg,#0b0d10,#101318)}
+    .nav,.aside{padding:22px}
+    .brand h1,.top h2,.stack h3,.feed-item h4{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand p,.muted,.meta,.feed-item p{color:var(--muted)}
+    .brand h1{font-size:1.5rem}
+    .channels{display:grid;gap:10px;margin-top:22px}
+    .channels button{
+      border:1px solid transparent;
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      padding:14px 16px;
+      border-radius:18px;
+      text-align:left;
+      cursor:pointer;
+      font:inherit;
+    }
+    .channels button.active,.channels button:hover{color:var(--text);border-color:var(--line-2)}
+    .workspace{padding:16px;overflow:hidden}
+    .top{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:center;
+      padding:18px 20px;
+      border-radius:22px;
+      background:rgba(15,17,21,.88);
+      position:sticky;
+      top:16px;
+      z-index:5;
+      backdrop-filter:blur(12px);
+    }
+    .top-nav{display:flex;gap:14px;flex-wrap:wrap}
+    .top-nav a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid transparent}
+    .top-nav a.active,.top-nav a:hover{color:var(--text);border-color:var(--line-2)}
+    .stack{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px}
+    .stack section{border-radius:24px;background:var(--panel);padding:20px}
+    .feed{display:grid;gap:12px;max-height:calc(100vh - 160px);overflow:auto;padding-right:4px}
+    .feed-item{
+      border-radius:22px;
+      padding:18px;
+      background:var(--panel-2);
+      transition:border-color .2s ease, transform .2s ease;
+      cursor:pointer;
+    }
+    .feed-item.active,.feed-item:hover{border-color:var(--line-2);transform:translateY(-1px)}
+    .feed-item h4{font-size:1.12rem;line-height:1.28;margin:8px 0 10px}
+    .badge{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#d4d7db}
+    .detail-card{
+      min-height:100%;
+      border-radius:22px;
+      padding:22px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
+        linear-gradient(180deg,#15181d,#101317);
+      display:grid;
+      align-content:start;
+      gap:16px;
+    }
+    .detail-line{padding-top:14px;border-top:1px solid var(--line)}
+    .aside{display:grid;gap:16px}
+    .aside-card{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      background:var(--panel-2);
+    }
+    .meter{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:14px}
+    .meter span{display:block;height:100%;width:78%;background:linear-gradient(90deg,#d8dbde,#5f666e)}
+    @media (max-width:1200px){
+      .app{grid-template-columns:1fr}
+      .nav,.aside{display:none}
+      .stack{grid-template-columns:1fr}
+      .feed{max-height:none}
+    }
+    @media (max-width:720px){
+      .app{padding:12px}
+      .top{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="nav">
+      <div class="brand">
+        <div class="muted" style="letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;">Desk monitor</div>
+        <h1>Wire Monitor</h1>
+        <p>A denser newsroom surface for routing, scanning, and responding without visual clutter.</p>
+      </div>
+      <div class="channels">
+        <button class="active" type="button">All wires</button>
+        <button type="button">Markets</button>
+        <button type="button">Policy</button>
+        <button type="button">Infrastructure</button>
+        <button type="button">Labor</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="top">
+        <div>
+          <div class="muted">Live routing board</div>
+          <h2>Priority wires and editor handoff</h2>
+        </div>
+        <nav class="top-nav">
+          <a class="active" href="#">Feed</a>
+          <a href="#">Queues</a>
+          <a href="#">Assignments</a>
+          <a href="#">Archive</a>
+        </nav>
+      </header>
+
+      <div class="stack">
+        <section>
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:16px;">
+            <div>
+              <h3>Incoming wires</h3>
+              <div class="meta">Select a story to inspect the routing summary.</div>
+            </div>
+            <div class="meta">8 active items</div>
+          </div>
+          <div class="feed" id="feedList">
+            <article class="feed-item active" data-title="Power reserve warning extended into Monday session" data-summary="Grid managers widened the caution window after hotter demand projections and slower overnight maintenance turnover." data-route="Assign energy desk lead, hold market angle until ministry statement." data-watch="Watch reserve margin commentary at 06:30 and regional curtailment language.">
+              <div class="badge">Energy • 05 min ago</div>
+              <h4>Power reserve warning extended into Monday session.</h4>
+              <p>Editors expect follow-through in utilities, manufacturing, and public transport coverage.</p>
+            </article>
+            <article class="feed-item" data-title="Transit negotiators report partial progress on staffing ratios" data-summary="Officials confirmed movement on sequencing and overtime treatment, but not on baseline crew guarantees." data-route="Keep on live desk, prep commuter impact follow-up for first edition." data-watch="Need direct union text before promoting to top story.">
+              <div class="badge">Labor • 12 min ago</div>
+              <h4>Transit negotiators report partial progress on staffing ratios.</h4>
+              <p>The risk of disruption has fallen, though no final settlement text is available yet.</p>
+            </article>
+            <article class="feed-item" data-title="State issuers bring forward refinancing mandates after calmer rates" data-summary="Funding teams are moving earlier in the quarter to avoid collision with the next policy block." data-route="Route to public finance with side note for debt markets." data-watch="Monitor book depth and pricing guidance before promoting further.">
+              <div class="badge">Finance • 18 min ago</div>
+              <h4>State issuers bring forward refinancing mandates after calmer rates.</h4>
+              <p>Execution discipline is becoming more visible than outright optimism on borrowing costs.</p>
+            </article>
+            <article class="feed-item" data-title="Factory orders weaken in export districts despite steadier domestic repair work" data-summary="Survey revisions show softer near-term expectations, especially in machine tools and specialist components." data-route="Keep in industry queue, develop supply-chain angle if logistics data turns." data-watch="Need next port and freight read to confirm narrative weight.">
+              <div class="badge">Industry • 24 min ago</div>
+              <h4>Factory orders weaken in export districts despite steadier domestic repair work.</h4>
+              <p>The split between external demand and maintenance work is becoming harder to ignore.</p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="detail-card" id="detailCard">
+            <div>
+              <div class="badge">Routing summary</div>
+              <h3 id="detailTitle">Power reserve warning extended into Monday session</h3>
+            </div>
+            <p class="muted" id="detailSummary">Grid managers widened the caution window after hotter demand projections and slower overnight maintenance turnover.</p>
+            <div class="detail-line">
+              <strong>Desk route</strong>
+              <p class="muted" id="detailRoute">Assign energy desk lead, hold market angle until ministry statement.</p>
+            </div>
+            <div class="detail-line">
+              <strong>What to watch</strong>
+              <p class="muted" id="detailWatch">Watch reserve margin commentary at 06:30 and regional curtailment language.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <aside class="aside">
+      <div class="aside-card">
+        <div class="muted">Desk load</div>
+        <h3 style="margin-top:8px;">Coverage readiness</h3>
+        <div class="meter"><span></span></div>
+        <p class="muted">Most priority lines are staffed, but energy and labor still require direct statement verification.</p>
+      </div>
+      <div class="aside-card">
+        <div class="muted">Editor note</div>
+        <p class="muted">The page aims to feel operational, not flashy. Thin rules, soft depth, and disciplined spacing carry the hierarchy.</p>
+      </div>
+    </aside>
+  </div>
+  <script>
+    (function () {
+      var items = document.querySelectorAll(".feed-item");
+      var title = document.getElementById("detailTitle");
+      var summary = document.getElementById("detailSummary");
+      var route = document.getElementById("detailRoute");
+      var watch = document.getElementById("detailWatch");
+
+      items.forEach(function (item) {
+        item.addEventListener("click", function () {
+          items.forEach(function (entry) { entry.classList.toggle("active", entry === item); });
+          title.textContent = item.getAttribute("data-title");
+          summary.textContent = item.getAttribute("data-summary");
+          route.textContent = item.getAttribute("data-route");
+          watch.textContent = item.getAttribute("data-watch");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

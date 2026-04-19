@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Signal Review is an analytical dark news feed focused on sectors, policy briefs, and editorial summaries." />
+  <title>News Feed 03 - Signal Review</title>
+  <style>
+    :root{
+      --bg:#08090a;
+      --panel:#0f1113;
+      --panel-2:#15181c;
+      --panel-3:#1d2126;
+      --text:#eef0f2;
+      --muted:#98a0a7;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.16);
+      --shadow:0 26px 60px rgba(0,0,0,.42);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255,255,255,.05), transparent 22%),
+        linear-gradient(180deg,#050607,#0c0e11);
+    }
+    .shell{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+    .sidebar,.main-header,.hero,.panel{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .sidebar{
+      padding:24px 20px;
+      border-right:1px solid var(--line);
+      background:linear-gradient(180deg,#0b0d10,#101317);
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    .brand h1,.hero h2,.panel h3,.report h4{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand h1{font-size:1.7rem}
+    .muted,.sidebar p,.report p,.meta{color:var(--muted)}
+    .rail{display:grid;gap:10px}
+    .rail button{
+      text-align:left;
+      border:1px solid transparent;
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      border-radius:18px;
+      padding:14px 16px;
+      cursor:pointer;
+      font:inherit;
+      transition:border-color .2s ease, color .2s ease, transform .2s ease;
+    }
+    .rail button.active,.rail button:hover{color:var(--text);border-color:var(--line-2);transform:translateX(3px)}
+    .main{padding:18px}
+    .main-header{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:center;
+      padding:18px 22px;
+      border-radius:28px;
+      background:rgba(14,16,19,.88);
+      position:sticky;
+      top:16px;
+      z-index:10;
+      backdrop-filter:blur(14px);
+    }
+    .meta-strip{display:flex;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+    .hero{
+      margin-top:18px;
+      border-radius:34px;
+      padding:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#111317,#0d0f12);
+    }
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
+    .hero h2{font-size:clamp(2rem,4vw,4.2rem);line-height:1.02;max-width:10ch}
+    .hero p{line-height:1.72;max-width:58ch}
+    .matrix{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      align-self:end;
+    }
+    .metric{
+      padding:18px;
+      border-radius:24px;
+      background:var(--panel-2);
+      border:1px solid var(--line);
+    }
+    .metric strong{display:block;font-size:1.5rem;margin-top:8px}
+    .sections{display:grid;gap:18px;margin-top:18px}
+    .panel{
+      border-radius:30px;
+      padding:24px;
+      background:linear-gradient(180deg,#101318,#0c0e11);
+    }
+    .panel-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:18px}
+    .reports{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .report{
+      padding:20px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:var(--panel-2);
+      transition:border-color .2s ease, transform .2s ease;
+    }
+    .report:hover{border-color:var(--line-2);transform:translateY(-2px)}
+    .report h4{font-size:1.16rem;line-height:1.28;margin:10px 0 12px}
+    .feed{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .stream{display:grid;gap:14px}
+    .stream-item{display:grid;grid-template-columns:76px 1fr;gap:14px;padding-top:14px;border-top:1px solid var(--line)}
+    .stream-item:first-child{padding-top:0;border-top:0}
+    .stream-item time{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#d6d8db}
+    .note{
+      min-height:100%;
+      padding:24px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        linear-gradient(180deg,#16191e,#101317);
+    }
+    .progress{
+      margin-top:18px;
+      height:8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      overflow:hidden;
+    }
+    .progress span{display:block;height:100%;width:68%;background:linear-gradient(90deg,#d8dadc,#5f656c)}
+    @media (max-width:1120px){
+      .shell{grid-template-columns:1fr}
+      .sidebar{display:none}
+      .hero-grid,.reports,.feed{grid-template-columns:1fr}
+      .matrix{grid-template-columns:1fr}
+    }
+    @media (max-width:720px){
+      .main{padding:12px}
+      .main-header{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="muted" style="letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;">Analyst feed</div>
+        <h1>Signal Review</h1>
+      </div>
+      <p>A decision-oriented news feed for readers who want sectors, timing, and policy context before noise.</p>
+      <div class="rail">
+        <button class="active" type="button">Macro view</button>
+        <button type="button">Infrastructure</button>
+        <button type="button">Credit</button>
+        <button type="button">Industry</button>
+        <button type="button">Public finance</button>
+      </div>
+      <p class="muted">The navigation is intentionally quiet. The weight stays on the briefing itself.</p>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <div>
+          <div class="muted">Sunday briefing</div>
+          <strong style="font-size:1.12rem;">Priority signals before the European open</strong>
+        </div>
+        <div class="meta-strip">
+          <span>11 source clusters</span>
+          <span>5 sectors in focus</span>
+          <span>Updated 09:18</span>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="muted" style="letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;">Primary read</div>
+            <h2>Capital remains available, but conviction is becoming more selective.</h2>
+            <p class="muted">
+              Lending conditions are no longer the only story. Boards are now separating short-cycle resilience from longer-cycle exposure, which is producing steadier private financing for infrastructure and a more cautious tone around broad industrial expansion.
+            </p>
+          </div>
+          <div class="matrix">
+            <div class="metric"><span class="muted">Macro confidence</span><strong>68</strong><span class="muted">Moderate</span></div>
+            <div class="metric"><span class="muted">Credit tone</span><strong>74</strong><span class="muted">Stable</span></div>
+            <div class="metric"><span class="muted">Policy clarity</span><strong>42</strong><span class="muted">Mixed</span></div>
+            <div class="metric"><span class="muted">Industrial demand</span><strong>57</strong><span class="muted">Softening</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sections">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Sector briefs</h3>
+              <div class="muted">Short reads built for fast scanning.</div>
+            </div>
+            <div class="meta">Filter changes copy tone below</div>
+          </div>
+          <div class="reports" id="sectorReports">
+            <article class="report">
+              <div class="muted">Infrastructure</div>
+              <h4>Ports and freight stay comparatively firm while inland demand turns less certain.</h4>
+              <p>Operators report workable capacity, but planning confidence is increasingly tied to labor settlement timing.</p>
+            </article>
+            <article class="report">
+              <div class="muted">Credit</div>
+              <h4>Mid-market lenders prefer visible cash flow over broad cyclical upside.</h4>
+              <p>Committees continue to fund equipment, logistics, and regulated services at better terms than consumer exposure.</p>
+            </article>
+            <article class="report">
+              <div class="muted">Public finance</div>
+              <h4>Agencies move early to secure issuance windows before the next policy block begins.</h4>
+              <p>Execution discipline is becoming a bigger advantage than outright optimism on rates.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Continuous stream</h3>
+              <div class="muted">Live notes on what matters next.</div>
+            </div>
+            <div class="meta">Desk monitor</div>
+          </div>
+          <div class="feed">
+            <div class="stream">
+              <div class="stream-item"><time>08:55</time><div><strong>Industrial survey revisions show weaker export expectations in two manufacturing regions.</strong><div class="muted">Desk note: watch whether logistics resilience offsets the headline softness.</div></div></div>
+              <div class="stream-item"><time>08:26</time><div><strong>Transit agencies restart contingency planning despite quieter labor rhetoric.</strong><div class="muted">Officials are avoiding assumptions until staffing ratios are signed.</div></div></div>
+              <div class="stream-item"><time>07:58</time><div><strong>Private capital groups continue rotating toward regulated infrastructure cash flow.</strong><div class="muted">The theme remains steady: certainty is valued more than acceleration.</div></div></div>
+            </div>
+            <aside class="note">
+              <div class="muted" style="letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;">Confidence score</div>
+              <h3 style="margin-top:10px;">Market calm, policy fog.</h3>
+              <p class="muted">The overall backdrop is investable but not yet generous. Readers should treat fresh policy claims carefully until implementation detail catches up.</p>
+              <div class="progress"><span></span></div>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    (function () {
+      var groups = {
+        "Macro view": [
+          ["Infrastructure", "Ports and freight stay comparatively firm while inland demand turns less certain.", "Operators report workable capacity, but planning confidence is increasingly tied to labor settlement timing."],
+          ["Credit", "Mid-market lenders prefer visible cash flow over broad cyclical upside.", "Committees continue to fund equipment, logistics, and regulated services at better terms than consumer exposure."],
+          ["Public finance", "Agencies move early to secure issuance windows before the next policy block begins.", "Execution discipline is becoming a bigger advantage than outright optimism on rates."]
+        ],
+        "Infrastructure": [
+          ["Freight", "Reserve power warnings place more scrutiny on ports, rail hubs, and cold-chain operations.", "Editors are prioritizing logistics exposure because it connects directly to inflation, trade timing, and regional growth."],
+          ["Utilities", "Grid operators argue for narrower industrial curtailment rules ahead of summer heat stress.", "The debate has shifted from emergency response to where selective relief should be allowed."],
+          ["Construction", "Project managers report cleaner financing, but slower permitting continues to delay starts.", "The underlying demand is present; delivery friction is the real story."]
+        ],
+        "Credit": [
+          ["Banks", "Senior lenders remain selective, but term sheets are improving for asset-heavy businesses.", "Risk appetite is not broadening evenly; the best execution still goes to companies with visible revenue quality."],
+          ["Private debt", "Sponsors are using quieter markets to lock in covenant flexibility before autumn.", "The tone is cautious confidence rather than aggressive expansion."],
+          ["Refinancing", "Public issuers are moving earlier in the quarter to avoid policy congestion.", "Timing discipline is becoming a competitive advantage."]
+        ],
+        "Industry": [
+          ["Factories", "Order books are softening in export-heavy districts while domestic maintenance work stays active.", "The contrast argues for more targeted rather than broad industrial narratives."],
+          ["Materials", "Price pressure has eased, but procurement managers still expect uneven supplier lead times.", "The improvement is real, though not yet clean enough to call structural."],
+          ["Autos", "Component demand remains stable, but distribution planning is becoming more defensive.", "Inventory is being managed with greater caution than the headline data suggests."]
+        ],
+        "Public finance": [
+          ["States", "Regional funding teams want quicker approval windows while rates remain relatively calm.", "The goal is less about urgency and more about not losing timing advantages."],
+          ["Cities", "Transit and housing agencies continue to dominate the near-term issuance calendar.", "Their financing needs are visible and politically legible, which helps execution."],
+          ["Policy", "Support packages are getting narrower, not larger.", "That change matters more for local planning than for national messaging."]
+        ]
+      };
+
+      var buttons = document.querySelectorAll(".rail button");
+      var container = document.getElementById("sectorReports");
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var key = button.textContent;
+          buttons.forEach(function (node) { node.classList.toggle("active", node === button); });
+          container.innerHTML = groups[key].map(function (entry) {
+            return '<article class="report"><div class="muted">' + entry[0] + '</div><h4>' + entry[1] + '</h4><p>' + entry[2] + '</p></article>';
+          }).join("");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Night Desk is a dark newsroom layout with compact late-edition coverage and live desk notes." />
+  <title>News Feed 02 - Night Desk</title>
+  <style>
+    :root{
+      --bg:#070708;
+      --panel:#101114;
+      --panel-2:#15171b;
+      --panel-3:#1d2025;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.16);
+      --text:#f3f3f2;
+      --muted:#999ca1;
+      --soft:#d0d3d6;
+      --shadow:0 24px 70px rgba(0,0,0,.42);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,255,255,.06), transparent 22%),
+        linear-gradient(180deg,#050506 0%, #0b0c0f 100%);
+    }
+    a{text-decoration:none;color:inherit}
+    .shell{max-width:1440px;margin:0 auto;padding:20px}
+    .masthead,.hero,.column,.bar{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .masthead{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:20px;
+      align-items:end;
+      padding:22px 24px;
+      border-radius:30px;
+      background:rgba(12,13,16,.88);
+    }
+    .brand h1,.hero h2,.column h3,.brief h4{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand h1{font-size:2rem;text-transform:uppercase;letter-spacing:.06em}
+    .brand p,.muted,.meta,.brief p{color:var(--muted)}
+    .menu{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase}
+    .menu a{padding-bottom:6px;color:var(--muted);border-bottom:1px solid transparent}
+    .menu a.active,.menu a:hover{color:var(--text);border-color:var(--line-2)}
+    .stamp{font-size:.9rem;color:var(--soft);display:grid;gap:6px;justify-items:end}
+    .hero{
+      margin-top:18px;
+      padding:28px;
+      border-radius:34px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), linear-gradient(180deg,#111216,#0d0e11);
+    }
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+    .hero-visual{
+      min-height:380px;
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.3)),
+        radial-gradient(circle at 74% 26%, rgba(255,255,255,.18), transparent 14%),
+        linear-gradient(140deg,#2b2d31,#0f1013 58%, #1b1d21);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-visual::before{
+      content:"Late edition";
+      position:absolute;
+      left:24px;
+      bottom:22px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-size:.76rem;
+      color:#d6d8dc;
+    }
+    .hero h2{font-size:clamp(2rem,3.8vw,4rem);line-height:1.04;max-width:9ch}
+    .hero p{line-height:1.72;max-width:56ch}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+    .bar{
+      padding:16px 18px;
+      border-radius:22px;
+      background:var(--panel-2);
+      transform:translateY(14px);
+      opacity:0;
+      transition:opacity .45s ease, transform .45s ease;
+    }
+    .bar.visible{opacity:1;transform:translateY(0)}
+    .bar strong{display:block;font-size:1.25rem;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:18px}
+    .column{
+      border-radius:30px;
+      background:linear-gradient(180deg,#101216,#0c0d10);
+      padding:24px;
+    }
+    .column-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:18px}
+    .list{display:grid;gap:16px}
+    .brief{padding-top:16px;border-top:1px solid var(--line)}
+    .brief:first-child{padding-top:0;border-top:0}
+    .brief h4{font-size:1.16rem;line-height:1.26;margin:8px 0 10px}
+    .brief p{margin:0;line-height:1.65}
+    .timeline{display:grid;gap:14px}
+    .tick{display:grid;grid-template-columns:66px 1fr;gap:14px;padding-top:14px;border-top:1px solid var(--line)}
+    .tick:first-child{padding-top:0;border-top:0}
+    .tick time{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#cfd2d7}
+    .selector{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    .selector button{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font:inherit;
+    }
+    .selector button.active{color:var(--text);border-color:var(--line-2);background:rgba(255,255,255,.06)}
+    [data-pane]{display:none}
+    [data-pane].active{display:block}
+    @media (max-width:1120px){
+      .hero-grid,.layout{grid-template-columns:1fr}
+      .hero-stats{grid-template-columns:1fr}
+    }
+    @media (max-width:720px){
+      .shell{padding:12px}
+      .masthead{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <div class="brand">
+        <p class="muted">Edition 04</p>
+        <h1>Night Desk</h1>
+      </div>
+      <nav class="menu">
+        <a class="active" href="#">Late edition</a>
+        <a href="#">World</a>
+        <a href="#">Capital</a>
+        <a href="#">Markets</a>
+        <a href="#">Opinion</a>
+      </nav>
+      <div class="stamp">
+        <span>Sunday • 22:40</span>
+        <span class="muted">Prepared for first-light briefing</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="muted" style="letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;">Lead Briefing</div>
+          <h2>Transport, energy, and labor talks dominate the next session.</h2>
+          <p class="muted">
+            Negotiators made narrow progress in several high-visibility disputes overnight, but no final settlement has been signed. Editors are holding the main page around labor, logistics, and reserve power availability until ministries issue updated guidance.
+          </p>
+          <div class="hero-stats">
+            <div class="bar"><span class="muted">Open live lines</span><strong>12</strong></div>
+            <div class="bar"><span class="muted">Desk alerts</span><strong>07</strong></div>
+            <div class="bar"><span class="muted">Editors on shift</span><strong>18</strong></div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="column">
+        <div class="column-head">
+          <div>
+            <h3>Front page</h3>
+            <div class="meta">Three pieces leading the next cycle.</div>
+          </div>
+          <div class="meta">Editor selection</div>
+        </div>
+        <div class="list">
+          <article class="brief">
+            <div class="meta">Policy</div>
+            <h4>Cabinet narrows emergency support language to infrastructure and freight.</h4>
+            <p>The latest draft removes broader business relief and prioritizes ports, rail links, and regional power dependencies.</p>
+          </article>
+          <article class="brief">
+            <div class="meta">World</div>
+            <h4>Shipping insurers revisit corridor pricing after a second week of calmer passage data.</h4>
+            <p>Analysts say costs may ease, but only for operators able to lock in verified routing and inspection timing.</p>
+          </article>
+          <article class="brief">
+            <div class="meta">Capital</div>
+            <h4>Housing agencies seek faster approval windows as refinancing appetite returns.</h4>
+            <p>Officials want planning documents cleared before summer procurement pressure begins to build again.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="column">
+        <div class="column-head">
+          <div>
+            <h3>Live desk</h3>
+            <div class="meta">Rolling updates from editors and field teams.</div>
+          </div>
+          <div class="meta">Every 10 min</div>
+        </div>
+        <div class="timeline">
+          <div class="tick"><time>22:12</time><div><strong>Energy ministry schedules a pre-market statement for 06:30.</strong><div class="meta">The desk expects reserve margin guidance to anchor the first read of the day.</div></div></div>
+          <div class="tick"><time>21:46</time><div><strong>Regional transit talks continue with staffing ratios still unresolved.</strong><div class="meta">Negotiators described progress as “material but incomplete.”</div></div></div>
+          <div class="tick"><time>21:09</time><div><strong>Credit desks report steadier demand for investment-grade paper.</strong><div class="meta">Execution quality improved after a quieter US open reduced spread volatility.</div></div></div>
+        </div>
+      </section>
+
+      <section class="column">
+        <div class="column-head">
+          <div>
+            <h3>Desk view</h3>
+            <div class="meta">Toggle between agenda, watchlist, and notes.</div>
+          </div>
+          <div class="meta">Interactive</div>
+        </div>
+        <div class="selector">
+          <button class="active" data-tab="agenda" type="button">Agenda</button>
+          <button data-tab="watch" type="button">Watchlist</button>
+          <button data-tab="notes" type="button">Notes</button>
+        </div>
+        <div data-pane="agenda" class="active">
+          <div class="list">
+            <article class="brief"><h4>06:30 energy briefing</h4><p>Confirm line on reserve capacity, industrial curtailment risk, and regional exemptions.</p></article>
+            <article class="brief"><h4>07:15 transport update</h4><p>Seek clarity on union text, service restoration timing, and contingency staffing.</p></article>
+          </div>
+        </div>
+        <div data-pane="watch">
+          <div class="list">
+            <article class="brief"><h4>Freight corridor pricing</h4><p>Monitor insurer revisions and early port booking volumes.</p></article>
+            <article class="brief"><h4>Refinancing pipeline</h4><p>Track whether state agencies accelerate tenders after calmer rate action.</p></article>
+          </div>
+        </div>
+        <div data-pane="notes">
+          <div class="list">
+            <article class="brief"><h4>Editor note</h4><p>Keep language measured. The page should feel certain about what is known and explicit about what still is not.</p></article>
+            <article class="brief"><h4>Design note</h4><p>Thin rules, quiet shadows, and serif headlines are doing most of the work here.</p></article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script>
+    (function () {
+      document.querySelectorAll(".bar").forEach(function (node, index) {
+        setTimeout(function () { node.classList.add("visible"); }, 120 * (index + 1));
+      });
+
+      var buttons = document.querySelectorAll("[data-tab]");
+      var panes = document.querySelectorAll("[data-pane]");
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var target = button.getAttribute("data-tab");
+          buttons.forEach(function (entry) { entry.classList.toggle("active", entry === button); });
+          panes.forEach(function (pane) {
+            pane.classList.toggle("active", pane.getAttribute("data-pane") === target);
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

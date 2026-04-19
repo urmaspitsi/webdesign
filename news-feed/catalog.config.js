@@ -1,26 +1,62 @@
 window.projectCatalog = {
   slug: "news-feed",
   title: "News feed",
-  description: "Placeholder folder for future news feed and editorial stream samples.",
+  description: "Five restrained dark-mode news feed studies built as standalone HTML files.",
   hero: {
-    title: "News feed layouts are coming next.",
+    title: "Elegant dark news feeds with quiet contrast and editorial structure.",
     text:
-      "This section is reserved for feed-driven interfaces such as editorial homepages, update streams, and news listing concepts.",
+      "Five standalone news-feed samples exploring newsroom fronts, briefing layouts, market-led streams, and live editorial workspaces. Each page is a single HTML file for easy copy, review, and comparison.",
     meta: [
-      "0 published entries",
-      "Placeholder section",
-      "Feed-first layouts"
+      "5 published entries",
+      "Single-file HTML",
+      "Dark editorial direction"
     ]
   },
   sections: [
     {
       title: "News Feed Samples",
       description:
-        "Samples for this category have not been added yet. Future entries will appear here as standalone HTML pages.",
-      note: "Placeholder",
-      items: []
+        "Each sample keeps the palette tight, the chrome minimal, and the hierarchy focused on headlines, timing, and readable story grouping.",
+      note: "5 published entries",
+      items: [
+        {
+          title: "Chronicle Ledger",
+          visualTitle: "Chronicle Ledger",
+          description:
+            "A polished newsroom front page with a strong lead story, measured side briefs, and a refined market strip.",
+          href: "chronicle-ledger.html"
+        },
+        {
+          title: "Night Desk",
+          visualTitle: "Night Desk",
+          description:
+            "A darker late-edition layout with a compact headline rail, live desk notes, and calm three-column pacing.",
+          href: "night-desk.html"
+        },
+        {
+          title: "Signal Review",
+          visualTitle: "Signal Review",
+          description:
+            "A more analytical feed built around sectors, policy briefs, and decision-focused editorial summaries.",
+          href: "signal-review.html"
+        },
+        {
+          title: "Wire Monitor",
+          visualTitle: "Wire Monitor",
+          description:
+            "A denser monitoring surface for breaking items, watchlists, and time-sensitive newsroom routing.",
+          href: "wire-monitor.html"
+        },
+        {
+          title: "Bulletin Noir",
+          visualTitle: "Bulletin Noir",
+          description:
+            "An elegant magazine-leaning feed with generous spacing, sober typography, and premium monochrome treatment.",
+          href: "bulletin-noir.html"
+        }
+      ]
     }
   ],
   footerNote:
-    "This folder is ready for future news feed samples built as standalone HTML, CSS, and JavaScript files."
+    "All news-feed samples are plain HTML, CSS, and JavaScript so they can be copied directly or adapted individually."
 };

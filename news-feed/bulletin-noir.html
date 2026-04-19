@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bulletin Noir is an elegant monochrome news feed with magazine pacing and restrained editorial detail." />
+  <title>News Feed 05 - Bulletin Noir</title>
+  <style>
+    :root{
+      --bg:#070707;
+      --paper:#0e0f11;
+      --paper-2:#151618;
+      --paper-3:#1e2023;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.16);
+      --text:#f0efec;
+      --muted:#9f9f9a;
+      --shadow:0 30px 70px rgba(0,0,0,.44);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.05), transparent 18%),
+        linear-gradient(180deg,#050505,#0b0c0d);
+    }
+    .shell{max-width:1320px;margin:0 auto;padding:22px}
+    .frame,.hero,.feature,.panel,.quote{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .frame{
+      border-radius:34px;
+      padding:22px;
+      background:linear-gradient(180deg,#0b0c0e,#101114);
+    }
+    .top{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:center;
+      padding-bottom:18px;
+      border-bottom:1px solid var(--line);
+    }
+    .brand h1,.hero h2,.feature h3,.panel h3,.quote h3{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand h1{font-size:2rem;letter-spacing:.08em;text-transform:uppercase}
+    .muted,.brand p,.panel p,.feature p,.meta{color:var(--muted)}
+    .nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase}
+    .nav a{color:var(--muted);text-decoration:none;padding-bottom:6px;border-bottom:1px solid transparent}
+    .nav a.active,.nav a:hover{color:var(--text);border-color:var(--line-2)}
+    .hero{
+      margin-top:18px;
+      border-radius:32px;
+      padding:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#121316,#0d0e10);
+    }
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;align-items:center}
+    .hero h2{font-size:clamp(2.2rem,4vw,4.5rem);line-height:.98;max-width:10ch}
+    .hero p{line-height:1.75;max-width:56ch}
+    .hero-visual{
+      min-height:360px;
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.34)),
+        radial-gradient(circle at 30% 26%, rgba(255,255,255,.12), transparent 18%),
+        linear-gradient(150deg,#27292d,#111215 58%,#1a1b1e);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-visual::after{
+      content:"Sunday Journal";
+      position:absolute;
+      right:24px;
+      bottom:22px;
+      font-size:.76rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:#d5d7d9;
+    }
+    .layout{display:grid;grid-template-columns:1fr .92fr;gap:18px;margin-top:18px}
+    .feature,.panel,.quote{
+      border-radius:30px;
+      padding:24px;
+      background:var(--paper);
+    }
+    .feature-list{display:grid;gap:16px}
+    .feature-card{padding-top:16px;border-top:1px solid var(--line)}
+    .feature-card:first-child{padding-top:0;border-top:0}
+    .feature h3,.panel h3{font-size:1.3rem;line-height:1.22}
+    .feature p,.panel p{line-height:1.68}
+    .aside-stack{display:grid;gap:18px}
+    .brief-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+    .brief{
+      padding:18px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:var(--paper-2);
+      transform:translateY(12px);
+      opacity:0;
+      transition:opacity .45s ease, transform .45s ease;
+    }
+    .brief.visible{opacity:1;transform:translateY(0)}
+    .brief strong{display:block;font-size:1rem;line-height:1.4}
+    .quote{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01)),
+        linear-gradient(180deg,#17191c,#111316);
+    }
+    .quote h3{font-size:1.5rem;line-height:1.35}
+    @media (max-width:1080px){
+      .hero-grid,.layout,.brief-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:720px){
+      .shell{padding:12px}
+      .top{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="frame">
+      <header class="top">
+        <div class="brand">
+          <p class="muted">Weekend edition</p>
+          <h1>Bulletin Noir</h1>
+        </div>
+        <nav class="nav">
+          <a class="active" href="#">Journal</a>
+          <a href="#">Cities</a>
+          <a href="#">Industry</a>
+          <a href="#">Finance</a>
+          <a href="#">Culture</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="muted" style="letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;">Cover story</div>
+            <h2>Measured pages for readers who prefer signal over spectacle.</h2>
+            <p class="muted">
+              This concept leans closest to a premium journal: larger typography, more open space, and calmer pacing between stories. It keeps the palette almost entirely monochrome, then lets proportions and rhythm create the elegance.
+            </p>
+          </div>
+          <div class="hero-visual" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <div class="layout">
+        <section class="feature">
+          <div class="meta">Primary report</div>
+          <h3>City budgets return to discipline as refinancing windows become usable again.</h3>
+          <p>
+            Public finance teams are acting with greater precision rather than greater confidence. The result is a quieter but more credible capital plan, where timing, sequence, and project legitimacy matter more than optimistic assumptions about the rate path.
+          </p>
+          <div class="feature-list">
+            <div class="feature-card">
+              <div class="meta">What changed</div>
+              <p>Stability in debt markets created room for agencies to move, but political support packages became narrower at the same time.</p>
+            </div>
+            <div class="feature-card">
+              <div class="meta">Why it matters</div>
+              <p>Readers get a more actionable story when financing, policy scope, and delivery risk are placed in one frame.</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="aside-stack">
+          <section class="panel">
+            <div class="meta">Short briefs</div>
+            <h3>Evening selections</h3>
+            <p>Two-column briefs keep the page efficient while preserving a slower editorial rhythm.</p>
+            <div class="brief-grid">
+              <article class="brief"><strong>Transit authorities reopen service planning after softer strike rhetoric.</strong></article>
+              <article class="brief"><strong>Regional exporters cite shipping reliability as a greater concern than pricing.</strong></article>
+              <article class="brief"><strong>Utilities request narrower industrial exemptions before peak demand season.</strong></article>
+              <article class="brief"><strong>Mid-market lenders continue preferring visible cash flow over cyclical upside.</strong></article>
+            </div>
+          </section>
+
+          <section class="quote">
+            <div class="meta">Editor's margin</div>
+            <h3>“Elegance in editorial UI usually comes from what you refuse to add.”</h3>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var briefs = document.querySelectorAll(".brief");
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.2 });
+
+      briefs.forEach(function (brief) { observer.observe(brief); });
+    })();
+  </script>
+</body>
+</html>
