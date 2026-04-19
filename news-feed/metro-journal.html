@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Metro Journal is a polished metropolitan news feed landing page with transport coverage, city headlines, and a live brief rail." />
+  <title>News Feed 10 - Metro Journal</title>
+  <style>
+    :root{
+      --bg:#08090a;--panel:#111317;--panel-2:#171b20;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.16);
+      --text:#f2f3f1;--muted:#9ea4ab;--shadow:0 24px 60px rgba(0,0,0,.42)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 15% 0%, rgba(255,255,255,.05), transparent 20%),linear-gradient(180deg,#050607,#0d1014)}
+    .shell{max-width:1380px;margin:0 auto;padding:20px}
+    .top,.hero,.panel,.brief{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .top{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:18px 22px;border-radius:28px;background:rgba(14,16,19,.9)}
+    .brand h1,.hero h2,.panel h3,.brief h4{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand h1{font-size:1.8rem;letter-spacing:.05em;text-transform:uppercase}
+    .muted,.meta,.brief p,.hero p{color:var(--muted)}
+    .hero{margin-top:18px;padding:28px;border-radius:32px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)),linear-gradient(180deg,#12161a,#0d1014)}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
+    .hero h2{font-size:clamp(2rem,4vw,4rem);line-height:1.02;max-width:9ch}
+    .hero-visual{
+      min-height:320px;border-radius:26px;background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.28)),
+        radial-gradient(circle at 72% 24%, rgba(255,255,255,.18), transparent 14%),
+        linear-gradient(145deg,#2a3138,#12171c 58%,#1b2228)
+    }
+    .layout{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;margin-top:18px}
+    .panel{padding:24px;border-radius:28px;background:var(--panel)}
+    .lead-list,.rail{display:grid;gap:14px;margin-top:16px}
+    .brief{padding:18px;border-radius:22px;background:var(--panel-2)}
+    .brief h4{font-size:1.12rem;line-height:1.3;margin:8px 0 10px}
+    .rail-item{display:grid;grid-template-columns:76px 1fr;gap:14px;padding-top:14px;border-top:1px solid var(--line)}
+    .rail-item:first-child{padding-top:0;border-top:0}
+    .rail-item time{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#d8dde2}
+    @media (max-width:1040px){.hero-grid,.layout{grid-template-columns:1fr}}
+    @media (max-width:720px){.shell{padding:12px}.top{flex-direction:column;align-items:flex-start}}
+  </style>
+  <link rel="stylesheet" href="theme-toggle.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="brand"><div class="muted">City edition</div><h1>Metro Journal</h1></div>
+      <div class="meta">Transport, housing, and services <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button></div>
+    </header>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="muted" style="font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;">Lead city line</div>
+          <h2>Urban coverage works best when the service reality stays visible.</h2>
+          <p>This sample focuses on metro-scale stories: transit negotiations, municipal finance, and service reliability. The layout stays professional and light with one lead, a small story stack, and a live brief rail.</p>
+        </div>
+        <div class="hero-visual" aria-hidden="true"></div>
+      </div>
+    </section>
+    <div class="layout">
+      <section class="panel">
+        <h3>Front stories</h3>
+        <div class="lead-list">
+          <article class="brief"><div class="meta">Transit</div><h4>Network operators prepare revised schedules while labor talks remain open.</h4><p>Service risk has softened, but planners still want signed staffing terms before promising normal frequency.</p></article>
+          <article class="brief"><div class="meta">Housing</div><h4>City agencies use calmer rates to advance repair-led financing plans.</h4><p>Maintenance programs remain easier to defend than large speculative builds.</p></article>
+          <article class="brief"><div class="meta">Utilities</div><h4>Power managers ask for narrower industrial exemptions before warmer demand arrives.</h4><p>The operating story is less about scarcity than about where flexibility should sit.</p></article>
+        </div>
+      </section>
+      <aside class="panel">
+        <h3>Live brief rail</h3>
+        <div class="rail">
+          <div class="rail-item"><time>09:18</time><div><strong>Regional bus agencies wait for revised staffing guidance.</strong><div class="muted">Editors expect the next service note before midday.</div></div></div>
+          <div class="rail-item"><time>08:47</time><div><strong>Bond desks report steadier interest in municipal repair programs.</strong><div class="muted">Visible project logic is helping execution quality.</div></div></div>
+          <div class="rail-item"><time>08:09</time><div><strong>Utility teams reframe demand planning around local contingency options.</strong><div class="muted">The policy question is narrowing toward exemptions and sequencing.</div></div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script src="theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Evening Dispatch is an elegant late-edition news feed landing page with restrained section switching and editorial notes." />
+  <title>News Feed 08 - Evening Dispatch</title>
+  <style>
+    :root{
+      --bg:#09090a;--panel:#111216;--panel-2:#17191d;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.16);
+      --text:#f1f0ed;--muted:#9fa09d;--shadow:0 28px 70px rgba(0,0,0,.44)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 20% 0%, rgba(255,255,255,.05), transparent 18%),linear-gradient(180deg,#050505,#0c0d10)}
+    .shell{max-width:1320px;margin:0 auto;padding:20px}
+    .top,.hero,.panel{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .top{display:flex;justify-content:space-between;gap:18px;align-items:end;padding:20px 24px;border-radius:30px;background:rgba(13,14,17,.9)}
+    .brand h1,.hero h2,.panel h3,.card h4{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand h1{font-size:1.9rem;letter-spacing:.06em;text-transform:uppercase}
+    .muted,.meta,.hero p,.card p{color:var(--muted)}
+    .hero{margin-top:18px;padding:28px;border-radius:32px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)),linear-gradient(180deg,#121317,#0d0e11)}
+    .hero h2{font-size:clamp(2.1rem,4vw,4.1rem);line-height:1.02;max-width:10ch}
+    .hero p{max-width:60ch;line-height:1.75}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .tabs button{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer;font:inherit}
+    .tabs button.active{color:var(--text);border-color:var(--line-2);background:rgba(255,255,255,.06)}
+    .panel{margin-top:18px;padding:24px;border-radius:30px;background:var(--panel)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+    .card{padding:18px;border-radius:22px;border:1px solid var(--line);background:var(--panel-2)}
+    .card h4{font-size:1.14rem;line-height:1.3;margin:8px 0 10px}
+    .editor{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+    @media (max-width:960px){.grid{grid-template-columns:1fr}}
+    @media (max-width:720px){.shell{padding:12px}.top{flex-direction:column;align-items:flex-start}}
+  </style>
+  <link rel="stylesheet" href="theme-toggle.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="brand"><div class="muted">Late cycle</div><h1>Evening Dispatch</h1></div>
+      <div class="meta">Curated for the night desk <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button></div>
+    </header>
+    <section class="hero">
+      <div class="muted" style="font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;">Editorial note</div>
+      <h2>The last edition should feel calmer, not thinner.</h2>
+      <p>This concept uses a single switching panel to rotate between top stories, briefing notes, and follow-up coverage. That keeps the structure minimal while still giving the page a little interaction.</p>
+      <div class="tabs">
+        <button class="active" data-set="top" type="button">Top stories</button>
+        <button data-set="briefing" type="button">Briefing</button>
+        <button data-set="followup" type="button">Follow-up</button>
+      </div>
+    </section>
+    <section class="panel">
+      <h3 id="panelTitle">Top stories</h3>
+      <div class="muted" id="panelCopy">The main three stories for the next edition.</div>
+      <div class="grid" id="cardGrid"></div>
+      <div class="editor">
+        <div class="muted">Editor margin</div>
+        <p class="muted">Elegant landing pages usually improve when the components are reduced before they are decorated.</p>
+      </div>
+    </section>
+  </div>
+  <script>
+    (function () {
+      var data = {
+        top: {
+          title: "Top stories",
+          copy: "The main three stories for the next edition.",
+          cards: [
+            ["Policy", "Cabinet narrows the scope of industrial support.", "The clearer message is selectivity, not retreat."],
+            ["Transit", "Negotiators cool disruption risk without closing talks.", "Editors still want the signed staffing language."],
+            ["Energy", "Reserve capacity remains the first practical market question.", "Utilities and factories stay linked in the next read."]
+          ]
+        },
+        briefing: {
+          title: "Briefing",
+          copy: "Short notes that orient readers before morning coverage begins.",
+          cards: [
+            ["Desk line", "Refinancing windows look usable again.", "Public issuers may move early if calm holds."],
+            ["Watch", "Shipping reliability matters more than price tonight.", "Export desks are prioritizing certainty over margin."],
+            ["Tone", "Coverage stays sober and specific.", "Confidence should be earned line by line."]
+          ]
+        },
+        followup: {
+          title: "Follow-up",
+          copy: "Stories likely to develop into the next cycle.",
+          cards: [
+            ["Housing", "Agencies prepare faster approvals for repair programs.", "Funding demand is practical and politically legible."],
+            ["Industry", "Export-heavy districts report softer order books.", "The domestic maintenance offset remains important."],
+            ["Markets", "Credit appetite holds for essential-service borrowers.", "Risk selection is sharpening rather than broadening."]
+          ]
+        }
+      };
+      var title = document.getElementById("panelTitle");
+      var copy = document.getElementById("panelCopy");
+      var grid = document.getElementById("cardGrid");
+      var buttons = document.querySelectorAll("[data-set]");
+      function render(key) {
+        title.textContent = data[key].title;
+        copy.textContent = data[key].copy;
+        grid.innerHTML = data[key].cards.map(function (entry) {
+          return '<article class="card"><div class="meta">' + entry[0] + '</div><h4>' + entry[1] + '</h4><p>' + entry[2] + '</p></article>';
+        }).join("");
+      }
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var key = button.getAttribute("data-set");
+          buttons.forEach(function (entry) { entry.classList.toggle("active", entry === button); });
+          render(key);
+        });
+      });
+      render("top");
+    })();
+  </script>
+  <script src="theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Atlas Bulletin is a restrained global affairs news feed landing page with regional watchlists and elegant briefing cards." />
+  <title>News Feed 09 - Atlas Bulletin</title>
+  <style>
+    :root{
+      --bg:#070809;--panel:#101317;--panel-2:#161a1f;--panel-3:#1e242b;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.15);
+      --text:#eef1f3;--muted:#98a0a8;--shadow:0 26px 64px rgba(0,0,0,.42)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 0% 0%, rgba(255,255,255,.05), transparent 16%),linear-gradient(180deg,#050607,#0c1014)}
+    .shell{max-width:1400px;margin:0 auto;padding:20px}
+    .top,.hero,.panel,.card{border:1px solid var(--line);box-shadow:var(--shadow)}
+    .top{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:18px 22px;border-radius:28px;background:rgba(13,16,19,.9)}
+    .brand h1,.hero h2,.panel h3,.card h4{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:500}
+    .brand h1{font-size:1.75rem;letter-spacing:.05em;text-transform:uppercase}
+    .muted,.meta,.hero p,.card p{color:var(--muted)}
+    .nav{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .nav a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid transparent}
+    .nav a.active,.nav a:hover{color:var(--text);border-color:var(--line-2)}
+    .hero{margin-top:18px;padding:28px;border-radius:32px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)),linear-gradient(180deg,#12161b,#0d1115)}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}
+    .hero h2{font-size:clamp(2rem,4vw,4rem);line-height:1.02;max-width:10ch}
+    .map{
+      min-height:320px;border-radius:26px;background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.28)),
+        radial-gradient(circle at 28% 38%, rgba(255,255,255,.12), transparent 16%),
+        radial-gradient(circle at 62% 48%, rgba(255,255,255,.14), transparent 14%),
+        linear-gradient(145deg,#24303a,#12171d 60%,#1a232b)
+    }
+    .layout{display:grid;grid-template-columns:1fr .9fr;gap:18px;margin-top:18px}
+    .panel{padding:24px;border-radius:28px;background:var(--panel)}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+    .card{padding:18px;border-radius:22px;background:var(--panel-2)}
+    .card h4{font-size:1.12rem;line-height:1.3;margin:8px 0 10px}
+    .watch{display:grid;gap:14px;margin-top:16px}
+    .watch-item{padding:16px;border-radius:22px;background:var(--panel-2);border:1px solid var(--line)}
+    @media (max-width:1040px){.top,.hero-grid,.layout,.cards{grid-template-columns:1fr}}
+    @media (max-width:720px){.shell{padding:12px}}
+  </style>
+  <link rel="stylesheet" href="theme-toggle.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="brand"><div class="muted">Global affairs</div><h1>Atlas Bulletin</h1></div>
+      <nav class="nav"><a class="active" href="#">World</a><a href="#">Europe</a><a href="#">Trade</a><a href="#">Energy</a><a href="#">Risk</a></nav>
+      <div class="meta">Regional watchlist <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button></div>
+    </header>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="muted" style="font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;">Lead brief</div>
+          <h2>Global calm is uneven, and readers can feel the seams.</h2>
+          <p>The page combines one lead statement with region-specific cards and a short watchlist. The result feels composed, clear, and lightweight enough for a fast-moving web app module.</p>
+        </div>
+        <div class="map" aria-hidden="true"></div>
+      </div>
+    </section>
+    <div class="layout">
+      <section class="panel">
+        <h3>Regional cards</h3>
+        <div class="muted">A compact grid keeps the page informative without turning dense.</div>
+        <div class="cards">
+          <article class="card"><div class="meta">Europe</div><h4>Energy resilience remains central to the next week of policy messaging.</h4><p>Reserve planning and industrial exemptions continue to define the practical debate.</p></article>
+          <article class="card"><div class="meta">Trade</div><h4>Shipping reliability is improving, but corridor pricing still looks selective.</h4><p>Operators with verified routing continue to secure the best terms.</p></article>
+          <article class="card"><div class="meta">Capital</div><h4>Public issuers are moving earlier as volatility calms.</h4><p>The visible story is timing discipline, not a broad return of confidence.</p></article>
+          <article class="card"><div class="meta">Industry</div><h4>Export districts are softening faster than domestic maintenance activity.</h4><p>The split argues for narrower, better-targeted coverage.</p></article>
+        </div>
+      </section>
+      <aside class="panel">
+        <h3>What shifts next</h3>
+        <div class="watch">
+          <div class="watch-item"><strong>Utility briefings</strong><div class="muted">Could influence industrial sentiment across several regions at once.</div></div>
+          <div class="watch-item"><strong>Transit labor text</strong><div class="muted">A cleaner settlement would ease city and service-risk coverage.</div></div>
+          <div class="watch-item"><strong>Credit reopening</strong><div class="muted">Further evidence of steadier deal flow would reinforce the calmer backdrop.</div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script src="theme-toggle.js"></script>
+</body>
+</html>

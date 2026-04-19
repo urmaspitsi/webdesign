@@ -116,6 +116,7 @@
       .top{flex-direction:column;align-items:flex-start}
     }
   </style>
+  <link rel="stylesheet" href="theme-toggle.css" />
 </head>
 <body>
   <div class="shell">
@@ -132,6 +133,7 @@
           <a href="#">Finance</a>
           <a href="#">Culture</a>
         </nav>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
       </header>
 
       <section class="hero">
@@ -201,5 +203,6 @@
       briefs.forEach(function (brief) { observer.observe(brief); });
     })();
   </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>

@@ -1,13 +1,13 @@
 window.projectCatalog = {
   slug: "news-feed",
   title: "News feed",
-  description: "Five restrained dark-mode news feed studies built as standalone HTML files.",
+  description: "Ten restrained dark-mode news feed studies built as standalone HTML files.",
   hero: {
     title: "Elegant dark news feeds with quiet contrast and editorial structure.",
     text:
-      "Five standalone news-feed samples exploring newsroom fronts, briefing layouts, market-led streams, and live editorial workspaces. Each page is a single HTML file for easy copy, review, and comparison.",
+      "Ten standalone news-feed samples exploring newsroom fronts, briefing layouts, market-led streams, live editorial workspaces, and polished briefing dashboards. Each page is a single HTML file for easy copy, review, and comparison.",
     meta: [
-      "5 published entries",
+      "10 published entries",
       "Single-file HTML",
       "Dark editorial direction"
     ]
@@ -17,7 +17,7 @@ window.projectCatalog = {
       title: "News Feed Samples",
       description:
         "Each sample keeps the palette tight, the chrome minimal, and the hierarchy focused on headlines, timing, and readable story grouping.",
-      note: "5 published entries",
+      note: "10 published entries",
       items: [
         {
           title: "Chronicle Ledger",
@@ -53,6 +53,41 @@ window.projectCatalog = {
           description:
             "An elegant magazine-leaning feed with generous spacing, sober typography, and premium monochrome treatment.",
           href: "bulletin-noir.html"
+        },
+        {
+          title: "Civic Brief",
+          visualTitle: "Civic Brief",
+          description:
+            "A quiet public-affairs landing page balancing a lead policy story with structured city and infrastructure updates.",
+          href: "civic-brief.html"
+        },
+        {
+          title: "Market Fold",
+          visualTitle: "Market Fold",
+          description:
+            "A refined business-first news feed with compact market cues, a decisive hero, and measured coverage blocks.",
+          href: "market-fold.html"
+        },
+        {
+          title: "Evening Dispatch",
+          visualTitle: "Evening Dispatch",
+          description:
+            "A late-cycle editorial layout with a calmer headline cadence, studio notes, and elegant section switching.",
+          href: "evening-dispatch.html"
+        },
+        {
+          title: "Atlas Bulletin",
+          visualTitle: "Atlas Bulletin",
+          description:
+            "A global affairs concept pairing a restrained lead module with regional watchlists and briefing cards.",
+          href: "atlas-bulletin.html"
+        },
+        {
+          title: "Metro Journal",
+          visualTitle: "Metro Journal",
+          description:
+            "A metropolitan news front with confident typography, transport-heavy coverage, and a polished live brief rail.",
+          href: "metro-journal.html"
         }
       ]
     }

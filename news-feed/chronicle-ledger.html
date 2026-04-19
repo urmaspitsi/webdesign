@@ -146,6 +146,7 @@
       .hero,.section{padding:20px}
     }
   </style>
+  <link rel="stylesheet" href="theme-toggle.css" />
 </head>
 <body>
   <div class="shell">
@@ -161,7 +162,7 @@
         <a href="#">Business</a>
         <a href="#">World</a>
       </nav>
-      <div class="meta"><span>19 April</span><span class="dot"></span><span>Updated every 6 min</span></div>
+      <div class="meta"><span>19 April</span><span class="dot"></span><span>Updated every 6 min</span><button class="theme-toggle" type="button" data-theme-toggle>Light mode</button></div>
     </header>
 
     <section class="ticker" aria-label="Market headlines">
@@ -280,5 +281,6 @@
       });
     })();
   </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>
