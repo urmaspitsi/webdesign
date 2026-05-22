@@ -54,6 +54,8 @@ class FakeElement {
 class FakeDocument {
   constructor() {
     this.nodesById = {};
+    this.title = "";
+    this.metaDescription = new FakeElement("meta");
   }
 
   createElement(tagName) {
@@ -67,6 +69,14 @@ class FakeDocument {
   registerElement(id, element) {
     this.nodesById[id] = element;
     element.id = id;
+  }
+
+  querySelector(selector) {
+    if (selector === 'meta[name="description"]') {
+      return this.metaDescription;
+    }
+
+    return null;
   }
 }
 
@@ -129,6 +139,14 @@ function createSandbox(fetchImpl) {
 function loadScriptIntoSandbox(filename, sandbox) {
   const source = fs.readFileSync(path.join(process.cwd(), filename), "utf8");
   vm.runInNewContext(source, sandbox, { filename });
+}
+
+function loadProjectIndexIntoSandbox(folder, sandbox) {
+  sandbox.location.href = "http://localhost:8000/" + folder + "/index.html";
+  loadScriptIntoSandbox("assets/site-data.js", sandbox);
+  loadScriptIntoSandbox(folder + "/catalog.config.js", sandbox);
+  loadScriptIntoSandbox("assets/catalog.js", sandbox);
+  loadScriptIntoSandbox("assets/folder-index.js", sandbox);
 }
 
 function sampleProjectCatalog(items) {
@@ -520,6 +538,52 @@ test("relative linked-page theme fetch remains GitHub Pages compatible under a r
   assert.equal(card.style.getPropertyValue("--card-panel-bg"), "#0b0c0f");
   assert.equal(card.style.getPropertyValue("--card-ink"), "#e7e9ee");
   assert.equal(card.style.getPropertyValue("--card-title-font"), "Inter,sans-serif");
+});
+
+test("all collection index pages render their configured items and link to existing pages", async function () {
+  const folders = ["landingpages", "dashboards", "item-gallery", "news-feed", "chat-ui"];
+
+  for (const folder of folders) {
+    const { sandbox, app } = createSandbox(async function () {
+      return {
+        ok: true,
+        text: async function () {
+          return "<style>body{background:#111;color:#eee;font-family:Inter,sans-serif;}</style>";
+        }
+      };
+    });
+
+    loadProjectIndexIntoSandbox(folder, sandbox);
+    await flushPromises();
+
+    const catalog = sandbox.projectCatalog;
+    const expectedItems = catalog.sections.reduce(function (total, section) {
+      return total + (section.items || []).length;
+    }, 0);
+    const cards = findAllByClass(app, "catalog-card");
+    const titles = findAllByClass(app, "card-title").map(function (node) {
+      return node.textContent;
+    });
+
+    assert.equal(sandbox.document.title, catalog.title, folder + " should set document title");
+    assert.equal(app.className, "site-shell", folder + " should initialize the app shell");
+    assert.equal(cards.length, expectedItems, folder + " should render every configured item");
+    assert.equal(findAllByClass(app, "hero-title").length, 1, folder + " should render a hero");
+    assert.equal(findAllByClass(app, "empty-state").length, 0, folder + " should not render empty state");
+
+    catalog.sections.forEach(function (section) {
+      (section.items || []).forEach(function (item) {
+        assert.ok(titles.includes(item.title), folder + " should show " + item.title);
+
+        if (item.href) {
+          assert.ok(
+            fs.existsSync(path.join(process.cwd(), folder, item.href)),
+            folder + " item should link to an existing page: " + item.href
+          );
+        }
+      });
+    });
+  }
 });
 
 (async function run() {
